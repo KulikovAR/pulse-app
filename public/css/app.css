@@ -1,0 +1,21 @@
+
+@font-face {
+    font-family: "Microsoft Sans Serif";
+    src: url("/fonts/microsoftsansserif.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+  
+body {
+    font-family: "Microsoft Sans Serif", Arial, sans-serif;
+    background-color: var(--theme-bg-color-white);
+}
+  
+.container{
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 16px;
+    /* background: var(--theme-text-color-gray); */
+}
+

@@ -1,0 +1,14 @@
+:root {
+    /* --theme-bg-color-white: #ffffff; */
+    --theme-bg-color-white: rgba(255, 255, 255, 1);
+    /* --theme-text-color-black: #000000; */
+    --theme-text-color-black: rgba(0, 0, 0, 1);
+    /* --theme-accent-color-blue: #007bff; */
+    --theme-accent-color-blue: rgba(51, 144, 236, 1);
+    --theme-text-color-gray: rgba(112, 117, 121, 1);
+    --theme-destructive-color: rgba(225, 69, 53, 1);
+
+    --theme-indicator-color-today: rgba(255, 146, 2, 1);
+    --theme-indicator-color-tomorrow: rgba(50, 173, 230, 1);
+    --theme-indicator-color-later: rgba(112, 117, 121, 1);
+}
