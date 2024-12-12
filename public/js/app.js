@@ -20204,7 +20204,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'App'
+  name: 'App',
+  mounted: function mounted() {
+    var _this = this;
+    var telegram = window.Telegram.WebApp;
+    telegram.ready();
+
+    // Включаем кнопку "Назад"
+    telegram.BackButton.show();
+
+    // Устанавливаем обработчик для нажатия на кнопку "Назад"
+    telegram.BackButton.onClick(function () {
+      // Ваша логика при нажатии кнопки "Назад"
+      _this.$router.go(-1);
+    });
+  }
 });
 
 /***/ }),
@@ -20918,9 +20932,12 @@ var _hoisted_17 = {
 };
 var _hoisted_18 = ["onClick"];
 var _hoisted_19 = {
-  "class": "selected-day-empty"
+  "class": "selected-day__reschedule-btn-wrapper"
 };
 var _hoisted_20 = {
+  "class": "selected-day-empty"
+};
+var _hoisted_21 = {
   "class": "selected-day-empty__content"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -21001,16 +21018,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         return $options.selectTime(time);
       }
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(time), 11 /* TEXT, CLASS, PROPS */, _hoisted_18);
-  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "selected-day__reschedule-btn",
     onClick: _cache[4] || (_cache[4] = function () {
       return $options.reschedule && $options.reschedule.apply($options, arguments);
     })
-  }, " Перенести ")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+  }, " Перенести ")])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 1
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Блок отсутствия расписания "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Блок отсутствия расписания "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "selected-day-empty__title"
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" В этот день нет "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" свободного времени ")], -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, " Ближайшая доступная дата " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.nearestAvailableDate), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" В этот день нет "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" свободного времени ")], -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, " Ближайшая доступная дата " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.nearestAvailableDate), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "selected-day-empty__go-to-date-btn",
     onClick: _cache[5] || (_cache[5] = function () {
       return $options.selectNearestDate && $options.selectNearestDate.apply($options, arguments);
@@ -21308,6 +21325,9 @@ var _hoisted_4 = {
   "class": "reminder-item__header"
 };
 var _hoisted_5 = {
+  "class": "reminder-btns__wrapper"
+};
+var _hoisted_6 = {
   "class": "reminder-btns"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -21327,7 +21347,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1 /* STABLE */
   }), _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "reminder-item__service-content"
-  }, " Стрижка волос, уход за бородой ", -1 /* HOISTED */))]), _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"reminder-item__service-info\" data-v-67274c32><div class=\"reminder-item__service-info-item time\" data-v-67274c32><span class=\"service-info-title-span\" data-v-67274c32> Время: </span><span class=\"service-info-content-span\" data-v-67274c32> 11:00 </span></div><div class=\"reminder-item__service-info-item address\" data-v-67274c32><span class=\"service-info-title-span\" data-v-67274c32> Адрес: </span><span class=\"service-info-content-span\" data-v-67274c32> Ул. Красноармейская 112, к3 </span></div><div class=\"reminder-item__service-info-item master\" data-v-67274c32><span class=\"service-info-title-span\" data-v-67274c32> Мастер: </span><span class=\"service-info-content-span\" data-v-67274c32> Никита </span></div></div><a class=\"set-route\" href=\"#\" data-v-67274c32>Проложить маршрут</a><div class=\"reminder-item__settings\" data-v-67274c32><div class=\"reminder-item__settings-item moment\" data-v-67274c32><img class=\"reminder-item__settings-img\" src=\"/images/reminder/moment.svg\" alt=\"\" data-v-67274c32><div class=\"reminder-item__settings-info\" data-v-67274c32> за: 1 час </div></div><div class=\"reminder-item__settings-item interval\" data-v-67274c32><img class=\"reminder-item__settings-img\" src=\"/images/reminder/interval.svg\" alt=\"\" data-v-67274c32><div class=\"reminder-item__settings-info\" data-v-67274c32> Каждые 2 недели </div></div></div>", 3))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, " Стрижка волос, уход за бородой ", -1 /* HOISTED */))]), _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"reminder-item__service-info\" data-v-67274c32><div class=\"reminder-item__service-info-item time\" data-v-67274c32><span class=\"service-info-title-span\" data-v-67274c32> Время: </span><span class=\"service-info-content-span\" data-v-67274c32> 11:00 </span></div><div class=\"reminder-item__service-info-item address\" data-v-67274c32><span class=\"service-info-title-span\" data-v-67274c32> Адрес: </span><span class=\"service-info-content-span\" data-v-67274c32> Ул. Красноармейская 112, к3 </span></div><div class=\"reminder-item__service-info-item master\" data-v-67274c32><span class=\"service-info-title-span\" data-v-67274c32> Мастер: </span><span class=\"service-info-content-span\" data-v-67274c32> Никита </span></div></div><a class=\"set-route\" href=\"#\" data-v-67274c32>Проложить маршрут</a><div class=\"reminder-item__settings\" data-v-67274c32><div class=\"reminder-item__settings-item moment\" data-v-67274c32><img class=\"reminder-item__settings-img\" src=\"/images/reminder/moment.svg\" alt=\"\" data-v-67274c32><div class=\"reminder-item__settings-info\" data-v-67274c32> за: 1 час </div></div><div class=\"reminder-item__settings-item interval\" data-v-67274c32><img class=\"reminder-item__settings-img\" src=\"/images/reminder/interval.svg\" alt=\"\" data-v-67274c32><div class=\"reminder-item__settings-info\" data-v-67274c32> Каждые 2 недели </div></div></div>", 3))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "reminder-btn cancel",
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.showCancelPopUp && $options.showCancelPopUp.apply($options, arguments);
@@ -21342,7 +21362,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return _cache[4] || (_cache[4] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Перенести ")]);
     }),
     _: 1 /* STABLE */
-  })])])]);
+  })])])])]);
 }
 
 /***/ }),
@@ -21367,29 +21387,32 @@ var _hoisted_2 = {
   "class": "container"
 };
 var _hoisted_3 = {
-  "class": "services-list"
+  "class": "services-wrapper"
 };
 var _hoisted_4 = {
+  "class": "services-list"
+};
+var _hoisted_5 = {
   "class": "services-list__item__img"
 };
-var _hoisted_5 = ["src", "alt", "onError"];
-var _hoisted_6 = {
+var _hoisted_6 = ["src", "alt", "onError"];
+var _hoisted_7 = {
   "class": "services-list__item__name"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.services, function (item, index) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Оболочка для маскирования краев "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.services, function (item, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: index,
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["services-list__item", item.day == 'today' ? 'today' : item.day == 'tomorrow' ? 'tomorrow' : item.day == 'later' ? 'later' : ''])
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
       "class": "services-list__item__img-img",
       src: item.img,
       alt: item.name,
       onError: function onError($event) {
         return $options.setFallbackImage(index);
       }
-    }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_5)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1 /* TEXT */)], 2 /* CLASS */);
-  }), 128 /* KEYED_FRAGMENT */))])])]);
+    }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_6)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1 /* TEXT */)], 2 /* CLASS */);
+  }), 128 /* KEYED_FRAGMENT */))])])])]);
 }
 
 /***/ }),
@@ -23551,7 +23574,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.calendar[data-v-ac8f9380]{\r\n        margin-bottom: 16px;\n}\n.calendar__day.placeholder[data-v-ac8f9380] {\r\n        color: var(--theme-text-color-gray);\r\n        pointer-events: none;\n}\n.calendar__day.active[data-v-ac8f9380] {\r\n        background: var(--theme-accent-color-blue);\r\n        color: var(--theme-bg-color-white);\n}\n.calendar__day.today[data-v-ac8f9380] {\r\n        font-weight: bold;\r\n        border: 1px solid var(--theme-accent-color-blue);\n}\n.calendar-month__arrow.disabled[data-v-ac8f9380] {\r\n        opacity: 0.5;\r\n        pointer-events: none;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.calendar[data-v-ac8f9380]{\r\n        margin-bottom: 16px;\n}\n.calendar__day.placeholder[data-v-ac8f9380] {\r\n        color: var(--theme-text-color-gray);\r\n        pointer-events: none;\n}\n.calendar__day.active[data-v-ac8f9380] {\r\n        background: var(--theme-accent-color-blue);\r\n        color: var(--theme-bg-color-white);\n}\n.calendar__day.today[data-v-ac8f9380] {\r\n        /* font-weight: bold; */\r\n        /* border: 1px solid var(--theme-accent-color-blue); */\r\n        background: #F8F8F8;\n}\n.calendar-month__arrow.disabled[data-v-ac8f9380] {\r\n        opacity: 0.5;\r\n        pointer-events: none;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -23575,7 +23598,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.calendar-month[data-v-ac8f9380]{\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: space-between;\r\n        padding-top: 14px;\r\n        margin-bottom: 26px;\n}\n.calendar__title-days[data-v-ac8f9380]{\r\n        width: 100%;\r\n        display: flex;\r\n        gap: 8px;\r\n        height: 32px;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: var(--theme-text-color-gray);\n}\n.calendar__title-day[data-v-ac8f9380]{\r\n        width: 12%;\r\n        height: 100%;\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\n}\n.calendar__days[data-v-ac8f9380]{\r\n        width: 100%;\r\n        display: flex;\r\n        flex-wrap: wrap;\r\n        gap: 8px;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\n.calendar__day[data-v-ac8f9380]{\r\n        width: 12%;\r\n        height: 40px;\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n        margin-bottom: 4px;\r\n        border-radius: 12px;\n}\n.calendar__day.active[data-v-ac8f9380]{\r\n        background: var(--theme-accent-color-blue);\r\n        color: var(--theme-bg-color-white);\n}\n.calendar__day.empty[data-v-ac8f9380]{\r\n        color: var(--theme-text-color-gray);\n}\n.calendar-month__arrows[data-v-ac8f9380]{\r\n        display: flex;\r\n        align-items: center;\r\n        gap: 8px;\n}\n.calendar-month__arrow[data-v-ac8f9380]{\r\n        width: 30px;\r\n        height: 30px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.calendar-month[data-v-ac8f9380]{\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: space-between;\r\n        padding-top: 14px;\r\n        margin-bottom: 26px;\n}\n.calendar__title-days[data-v-ac8f9380]{\r\n        width: 100%;\r\n        display: flex;\r\n        justify-content: space-between;\r\n        gap: 8px;\r\n        height: 32px;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: var(--theme-text-color-gray);\n}\n.calendar__title-day[data-v-ac8f9380]{\r\n        width: 12%;\r\n        height: 100%;\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\n}\n.calendar__days[data-v-ac8f9380]{\r\n        width: 100%;\r\n        display: flex;\r\n        justify-content: space-between;\r\n        flex-wrap: wrap;\r\n        gap: 8px;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\n.calendar__day[data-v-ac8f9380]{\r\n        width: 12%;\r\n        height: 40px;\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n        margin-bottom: 4px;\r\n        border-radius: 12px;\r\n\r\n        cursor: pointer;\n}\n.calendar__day.active[data-v-ac8f9380]{\r\n        background: var(--theme-accent-color-blue);\r\n        color: var(--theme-bg-color-white);\n}\n.calendar__day.empty[data-v-ac8f9380]{\r\n        color: var(--theme-text-color-gray);\n}\n.calendar-month__arrows[data-v-ac8f9380]{\r\n        display: flex;\r\n        align-items: center;\r\n        gap: 8px;\n}\n.calendar-month__arrow[data-v-ac8f9380]{\r\n        width: 30px;\r\n        height: 30px;\r\n        cursor: pointer;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -23623,7 +23646,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.selected-day[data-v-ac8f9380]{\r\n        width: 100%;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.selected-day__time-division[data-v-ac8f9380]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        align-items: center;\r\n        margin-bottom: 16px;\n}\n.selected-day__time-division__title[data-v-ac8f9380]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 600;\r\n        line-height: 19.24px;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        \r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n        margin-bottom: 18px;\n}\n.selected-day__time-list[data-v-ac8f9380]{\r\n        display: flex;\r\n        gap: 12px;\r\n        flex-wrap: wrap;\r\n        width: 100%;\n}\n.selected-day__time-item[data-v-ac8f9380]{\r\n        width: 22%;\r\n        height: 35px;\r\n        border-radius: 16px;\r\n        border: 1px solid rgba(0, 0, 0, 1);\r\n        \r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 600;\r\n        line-height: 19.24px;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\n.selected-day__time-item.active[data-v-ac8f9380]{\r\n        background: var(--theme-accent-color-blue);\r\n        border-color: var(--theme-accent-color-blue);\r\n        color: var(--theme-bg-color-white);\n}\n.selected-day__reschedule-btn[data-v-ac8f9380],\r\n    .selected-day-empty__go-to-date-btn[data-v-ac8f9380]{\r\n        width: 100%;\r\n        height: 44px;\r\n        border-radius: 12px;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        background: var(--theme-accent-color-blue);\r\n        color: var(--theme-bg-color-white);\r\n        margin-bottom: 12px;\n}\n.selected-day__time-division.evening[data-v-ac8f9380]{\r\n        margin-bottom: 60px;\r\n        flex-grow: 1;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.selected-day[data-v-ac8f9380]{\r\n        width: 100%;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.selected-day__time-division[data-v-ac8f9380]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        align-items: center;\r\n        margin-bottom: 16px;\n}\n.selected-day__time-division__title[data-v-ac8f9380]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 600;\r\n        line-height: 19.24px;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        \r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n        margin-bottom: 18px;\n}\n.selected-day__time-list[data-v-ac8f9380]{\r\n        display: flex;\r\n        gap: 12px;\r\n        flex-wrap: wrap;\r\n        width: 100%;\n}\n.selected-day__time-item[data-v-ac8f9380]{\r\n        width: 22%;\r\n        height: 35px;\r\n        border-radius: 16px;\r\n        border: 1px solid rgba(0, 0, 0, 1);\r\n        \r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 600;\r\n        line-height: 19.24px;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\n.selected-day__time-item.active[data-v-ac8f9380]{\r\n        background: var(--theme-accent-color-blue);\r\n        border-color: var(--theme-accent-color-blue);\r\n        color: var(--theme-bg-color-white);\n}\n.selected-day__reschedule-btn[data-v-ac8f9380],\r\n    .selected-day-empty__go-to-date-btn[data-v-ac8f9380]{\r\n        width: 100%;\r\n        height: 44px;\r\n        border-radius: 12px;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        background: var(--theme-accent-color-blue);\r\n        color: var(--theme-bg-color-white);\r\n        margin-bottom: 12px;\r\n\r\n        cursor: pointer;\n}\n.selected-day__time-division.evening[data-v-ac8f9380]{\r\n        margin-bottom: 60px;\r\n        flex-grow: 1;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -23671,7 +23694,31 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.calendar-content[data-v-ac8f9380]{\r\n        flex-grow: 1; \r\n        display: flex;\r\n        flex-direction: column;\n}\n.calendar-content .container[data-v-ac8f9380]{\r\n        flex-grow: 1;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.calendar-wrapper[data-v-ac8f9380]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        flex-grow: 1;\n}\n.selected-day[data-v-ac8f9380]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        flex-grow: 1;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.calendar-content[data-v-ac8f9380]{\r\n        flex-grow: 1; \r\n        display: flex;\r\n        flex-direction: column;\n}\n.calendar-content .container[data-v-ac8f9380]{\r\n        flex-grow: 1;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.calendar-wrapper[data-v-ac8f9380]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        flex-grow: 1;\n}\n.selected-day[data-v-ac8f9380]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        flex-grow: 1;\r\n        margin-bottom: 84px;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/CalendarContent.vue?vue&type=style&index=6&id=ac8f9380&scoped=true&lang=css":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/CalendarContent.vue?vue&type=style&index=6&id=ac8f9380&scoped=true&lang=css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fixed[data-v-ac8f9380] {\r\n        position: fixed;\r\n        left: 0;\r\n        right: 0;\r\n        bottom: 20px;\r\n        margin: 0 16px;\r\n        width: calc(100% - 16px * 2);\r\n        z-index: 100;\n}\n.selected-day__reschedule-btn-wrapper[data-v-ac8f9380]{\r\n        position: fixed;\r\n        left: 0;\r\n        right: 0;\r\n        bottom: 0;\r\n        margin: 0 auto;\r\n        z-index: 200;\r\n        background: #EFEFF3;\r\n        padding: 20px 16px;\r\n        max-width: 400px;\n}\n.selected-day__reschedule-btn[data-v-ac8f9380]{\r\n        margin-bottom: 0;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -23719,7 +23766,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.cancel-appointment__pop-up__btns[data-v-011dd09c]{\r\n        width: 100%;\r\n        height: 40px;\r\n        display: flex;\r\n        align-items: center;\r\n        gap: 8px;\n}\n.cancel-appointment__pop-up__btn[data-v-011dd09c]{\r\n        width: 50%;\r\n        height: 100%;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-align: center;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n\r\n        cursor: pointer;\n}\n.cancel-appointment__pop-up__btn.cancel[data-v-011dd09c]{\r\n        color: var(--theme-destructive-color);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.cancel-appointment__pop-up__btns[data-v-011dd09c]{\r\n        width: 100%;\r\n        height: 40px;\r\n        display: flex;\r\n        align-items: center;\r\n        gap: 8px;\n}\n.cancel-appointment__pop-up__btn[data-v-011dd09c]{\r\n        width: 50%;\r\n        height: 100%;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-align: center;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        background: var(--theme-secondary-bg-color);\r\n        border-radius: 8px;\r\n\r\n        cursor: pointer;\n}\n.cancel-appointment__pop-up__btn.cancel[data-v-011dd09c]{\r\n        color: var(--theme-destructive-color);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -23767,7 +23814,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.reminder-accordion[data-v-083031ca]{\r\n        flex-grow: 1; \r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-accordion .container[data-v-083031ca]{\r\n        flex-grow: 1;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-accordion__list[data-v-083031ca]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        flex-grow: 1;\n}\n.reminder-accordion__item__title[data-v-083031ca]{\r\n        position: relative;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 24px;\r\n        font-weight: 400;\r\n        line-height: 27.16px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        padding: 10px 0;\r\n        cursor: pointer;\n}\n.reminder-accordion__item__reminder-list[data-v-083031ca]{\r\n        padding: 8px 0;\r\n        display: none;\r\n        flex-direction: column;\n}\n.reminder-item[data-v-083031ca]{\r\n        padding: 12px;\r\n        display: flex;\r\n        flex-direction: column;\r\n\r\n        cursor: pointer;\r\n        margin-bottom: 8px;\r\n\r\n        color: var(--theme-text-color-black);\n}\n.reminder-item__header[data-v-083031ca]{\r\n        display: flex;\r\n        align-items: center;\r\n        margin-bottom: 8px;\n}\n.reminder-item__header__service-img[data-v-083031ca] {\r\n        width: 30px;\r\n        height: 30px;\r\n        border-radius: 50%;\r\n        overflow: hidden;\r\n        margin-right: 7px;\r\n        display: flex; \r\n        align-items: center; \r\n        justify-content: center; \r\n        background-color: #f0f0f0; /* Цвет фона для случаев, если изображение не загрузится */\n}\n.reminder-item__header__service-img-img[data-v-083031ca] {\r\n        width: 100%; \r\n        height: 100%; \r\n        -o-object-fit: cover; \r\n           object-fit: cover;\n}\n.reminder-item__header__service-name[data-v-083031ca]{\r\n        display: flex;\r\n        justify-content: start;\r\n        align-items: center;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\n.reminder-item__service-content[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        margin-bottom: 12px;\n}\n.reminder-item__service-time[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 13px;\r\n        font-weight: 400;\r\n        line-height: 14.71px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\nspan.service-time[data-v-083031ca]{\r\n        color: var(--theme-text-color-gray);\n}\n.reminder-accordion__item.later .reminder-accordion__item__title[data-v-083031ca] {\r\n        color: var(--theme-text-color-gray);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.reminder-accordion[data-v-083031ca]{\r\n        flex-grow: 1; \r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-accordion .container[data-v-083031ca]{\r\n        flex-grow: 1;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-accordion__list[data-v-083031ca]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        flex-grow: 1;\n}\n.reminder-accordion__item__title[data-v-083031ca]{\r\n        position: relative;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 24px;\r\n        font-weight: 400;\r\n        line-height: 27.16px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        padding: 10px 0;\r\n        cursor: pointer;\n}\n.reminder-accordion__item__reminder-list[data-v-083031ca]{\r\n        padding: 8px 0;\r\n        display: none;\r\n        flex-direction: column;\n}\n.reminder-item[data-v-083031ca]{\r\n        padding: 12px;\r\n        display: flex;\r\n        flex-direction: column;\r\n\r\n        cursor: pointer;\r\n        margin-bottom: 8px;\r\n        background: #ffffff;\r\n        border-radius: 12px;\r\n\r\n        color: var(--theme-text-color-black);\n}\n.reminder-item__header[data-v-083031ca]{\r\n        display: flex;\r\n        align-items: center;\r\n        margin-bottom: 8px;\n}\n.reminder-item__header__service-img[data-v-083031ca] {\r\n        width: 30px;\r\n        height: 30px;\r\n        border-radius: 50%;\r\n        overflow: hidden;\r\n        margin-right: 7px;\r\n        display: flex; \r\n        align-items: center; \r\n        justify-content: center; \r\n        background-color: #f0f0f0; /* Цвет фона для случаев, если изображение не загрузится */\n}\n.reminder-item__header__service-img-img[data-v-083031ca] {\r\n        width: 100%; \r\n        height: 100%; \r\n        -o-object-fit: cover; \r\n           object-fit: cover;\n}\n.reminder-item__header__service-name[data-v-083031ca]{\r\n        display: flex;\r\n        justify-content: start;\r\n        align-items: center;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\n.reminder-item__service-content[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        margin-bottom: 12px;\n}\n.reminder-item__service-time[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 13px;\r\n        font-weight: 400;\r\n        line-height: 14.71px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\nspan.service-time[data-v-083031ca]{\r\n        color: var(--theme-text-color-gray);\n}\n.reminder-accordion__item.later .reminder-accordion__item__title[data-v-083031ca] {\r\n        color: var(--theme-text-color-gray);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -23839,7 +23886,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.reminder-item__wrapper[data-v-67274c32]{\r\n        padding: 12px 0;\r\n        flex-grow: 1; /* Занимаем оставшееся пространство после Header и Services */\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-item__wrapper .container[data-v-67274c32]{\r\n        flex-grow: 1;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-item[data-v-67274c32]{\r\n        flex-grow: 1; /* Растягиваем reminder-item внутри wrapper */\r\n        padding: 22px 16px;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-item__header[data-v-67274c32]{\r\n        display: flex;\r\n        justify-content: start;\r\n        align-items: start;\r\n        margin-bottom: 34px;\n}\n.reminder-item__back-arrow[data-v-67274c32]{\r\n        width: 6px;\r\n        height: 30px;\r\n        cursor: pointer;\r\n        margin-right: 12px;\n}\n.reminder-item__service-content[data-v-67274c32]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 24px;\r\n        font-weight: 400;\r\n        line-height: 27.16px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\n.reminder-item__service-info[data-v-67274c32]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        margin-bottom: 24px;\n}\n.reminder-item__service-info-item+.reminder-item__service-info-item[data-v-67274c32]{\r\n        margin-top: 12px;\n}\nspan.service-info-title-span[data-v-67274c32]{\r\n        color: var(--theme-text-color-gray);\n}\n.set-route[data-v-67274c32]{\r\n        padding: 10px 24px;\r\n        text-decoration: none;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: rgba(0, 122, 255, 1);\r\n\r\n        margin-bottom: 24px;\n}\n.reminder-item__settings[data-v-67274c32]{\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-item__settings-item[data-v-67274c32]{\r\n        display: flex;\r\n        align-items: center;\n}\n.reminder-item__settings-item+.reminder-item__settings-item[data-v-67274c32]{\r\n        margin-top: 18px;\n}\n.reminder-item__settings-img[data-v-67274c32]{\r\n        width: 20px;\r\n        height: 20px;\r\n        margin-right: 6px;\n}\n.reminder-item__settings-info[data-v-67274c32]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: var(--theme-text-color-gray);\n}\n.reminder-btns[data-v-67274c32]{\r\n        width: 100%;\r\n        height: 44px;\r\n        display: flex;\r\n        align-items: center;\r\n        gap: 12px;\n}\n.reminder-btn[data-v-67274c32]{\r\n        width: 50%;\r\n        height: 100%;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: center;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: var(--theme-text-color-black);\r\n\r\n        cursor: pointer;\n}\n.reminder-btn.cancel[data-v-67274c32]{\r\n        color: rgba(255, 59, 48, 1);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.reminder-item__wrapper[data-v-67274c32]{\r\n        padding: 12px 0;\r\n        flex-grow: 1; /* Занимаем оставшееся пространство после Header и Services */\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-item__wrapper .container[data-v-67274c32]{\r\n        flex-grow: 1;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-item[data-v-67274c32]{\r\n        border-radius: 12px;\r\n        flex-grow: 1; /* Растягиваем reminder-item внутри wrapper */\r\n        padding: 22px 0;\r\n        display: flex;\r\n        flex-direction: column;\r\n\r\n        margin-bottom: 12px;\n}\n.reminder-item__header[data-v-67274c32]{\r\n        display: flex;\r\n        justify-content: start;\r\n        align-items: start;\r\n        margin-bottom: 34px;\n}\n.reminder-item__back-arrow[data-v-67274c32]{\r\n        width: 6px;\r\n        height: 30px;\r\n        cursor: pointer;\r\n        margin-right: 12px;\n}\n.reminder-item__service-content[data-v-67274c32]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 24px;\r\n        font-weight: 400;\r\n        line-height: 27.16px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\n.reminder-item__service-info[data-v-67274c32]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        margin-bottom: 24px;\n}\n.reminder-item__service-info-item+.reminder-item__service-info-item[data-v-67274c32]{\r\n        margin-top: 12px;\n}\nspan.service-info-title-span[data-v-67274c32]{\r\n        color: var(--theme-text-color-gray);\n}\n.set-route[data-v-67274c32]{\r\n        padding: 10px 24px;\r\n        text-decoration: none;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: rgba(0, 122, 255, 1);\r\n\r\n        width: -moz-fit-content;\r\n\r\n        width: fit-content;\r\n        background: var(--theme-bg-color-white);\r\n        border-radius: 12px;\r\n\r\n        margin-bottom: 24px;\n}\n.reminder-item__settings[data-v-67274c32]{\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-item__settings-item[data-v-67274c32]{\r\n        display: flex;\r\n        align-items: center;\n}\n.reminder-item__settings-item+.reminder-item__settings-item[data-v-67274c32]{\r\n        margin-top: 18px;\n}\n.reminder-item__settings-img[data-v-67274c32]{\r\n        width: 20px;\r\n        height: 20px;\r\n        margin-right: 6px;\n}\n.reminder-item__settings-info[data-v-67274c32]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: var(--theme-text-color-gray);\n}\n.reminder-btns__wrapper[data-v-67274c32]{\r\n        position: fixed;\r\n        left: 0;\r\n        right: 0;\r\n        bottom: 0;\r\n        padding: 20px 16px;\r\n        margin: 0 auto;\r\n\r\n        background: #EFEFF3;\n}\n.reminder-btns[data-v-67274c32]{\r\n        width: 100%;\r\n        height: 44px;\r\n        display: flex;\r\n        align-items: center;\r\n        gap: 12px;\r\n\r\n        /* margin-bottom: 20px; */\n}\n.reminder-btn[data-v-67274c32]{\r\n        width: 50%;\r\n        height: 100%;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: center;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: var(--theme-text-color-black);\r\n        background: #FFFFFF;\r\n        border-radius: 12px;\r\n\r\n        cursor: pointer;\n}\n.reminder-btn.cancel[data-v-67274c32]{\r\n        color: rgba(255, 59, 48, 1);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -23863,31 +23910,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.services-list[data-v-30b0c6c9]{\r\n        padding: 14px 0;\r\n        display: flex;\r\n\r\n        width: 100%;\r\n\r\n        overflow-x: auto;\r\n        overflow-y: hidden;\r\n\r\n        scroll-behavior: smooth;\r\n\r\n        /* Скрываем скроллбар */\r\n        -ms-overflow-style: none; /* IE and Edge */\r\n        scrollbar-width: none; /* Firefox */\n}\n.services-list[data-v-30b0c6c9]::-webkit-scrollbar {\r\n        display: none; /* Chrome, Safari, Opera */\n}\n.services-list__item[data-v-30b0c6c9]{\r\n        position: relative;\r\n        width: 75px;\r\n        display: flex;\r\n        flex-direction: column;\r\n        align-items: center;\r\n        margin-right: 12px;\r\n        flex-shrink: 0;\n}\r\n    /* .services-list__item__img,\r\n    .services-list__item__img-img{\r\n        width: 64px;\r\n        height: 64px;\r\n    }\r\n    .services-list__item__img{\r\n        border-radius: 50%;\r\n        overflow: hidden;\r\n        margin-bottom: 8px;\r\n    } */\n.services-list__item__img[data-v-30b0c6c9] {\r\n        position: relative;\r\n        width: 64px;\r\n        height: 64px;\r\n        border-radius: 50%;\r\n        overflow: hidden;\r\n        margin-bottom: 8px;\r\n        display: flex; \r\n        align-items: center; \r\n        justify-content: center; \r\n        background-color: #f0f0f0; /* Цвет фона для случаев, если изображение не загрузится */\n}\n.services-list__item__img-img[data-v-30b0c6c9] {\r\n        width: 100%; \r\n        height: 100%; \r\n        -o-object-fit: cover; \r\n           object-fit: cover;\n}\n.services-list__item__name[data-v-30b0c6c9]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 13px;\r\n        font-weight: 400;\r\n        line-height: 14.71px;\r\n        text-align: center;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\r\n", ""]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Services.vue?vue&type=style&index=1&id=30b0c6c9&scoped=true&lang=css":
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Services.vue?vue&type=style&index=1&id=30b0c6c9&scoped=true&lang=css ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
-// Imports
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.services-list__item[data-v-30b0c6c9]::after{\r\n        content: '';\r\n        display: block;\r\n        width: 10px;\r\n        height: 10px;\r\n        border-radius: 50%;\r\n        position: absolute;\r\n        top: 0;\r\n        right: 5px;\n}\n.services-list__item.today[data-v-30b0c6c9]::after{\r\n        background: var(--theme-indicator-color-today);\n}\n.services-list__item.tomorrow[data-v-30b0c6c9]::after{\r\n        background: var(--theme-indicator-color-tomorrow);\n}\n.services-list__item.later[data-v-30b0c6c9]::after{\r\n        background: var(--theme-indicator-color-later);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\r\n/* Основной контейнер */\n.services[data-v-30b0c6c9] {\r\n    padding: 14px 0;\n}\n.services .container[data-v-30b0c6c9] {\r\n    position: relative;\r\n    width: 100%;\r\n    display: flex;\r\n    justify-content: center;\r\n    padding: 0;\n}\r\n\r\n/* Обертка для маскирования краев */\n.services-wrapper[data-v-30b0c6c9] {\r\n    position: relative;\r\n    width: 100%;\r\n    overflow: hidden; /* Маскируем края */\n}\r\n\r\n/* Список сервисов */\n.services-list[data-v-30b0c6c9] {\r\n    display: flex;\r\n    padding: 14px 0;\r\n    overflow-x: auto;\r\n    overflow-y: hidden;\r\n    scroll-behavior: smooth;\r\n    -ms-overflow-style: none; /* IE и Edge */\r\n    scrollbar-width: none; /* Firefox */\r\n    padding: 0 16px;\n}\n.services-list[data-v-30b0c6c9]::-webkit-scrollbar {\r\n    display: none; /* Chrome, Safari, Opera */\n}\r\n\r\n/* Элемент слайдера */\n.services-list__item[data-v-30b0c6c9] {\r\n    position: relative;\r\n    width: 75px;\r\n    flex-shrink: 0;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    margin-right: 12px;\n}\n.services-list__item[data-v-30b0c6c9]:last-child {\r\n    margin-right: 0;\n}\n.services-list__item__img[data-v-30b0c6c9] {\r\n    position: relative;\r\n    width: 64px;\r\n    height: 64px;\r\n    border-radius: 50%;\r\n    overflow: hidden;\r\n    margin-bottom: 8px;\r\n    display: flex; \r\n    align-items: center; \r\n    justify-content: center; \r\n    background-color: #f0f0f0; /* Цвет фона для случаев, если изображение не загрузится */\n}\n.services-list__item__img-img[data-v-30b0c6c9] {\r\n    width: 100%; \r\n    height: 100%; \r\n    -o-object-fit: cover; \r\n       object-fit: cover;\n}\n.services-list__item__name[data-v-30b0c6c9] {\r\n    font-family: Microsoft Sans Serif;\r\n    font-size: 13px;\r\n    font-weight: 400;\r\n    line-height: 14.71px;\r\n    text-align: center;\r\n    text-underline-position: from-font;\r\n    -webkit-text-decoration-skip-ink: none;\r\n            text-decoration-skip-ink: none;\n}\r\n\r\n/* Индикаторы дат */\n.services-list__item[data-v-30b0c6c9]::after {\r\n    content: '';\r\n    display: block;\r\n    width: 10px;\r\n    height: 10px;\r\n    border-radius: 50%;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 5px;\n}\n.services-list__item.today[data-v-30b0c6c9]::after {\r\n    background: var(--theme-indicator-color-today);\n}\n.services-list__item.tomorrow[data-v-30b0c6c9]::after {\r\n    background: var(--theme-indicator-color-tomorrow);\n}\n.services-list__item.later[data-v-30b0c6c9]::after {\r\n    background: var(--theme-indicator-color-later);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -41764,6 +41787,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/CalendarContent.vue?vue&type=style&index=6&id=ac8f9380&scoped=true&lang=css":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/CalendarContent.vue?vue&type=style&index=6&id=ac8f9380&scoped=true&lang=css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CalendarContent_vue_vue_type_style_index_6_id_ac8f9380_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CalendarContent.vue?vue&type=style&index=6&id=ac8f9380&scoped=true&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/CalendarContent.vue?vue&type=style&index=6&id=ac8f9380&scoped=true&lang=css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CalendarContent_vue_vue_type_style_index_6_id_ac8f9380_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CalendarContent_vue_vue_type_style_index_6_id_ac8f9380_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/CancelAppointmentPopUp.vue?vue&type=style&index=0&id=011dd09c&scoped=true&lang=css":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/CancelAppointmentPopUp.vue?vue&type=style&index=0&id=011dd09c&scoped=true&lang=css ***!
@@ -42001,36 +42054,6 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Services_vue_vue_type_style_index_0_id_30b0c6c9_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Services.vue?vue&type=style&index=1&id=30b0c6c9&scoped=true&lang=css":
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Services.vue?vue&type=style&index=1&id=30b0c6c9&scoped=true&lang=css ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Services_vue_vue_type_style_index_1_id_30b0c6c9_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Services.vue?vue&type=style&index=1&id=30b0c6c9&scoped=true&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Services.vue?vue&type=style&index=1&id=30b0c6c9&scoped=true&lang=css");
-
-            
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Services_vue_vue_type_style_index_1_id_30b0c6c9_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Services_vue_vue_type_style_index_1_id_30b0c6c9_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 
@@ -42472,7 +42495,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CalendarContent_vue_vue_type_style_index_3_id_ac8f9380_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./CalendarContent.vue?vue&type=style&index=3&id=ac8f9380&scoped=true&lang=css */ "./resources/js/components/CalendarContent.vue?vue&type=style&index=3&id=ac8f9380&scoped=true&lang=css");
 /* harmony import */ var _CalendarContent_vue_vue_type_style_index_4_id_ac8f9380_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CalendarContent.vue?vue&type=style&index=4&id=ac8f9380&scoped=true&lang=css */ "./resources/js/components/CalendarContent.vue?vue&type=style&index=4&id=ac8f9380&scoped=true&lang=css");
 /* harmony import */ var _CalendarContent_vue_vue_type_style_index_5_id_ac8f9380_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./CalendarContent.vue?vue&type=style&index=5&id=ac8f9380&scoped=true&lang=css */ "./resources/js/components/CalendarContent.vue?vue&type=style&index=5&id=ac8f9380&scoped=true&lang=css");
-/* harmony import */ var d_OpenServer_domains_Pulse_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var _CalendarContent_vue_vue_type_style_index_6_id_ac8f9380_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./CalendarContent.vue?vue&type=style&index=6&id=ac8f9380&scoped=true&lang=css */ "./resources/js/components/CalendarContent.vue?vue&type=style&index=6&id=ac8f9380&scoped=true&lang=css");
+/* harmony import */ var d_OpenServer_domains_Pulse_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -42485,7 +42509,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const __exports__ = /*#__PURE__*/(0,d_OpenServer_domains_Pulse_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_8__["default"])(_CalendarContent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_CalendarContent_vue_vue_type_template_id_ac8f9380_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-ac8f9380"],['__file',"resources/js/components/CalendarContent.vue"]])
+
+const __exports__ = /*#__PURE__*/(0,d_OpenServer_domains_Pulse_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_9__["default"])(_CalendarContent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_CalendarContent_vue_vue_type_template_id_ac8f9380_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-ac8f9380"],['__file',"resources/js/components/CalendarContent.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -42638,8 +42663,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Services_vue_vue_type_template_id_30b0c6c9_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Services.vue?vue&type=template&id=30b0c6c9&scoped=true */ "./resources/js/components/Services.vue?vue&type=template&id=30b0c6c9&scoped=true");
 /* harmony import */ var _Services_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Services.vue?vue&type=script&lang=js */ "./resources/js/components/Services.vue?vue&type=script&lang=js");
 /* harmony import */ var _Services_vue_vue_type_style_index_0_id_30b0c6c9_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Services.vue?vue&type=style&index=0&id=30b0c6c9&scoped=true&lang=css */ "./resources/js/components/Services.vue?vue&type=style&index=0&id=30b0c6c9&scoped=true&lang=css");
-/* harmony import */ var _Services_vue_vue_type_style_index_1_id_30b0c6c9_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Services.vue?vue&type=style&index=1&id=30b0c6c9&scoped=true&lang=css */ "./resources/js/components/Services.vue?vue&type=style&index=1&id=30b0c6c9&scoped=true&lang=css");
-/* harmony import */ var d_OpenServer_domains_Pulse_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var d_OpenServer_domains_Pulse_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
@@ -42647,8 +42671,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-
-const __exports__ = /*#__PURE__*/(0,d_OpenServer_domains_Pulse_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_4__["default"])(_Services_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Services_vue_vue_type_template_id_30b0c6c9_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-30b0c6c9"],['__file',"resources/js/components/Services.vue"]])
+const __exports__ = /*#__PURE__*/(0,d_OpenServer_domains_Pulse_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_Services_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Services_vue_vue_type_template_id_30b0c6c9_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-30b0c6c9"],['__file',"resources/js/components/Services.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -43148,6 +43171,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/CalendarContent.vue?vue&type=style&index=6&id=ac8f9380&scoped=true&lang=css":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/CalendarContent.vue?vue&type=style&index=6&id=ac8f9380&scoped=true&lang=css ***!
+  \*************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CalendarContent_vue_vue_type_style_index_6_id_ac8f9380_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CalendarContent.vue?vue&type=style&index=6&id=ac8f9380&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/CalendarContent.vue?vue&type=style&index=6&id=ac8f9380&scoped=true&lang=css");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/CancelAppointmentPopUp.vue?vue&type=style&index=0&id=011dd09c&scoped=true&lang=css":
 /*!********************************************************************************************************************!*\
   !*** ./resources/js/components/CancelAppointmentPopUp.vue?vue&type=style&index=0&id=011dd09c&scoped=true&lang=css ***!
@@ -43248,19 +43284,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Services_vue_vue_type_style_index_0_id_30b0c6c9_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Services.vue?vue&type=style&index=0&id=30b0c6c9&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Services.vue?vue&type=style&index=0&id=30b0c6c9&scoped=true&lang=css");
-
-
-/***/ }),
-
-/***/ "./resources/js/components/Services.vue?vue&type=style&index=1&id=30b0c6c9&scoped=true&lang=css":
-/*!******************************************************************************************************!*\
-  !*** ./resources/js/components/Services.vue?vue&type=style&index=1&id=30b0c6c9&scoped=true&lang=css ***!
-  \******************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Services_vue_vue_type_style_index_1_id_30b0c6c9_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Services.vue?vue&type=style&index=1&id=30b0c6c9&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Services.vue?vue&type=style&index=1&id=30b0c6c9&scoped=true&lang=css");
 
 
 /***/ }),

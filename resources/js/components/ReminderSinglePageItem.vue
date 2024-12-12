@@ -57,13 +57,15 @@
 
             </div>
 
-            <div class="reminder-btns">
-                <div class="reminder-btn cancel" @click="showCancelPopUp">
-                    Отменить
+            <div class="reminder-btns__wrapper">
+                <div class="reminder-btns">
+                    <div class="reminder-btn cancel" @click="showCancelPopUp">
+                        Отменить
+                    </div>
+                    <router-link :to="{name: 'calendar-page'}" class="reminder-btn reschedule">
+                        Перенести
+                    </router-link>
                 </div>
-                <router-link :to="{name: 'calendar-page'}" class="reminder-btn reschedule">
-                    Перенести
-                </router-link>
             </div>
         </div>
     </div>
@@ -101,10 +103,13 @@ export default {
         flex-direction: column;
     }
     .reminder-item{
+        border-radius: 12px;
         flex-grow: 1; /* Растягиваем reminder-item внутри wrapper */
-        padding: 22px 16px;
+        padding: 22px 0;
         display: flex;
         flex-direction: column;
+
+        margin-bottom: 12px;
     }
 
     .reminder-item__header{
@@ -161,6 +166,10 @@ export default {
         text-decoration-skip-ink: none;
         color: rgba(0, 122, 255, 1);
 
+        width: fit-content;
+        background: var(--theme-bg-color-white);
+        border-radius: 12px;
+
         margin-bottom: 24px;
     }
     
@@ -194,12 +203,25 @@ export default {
 
     }
 
+    .reminder-btns__wrapper{
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 20px 16px;
+        margin: 0 auto;
+
+        background: #EFEFF3;
+    }
+
     .reminder-btns{
         width: 100%;
         height: 44px;
         display: flex;
         align-items: center;
         gap: 12px;
+
+        /* margin-bottom: 20px; */
     }
 
     .reminder-btn{
@@ -218,6 +240,8 @@ export default {
         text-underline-position: from-font;
         text-decoration-skip-ink: none;
         color: var(--theme-text-color-black);
+        background: #FFFFFF;
+        border-radius: 12px;
 
         cursor: pointer;
     }

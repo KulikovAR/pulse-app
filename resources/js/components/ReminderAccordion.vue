@@ -263,6 +263,8 @@ export default {
 
         cursor: pointer;
         margin-bottom: 8px;
+        background: #ffffff;
+        border-radius: 12px;
 
         color: var(--theme-text-color-black);
     }

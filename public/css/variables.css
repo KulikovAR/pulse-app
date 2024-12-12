@@ -7,6 +7,7 @@
     --theme-accent-color-blue: rgba(51, 144, 236, 1);
     --theme-text-color-gray: rgba(112, 117, 121, 1);
     --theme-destructive-color: rgba(225, 69, 53, 1);
+    --theme-secondary-bg-color: rgba(244, 244, 245, 1);
 
     --theme-indicator-color-today: rgba(255, 146, 2, 1);
     --theme-indicator-color-tomorrow: rgba(50, 173, 230, 1);

@@ -1,11 +1,24 @@
 <template>
-    <router-view></router-view>
+    <router-view />
 </template>
-
+  
 <script>
 
 
 export default {
-    name: 'App'
+    name: 'App',
+    mounted() {
+        const telegram = window.Telegram.WebApp;
+        telegram.ready();
+
+        // Включаем кнопку "Назад"
+        telegram.BackButton.show();
+
+        // Устанавливаем обработчик для нажатия на кнопку "Назад"
+        telegram.BackButton.onClick(() => {
+        // Ваша логика при нажатии кнопки "Назад"
+            this.$router.go(-1);
+        });
+    }
 };
 </script>

@@ -139,6 +139,8 @@ export default {
         text-underline-position: from-font;
         text-decoration-skip-ink: none;
 
+        background: var(--theme-secondary-bg-color);
+        border-radius: 8px;
 
         cursor: pointer;
     }

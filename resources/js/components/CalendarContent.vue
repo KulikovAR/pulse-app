@@ -101,9 +101,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="selected-day__reschedule-btn" @click="reschedule">
-                        Перенести
+
+
+                    <div class="selected-day__reschedule-btn-wrapper">
+                        <div class="selected-day__reschedule-btn" @click="reschedule">
+                            Перенести 
+                        </div>
                     </div>
+
                 </div>
 
                 <!-- Блок отсутствия расписания -->
@@ -311,8 +316,9 @@ export default {
     }
   
     .calendar__day.today {
-        font-weight: bold;
-        border: 1px solid var(--theme-accent-color-blue);
+        /* font-weight: bold; */
+        /* border: 1px solid var(--theme-accent-color-blue); */
+        background: #F8F8F8;
     }
     
     .calendar-month__arrow.disabled {
@@ -332,6 +338,7 @@ export default {
     .calendar__title-days{
         width: 100%;
         display: flex;
+        justify-content: space-between;
         gap: 8px;
         height: 32px;
         font-family: Microsoft Sans Serif;
@@ -352,6 +359,7 @@ export default {
     .calendar__days{
         width: 100%;
         display: flex;
+        justify-content: space-between;
         flex-wrap: wrap;
         gap: 8px;
         font-family: Microsoft Sans Serif;
@@ -370,6 +378,8 @@ export default {
         align-items: center;
         margin-bottom: 4px;
         border-radius: 12px;
+
+        cursor: pointer;
     }
 
     .calendar__day.active{
@@ -389,6 +399,7 @@ export default {
     .calendar-month__arrow{
         width: 30px;
         height: 30px;
+        cursor: pointer;
     }
 </style>
 
@@ -512,6 +523,8 @@ export default {
         background: var(--theme-accent-color-blue);
         color: var(--theme-bg-color-white);
         margin-bottom: 12px;
+
+        cursor: pointer;
     }
 
     .selected-day__time-division.evening{
@@ -581,5 +594,32 @@ export default {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
+        margin-bottom: 84px;
+    }
+</style>
+
+<style scoped>
+    .fixed {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 20px;
+        margin: 0 16px;
+        width: calc(100% - 16px * 2);
+        z-index: 100;
+    }
+    .selected-day__reschedule-btn-wrapper{
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0 auto;
+        z-index: 200;
+        background: #EFEFF3;
+        padding: 20px 16px;
+        max-width: 400px;
+    }
+    .selected-day__reschedule-btn{
+        margin-bottom: 0;
     }
 </style>

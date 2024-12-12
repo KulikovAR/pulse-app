@@ -1,13 +1,26 @@
 <template>
     <div class="services">
         <div class="container">
-            <div class="services-list">
-                <div v-for="(item,index) in this.services" :key="index" class="services-list__item" :class="(item.day == 'today')? 'today': (item.day == 'tomorrow')? 'tomorrow': (item.day == 'later')? 'later': ''">
-                    <div class="services-list__item__img">
-                        <img class="services-list__item__img-img" :src=item.img :alt="item.name" @error="setFallbackImage(index)">
-                    </div>
-                    <div class="services-list__item__name">
-                        {{item.name}}
+            <!-- Оболочка для маскирования краев -->
+            <div class="services-wrapper">
+                <div class="services-list">
+                    <div
+                        v-for="(item, index) in this.services"
+                        :key="index"
+                        class="services-list__item"
+                        :class="(item.day == 'today') ? 'today' : (item.day == 'tomorrow') ? 'tomorrow' : (item.day == 'later') ? 'later' : ''"
+                    >
+                        <div class="services-list__item__img">
+                            <img
+                                class="services-list__item__img-img"
+                                :src="item.img"
+                                :alt="item.name"
+                                @error="setFallbackImage(index)"
+                            />
+                        </div>
+                        <div class="services-list__item__name">
+                            {{ item.name }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -18,8 +31,8 @@
 <script>
 export default {
     name: 'Services',
-    data(){
-        return{
+    data() {
+        return {
             services: [
                 {   
                     id: 1,
@@ -107,10 +120,9 @@ export default {
                     service_service: "Установка правой фары",
                     date_time: "2024-12-14T13:05:00.000Z"
                 },
-                
             ],
             fallbackImage: "/images/logo.svg",
-        }
+        };
     },
     mounted() {
         const container = this.$el.querySelector('.services-list');
@@ -130,7 +142,7 @@ export default {
             this.services[index].img = this.fallbackImage;
         },
 
-        remindersIndicatorDistribution(){
+        remindersIndicatorDistribution() {
             const now = new Date();
             const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
             const startOfTomorrow = new Date(startOfToday);
@@ -171,96 +183,111 @@ export default {
                 }
             });
         },
-    }
-}
+    },
+};
 </script>
 
 <style scoped>
-    .services-list{
-        padding: 14px 0;
-        display: flex;
+/* Основной контейнер */
+.services {
+    padding: 14px 0;
+}
 
-        width: 100%;
+.services .container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
 
-        overflow-x: auto;
-        overflow-y: hidden;
+/* Обертка для маскирования краев */
+.services-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden; /* Маскируем края */
+}
 
-        scroll-behavior: smooth;
+/* Список сервисов */
+.services-list {
+    display: flex;
+    padding: 14px 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none; /* IE и Edge */
+    scrollbar-width: none; /* Firefox */
+    padding: 0 16px;
+}
 
-        /* Скрываем скроллбар */
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
-    }
-    .services-list::-webkit-scrollbar {
-        display: none; /* Chrome, Safari, Opera */
-    }
-    .services-list__item{
-        position: relative;
-        width: 75px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-right: 12px;
-        flex-shrink: 0;
-    }
-    /* .services-list__item__img,
-    .services-list__item__img-img{
-        width: 64px;
-        height: 64px;
-    }
-    .services-list__item__img{
-        border-radius: 50%;
-        overflow: hidden;
-        margin-bottom: 8px;
-    } */
-    .services-list__item__img {
-        position: relative;
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        overflow: hidden;
-        margin-bottom: 8px;
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        background-color: #f0f0f0; /* Цвет фона для случаев, если изображение не загрузится */
-    }
+.services-list::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
 
-    .services-list__item__img-img {
-        width: 100%; 
-        height: 100%; 
-        object-fit: cover; 
-    }
-    .services-list__item__name{
-        font-family: Microsoft Sans Serif;
-        font-size: 13px;
-        font-weight: 400;
-        line-height: 14.71px;
-        text-align: center;
-        text-underline-position: from-font;
-        text-decoration-skip-ink: none;
+/* Элемент слайдера */
+.services-list__item {
+    position: relative;
+    width: 75px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 12px;
+}
+.services-list__item:last-child {
+    margin-right: 0;
+}
 
-    }
-</style>
+.services-list__item__img {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 8px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    background-color: #f0f0f0; /* Цвет фона для случаев, если изображение не загрузится */
+}
 
-<style scoped>
-    .services-list__item::after{
-        content: '';
-        display: block;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        position: absolute;
-        top: 0;
-        right: 5px;
-    }
-    .services-list__item.today::after{
-        background: var(--theme-indicator-color-today);
-    }
-    .services-list__item.tomorrow::after{
-        background: var(--theme-indicator-color-tomorrow);
-    }
-    .services-list__item.later::after{
-        background: var(--theme-indicator-color-later);
-    }
+.services-list__item__img-img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+
+.services-list__item__name {
+    font-family: Microsoft Sans Serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 14.71px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+/* Индикаторы дат */
+.services-list__item::after {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 5px;
+}
+
+.services-list__item.today::after {
+    background: var(--theme-indicator-color-today);
+}
+
+.services-list__item.tomorrow::after {
+    background: var(--theme-indicator-color-tomorrow);
+}
+
+.services-list__item.later::after {
+    background: var(--theme-indicator-color-later);
+}
 </style>
