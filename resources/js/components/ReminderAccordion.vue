@@ -8,20 +8,25 @@
                         СЕГОДНЯ
                     </div>
                     <div class="reminder-accordion__item__reminder-list">
-                        <router-link :to="{ name:'reminder-page' }" v-for="(item,index) in this.remindersToday" :key="index" class="reminder-item">
+                        <router-link v-for="(item,index) in this.remindersToday" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" class="reminder-item">
                             <div class="reminder-item__header">
-                                <div class="reminder-item__header__service-img">
-                                    <img class="reminder-item__header__service-img-img" :src="item.service_img" :alt=item.service_name>
+                                <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
+                                    <template v-if="item.company.image">
+                                        <img class="reminder-item__header__service-img-img" :src="item.company.image" alt="" />
+                                    </template>
+                                    <template v-else>
+                                        <span class="avatar-letter">{{ item.company.name.charAt(0).toUpperCase() }}</span>
+                                    </template>
                                 </div>
                                 <div class="reminder-item__header__service-name">
-                                    {{item.service_name}}
+                                    {{item.company.name}}
                                 </div>
                             </div>
                             <div class="reminder-item__service-content">
-                                {{item.service_service}}
+                                {{formatServiceNames(item.services)}}
                             </div>
                             <div class="reminder-item__service-time">
-                                <span class="service-time">Время: </span> {{this.getServiceTime(item.date_time)}}
+                                <span class="service-time">Время: </span> {{this.getServiceTime(item.event_time)}}
                             </div>
                         </router-link>
 
@@ -33,20 +38,25 @@
                         ЗАВТРА
                     </div>
                     <div class="reminder-accordion__item__reminder-list">
-                        <router-link :to="{ name:'reminder-page' }" v-for="(item,index) in this.remindersTomorrow" :key="index" class="reminder-item">
+                        <router-link v-for="(item,index) in this.remindersTomorrow" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" class="reminder-item">
                             <div class="reminder-item__header">
-                                <div class="reminder-item__header__service-img">
-                                    <img class="reminder-item__header__service-img-img" :src="item.service_img" :alt=item.service_name>
+                                <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
+                                    <template v-if="item.company.image">
+                                        <img class="reminder-item__header__service-img-img" :src="item.company.image" alt="" />
+                                    </template>
+                                    <template v-else>
+                                        <span class="avatar-letter">{{ item.company.name.charAt(0).toUpperCase() }}</span>
+                                    </template>
                                 </div>
                                 <div class="reminder-item__header__service-name">
-                                    {{item.service_name}}
+                                    {{item.company.name}}
                                 </div>
                             </div>
                             <div class="reminder-item__service-content">
-                                {{item.service_service}}
+                                {{formatServiceNames(item.services)}}
                             </div>
                             <div class="reminder-item__service-time">
-                                <span class="service-time">Время: </span> {{this.getServiceTime(item.date_time)}}
+                                <span class="service-time">Время: </span> {{this.getServiceTime(item.event_time)}}
                             </div>
                         </router-link>
 
@@ -58,20 +68,25 @@
                         ПОТОМ
                     </div>
                     <div class="reminder-accordion__item__reminder-list">
-                        <router-link :to="{ name:'reminder-page' }" v-for="(item,index) in this.remindersLater" :key="index" class="reminder-item">
+                        <router-link v-for="(item,index) in this.remindersLater" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" class="reminder-item">
                             <div class="reminder-item__header">
-                                <div class="reminder-item__header__service-img">
-                                    <img class="reminder-item__header__service-img-img" :src="item.service_img" :alt=item.service_name>
+                                <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
+                                    <template v-if="item.company.image">
+                                        <img class="reminder-item__header__service-img-img" :src="item.company.image" alt="" />
+                                    </template>
+                                    <template v-else>
+                                        <span class="avatar-letter">{{ item.company.name.charAt(0).toUpperCase() }}</span>
+                                    </template>
                                 </div>
                                 <div class="reminder-item__header__service-name">
-                                    {{item.service_name}}
+                                    {{item.company.name}}
                                 </div>
                             </div>
                             <div class="reminder-item__service-content">
-                                {{item.service_service}}
+                                {{formatServiceNames(item.services)}}
                             </div>
                             <div class="reminder-item__service-time">
-                                <span class="service-time">Время: </span> {{this.getServiceTime(item.date_time)}}
+                                <span class="service-time">Время: </span> {{this.getServiceTime(item.event_time)}}
                             </div>
                         </router-link>
 
@@ -84,73 +99,29 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'ReminderAccordion',
     data(){
         return{
-            reminders: [
-                {
-                    id: 1,
-                    client_id: 1,
-                    service_id: 1,
-                    service_name: "Барбер-шоп",
-                    service_img: "/images/services/item-1.svg",
-                    service_service: "Стрижка волос, уход за бородой",
-                    date_time: "2024-12-12T18:00:00.000Z"
-                },
-                {
-                    id: 2,
-                    client_id: 1,
-                    service_id: 2,
-                    service_name: "Автосервис",
-                    service_img: "/images/services/item-1.svg",
-                    service_service: "Замена масла",
-                    date_time: "2024-12-12T19:15:00.000Z"
-                },
-                {
-                    id: 3,
-                    client_id: 1,
-                    service_id: 3,
-                    service_name: "Салон красоты",
-                    service_img: "/images/services/item-1.svg",
-                    service_service: "Укладка",
-                    date_time: "2024-12-12T20:30:00.000Z"
-                },
-                {
-                    id: 4,
-                    client_id: 1,
-                    service_id: 4,
-                    service_name: "Тренажерный зал",
-                    service_img: "/images/services/item-1.svg",
-                    service_service: "Занятие",
-                    date_time: "2024-12-13T07:45:00.000Z"
-                },
-                {
-                    id: 5,
-                    client_id: 1,
-                    service_id: 1,
-                    service_name: "Барбер-шоп",
-                    service_img: "/images/services/item-1.svg",
-                    service_service: "Завивка усов",
-                    date_time: "2024-12-13T11:40:00.000Z"
-                },
-                {
-                    id: 6,
-                    client_id: 1,
-                    service_id: 2,
-                    service_name: "Автосервис",
-                    service_img: "/images/services/item-1.svg",
-                    service_service: "Установка правой фары",
-                    date_time: "2024-12-14T13:05:00.000Z"
-                },
-                
-            ],
+            reminders: [],
             remindersToday: [],
             remindersTomorrow: [],
             remindersLater: [],
         }
     },
     methods: {
+        async fetchReminders() {
+            try {
+                const response = await axios.get('/events');
+                console.log(response);
+                this.reminders = response.data.data;
+                this.remindersDistribution();
+            } catch (error) {
+                console.error('Error fetching reminders:', error);
+            }
+        },
         toggleAccord(event){
             let node = event.target;
             while(!node.classList.contains('reminder-accordion__item__title')){
@@ -165,6 +136,22 @@ export default {
                 accord.classList.remove('active')
             });
             node.classList.add('active');
+        },
+        formatServiceNames(services) {
+            if (!services || !services.length) return '';
+            const serviceNames = services.map(service => service.name);
+            serviceNames[0] = serviceNames[0].charAt(0).toUpperCase() + serviceNames[0].slice(1);
+            return serviceNames.join(', ');
+        },
+        getAvatarColor(name) {
+            const colors = [
+                '#1abc9c', '#2ecc71', '#3498db', '#9b59b6', '#34495e',
+                '#16a085', '#27ae60', '#2980b9', '#8e44ad', '#2c3e50',
+                '#f1c40f', '#e67e22', '#e74c3c', '#95a5a6', '#f39c12',
+                '#d35400', '#c0392b', '#bdc3c7', '#7f8c8d'
+            ];
+            const charCode = name.charCodeAt(0);
+            return colors[charCode % colors.length];
         },
         remindersDistribution(){
             const now = new Date();
@@ -182,7 +169,8 @@ export default {
             // console.log('startOfDayAfterTomorrow: ',startOfDayAfterTomorrow);
 
             this.reminders.forEach((reminder)=>{
-                const reminderDate = new Date(reminder.date_time);
+                const originalReminderDate = new Date(reminder.event_time);
+                const reminderDate = new Date(originalReminderDate.getTime() - originalReminderDate.getTimezoneOffset() * 60000);
 
                 // console.log('now: ',now,' --- ', reminderDate);
                 // console.log(reminderDate.getHours());
@@ -198,7 +186,9 @@ export default {
         },
         getServiceTime(date_time){
 
-            const date = new Date(date_time);
+            const originalDate = new Date(date_time);
+
+            const date = new Date(originalDate.getTime() - originalDate.getTimezoneOffset() * 60000);
 
             // Извлекаем часы и минуты, добавляя ведущий ноль при необходимости
             const hours = String(date.getHours()).padStart(2, "0");
@@ -210,7 +200,7 @@ export default {
         }
     },
     mounted(){
-        this.remindersDistribution();
+        this.fetchReminders();
     }
 }
 </script>
@@ -365,5 +355,11 @@ export default {
     }
     .reminder-accordion__item.later .reminder-accordion__item__title::after{
         background: var(--theme-indicator-color-later);
+    }
+
+    .avatar-letter {
+        color: white;
+        font-size: 16px;
+        font-weight: 500;
     }
 </style>

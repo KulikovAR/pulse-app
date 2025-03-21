@@ -7,7 +7,7 @@
                         <img class="reminder-item__back-arrow" src="/images/reminder/back-arrow.svg" alt="">
                     </router-link>
                     <div class="reminder-item__service-content">
-                        Стрижка волос, уход за бородой
+                        {{ event ? formatServiceNames(event.services) : 'Loading...' }}
                     </div>
                 </div>
 
@@ -17,10 +17,10 @@
                             Время: 
                         </span>
                         <span class="service-info-content-span">
-                            11:00 
+                            {{ event ? getServiceTime(event.event_time) : 'Loading...' }}
                         </span>
                     </div>
-                    <div class="reminder-item__service-info-item address">
+                    <!-- <div class="reminder-item__service-info-item address">
                         <span class="service-info-title-span">
                             Адрес: 
                         </span>
@@ -35,10 +35,10 @@
                         <span class="service-info-content-span"> 
                             Никита
                         </span>
-                    </div>
+                    </div> -->
                 </div>
 
-                <a class="set-route" href="#">Проложить маршрут</a>
+                <!-- <a class="set-route" href="#">Проложить маршрут</a> -->
 
                 <div class="reminder-item__settings">
                     <div class="reminder-item__settings-item moment">
@@ -62,9 +62,6 @@
                     <div class="reminder-btn cancel" @click="showCancelPopUp">
                         Отменить
                     </div>
-                    <router-link :to="{name: 'calendar-page'}" class="reminder-btn reschedule">
-                        Перенести
-                    </router-link>
                 </div>
             </div>
         </div>
@@ -74,18 +71,49 @@
 <script>
 export default {
     name: 'ReminderSinglePageItem',
+    data() {
+        return {
+            event: null,
+            error: null
+        }
+    },
     methods: {
+        formatServiceNames(services) {
+            if (!services || !services.length) return '';
+            const serviceNames = services.map(service => service.name);
+            serviceNames[0] = serviceNames[0].charAt(0).toUpperCase() + serviceNames[0].slice(1);
+            return serviceNames.join(', ');
+        },
+        getServiceTime(date_time){
+            if (!date_time) return 'N/A';
+            const originalDate = new Date(date_time);
+            const date = new Date(originalDate.getTime() - originalDate.getTimezoneOffset() * 60000);
+            const hours = String(date.getHours()).padStart(2, "0");
+            const minutes = String(date.getMinutes()).padStart(2, "0");
+            return `${hours}:${minutes}`;
+        },
         showCancelPopUp(){
             this.$emit('showCancelPopUp');
         },
         cancel(){
-            //отменяем запись
-            
-            //для примера
             alert('Запись отменена');
-
-            
+        },
+        async fetchEventData() {
+            try {
+                if (!this.$route.params.id) {
+                    throw new Error('Event ID is missing');
+                }
+                const response = await axios.get(`/event/${this.$route.params.id}`);
+                this.event = response.data.data;
+            } catch (error) {
+                console.error('Error fetching event data:', error);
+                this.error = error.message;
+                this.$router.push({ name: 'main' });
+            }
         }
+    },
+    mounted() {
+        this.fetchEventData();
     }
 }
 </script>
@@ -105,11 +133,12 @@ export default {
     .reminder-item{
         border-radius: 12px;
         flex-grow: 1; /* Растягиваем reminder-item внутри wrapper */
-        padding: 22px 0;
         display: flex;
         flex-direction: column;
 
-        margin-bottom: 12px;
+        background: #fff;
+        padding: 22px 16px;
+        margin-bottom: 64px;
     }
 
     .reminder-item__header{
@@ -208,10 +237,12 @@ export default {
         left: 0;
         right: 0;
         bottom: 0;
-        padding: 20px 16px;
         margin: 0 auto;
 
         background: #EFEFF3;
+        padding: 12px 0 20px;
+        display: flex;
+        justify-content: center;
     }
 
     .reminder-btns{
@@ -222,10 +253,12 @@ export default {
         gap: 12px;
 
         /* margin-bottom: 20px; */
+        max-width: 400px;
+        padding: 0 16px;
     }
 
     .reminder-btn{
-        width: 50%;
+        width: 100%;
         height: 100%;
 
         display: flex;

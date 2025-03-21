@@ -382,13 +382,13 @@ export default {
         cursor: pointer;
     }
 
+    .calendar__day.empty{
+        color: var(--theme-text-color-gray);
+    }
+
     .calendar__day.active{
         background: var(--theme-accent-color-blue);
         color: var(--theme-bg-color-white);
-    }
-
-    .calendar__day.empty{
-        color: var(--theme-text-color-gray);
     }
 
     .calendar-month__arrows{

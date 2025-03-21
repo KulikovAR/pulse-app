@@ -10,14 +10,17 @@
                         class="services-list__item"
                         :class="(item.day == 'today') ? 'today' : (item.day == 'tomorrow') ? 'tomorrow' : (item.day == 'later') ? 'later' : ''"
                     >
-                        <div class="services-list__item__img">
-                            <img
-                                class="services-list__item__img-img"
-                                :src="item.img"
-                                :alt="item.name"
-                                @error="setFallbackImage(index)"
-                            />
+                        
+
+                        <div class="services-list__item__img" :style="{ backgroundColor: !item.image ? getAvatarColor(item.name) : 'transparent' }">
+                            <template v-if="item.image">
+                                <img class="services-list__item__img-img" :src="item.image" alt="" />
+                            </template>
+                            <template v-else>
+                                <span class="avatar-letter">{{ item.name.charAt(0).toUpperCase() }}</span>
+                            </template>
                         </div>
+
                         <div class="services-list__item__name">
                             {{ item.name }}
                         </div>
@@ -29,98 +32,13 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'Services',
     data() {
         return {
-            services: [
-                {   
-                    id: 1,
-                    img: "/images/services/item-1.svg",
-                    name: "Барбер-шоп"
-                },
-                {
-                    id: 2,
-                    img: "/images/services/item-2.jpg",
-                    name: "Автосервис"
-                },
-                {
-                    id: 3,
-                    img: "/images/services/item-3.svg",
-                    name: "Салон красоты"
-                },
-                {
-                    id: 4,
-                    img: "/images/services/item-1.svg",
-                    name: "Тренажерный зал"
-                },
-                {
-                    id: 5,
-                    img: "/images/services/item-1.svg",
-                    name: "Барбер-шоп2"
-                },
-                {
-                    id: 6,
-                    img: "/images/services/item-1.svg",
-                    name: "Барбер-шоп3"
-                },
-            ],
-            reminders: [
-                {
-                    id: 1,
-                    client_id: 1,
-                    service_id: 1,
-                    service_name: "Барбер-шоп",
-                    service_img: "/images/services/item-1.svg",
-                    service_service: "Стрижка волос, уход за бородой",
-                    date_time: "2024-12-12T18:00:00.000Z"
-                },
-                {
-                    id: 2,
-                    client_id: 1,
-                    service_id: 2,
-                    service_name: "Автосервис",
-                    service_img: "/images/services/item-1.svg",
-                    service_service: "Замена масла",
-                    date_time: "2024-12-12T19:15:00.000Z"
-                },
-                {
-                    id: 3,
-                    client_id: 1,
-                    service_id: 3,
-                    service_name: "Салон красоты",
-                    service_img: "/images/services/item-1.svg",
-                    service_service: "Укладка",
-                    date_time: "2024-12-12T20:30:00.000Z"
-                },
-                {
-                    id: 4,
-                    client_id: 1,
-                    service_id: 4,
-                    service_name: "Тренажерный зал",
-                    service_img: "/images/services/item-1.svg",
-                    service_service: "Занятие",
-                    date_time: "2024-12-13T07:45:00.000Z"
-                },
-                {
-                    id: 5,
-                    client_id: 1,
-                    service_id: 1,
-                    service_name: "Барбер-шоп",
-                    service_img: "/images/services/item-1.svg",
-                    service_service: "Завивка усов",
-                    date_time: "2024-12-13T11:40:00.000Z"
-                },
-                {
-                    id: 6,
-                    client_id: 1,
-                    service_id: 2,
-                    service_name: "Автосервис",
-                    service_img: "/images/services/item-1.svg",
-                    service_service: "Установка правой фары",
-                    date_time: "2024-12-14T13:05:00.000Z"
-                },
-            ],
+            services: [],
+            reminders: [],
             fallbackImage: "/images/logo.svg",
         };
     },
@@ -135,13 +53,41 @@ export default {
             });
         });
 
-        this.remindersIndicatorDistribution();
+        this.fetchServices();
+        this.fetchReminders();
     },
     methods: {
+        async fetchServices() {
+            try {
+                const response = await axios.get('/companies/client');
+                this.services = response.data.data;
+            } catch (error) {
+                console.error('Error fetching services:', error);
+            }
+        },
         setFallbackImage(index) {
             this.services[index].img = this.fallbackImage;
         },
+        getAvatarColor(name) {
+            const colors = [
+                '#1abc9c', '#2ecc71', '#3498db', '#9b59b6', '#34495e',
+                '#16a085', '#27ae60', '#2980b9', '#8e44ad', '#2c3e50',
+                '#f1c40f', '#e67e22', '#e74c3c', '#95a5a6', '#f39c12',
+                '#d35400', '#c0392b', '#bdc3c7', '#7f8c8d'
+            ];
+            const charCode = name.charCodeAt(0);
+            return colors[charCode % colors.length];
+        },
 
+        async fetchReminders() {
+            try {
+                const response = await axios.get('/events');
+                this.reminders = response.data.data;
+                this.remindersIndicatorDistribution();
+            } catch (error) {
+                console.error('Error fetching reminders:', error);
+            }
+        },
         remindersIndicatorDistribution() {
             const now = new Date();
             const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -157,7 +103,8 @@ export default {
 
             // Обходим напоминания и обновляем соответствующие сервисы
             this.reminders.forEach(reminder => {
-                const reminderDate = new Date(reminder.date_time);
+                const originalReminderDate = new Date(reminder.event_time);
+                const reminderDate = new Date(originalReminderDate.getTime() - originalReminderDate.getTimezoneOffset() * 60000);
                 let day = null;
 
                 if (reminderDate >= startOfToday && reminderDate < startOfTomorrow) {
@@ -169,7 +116,7 @@ export default {
                 }
 
                 if (day) {
-                    const service = this.services.find(service => service.id === reminder.service_id);
+                    const service = this.services.find(service => service.id === reminder.company_id);
                     if (service) {
                         // Устанавливаем day с учетом приоритета
                         if (
@@ -199,6 +146,8 @@ export default {
     display: flex;
     justify-content: center;
     padding: 0;
+    margin: 0;
+    max-width: unset;
 }
 
 /* Обертка для маскирования краев */
@@ -206,6 +155,7 @@ export default {
     position: relative;
     width: 100%;
     overflow: hidden; /* Маскируем края */
+    max-width: 500px;
 }
 
 /* Список сервисов */
@@ -277,6 +227,7 @@ export default {
     position: absolute;
     top: 0;
     right: 5px;
+    border: 2px solid #fff;
 }
 
 .services-list__item.today::after {
@@ -290,4 +241,10 @@ export default {
 .services-list__item.later::after {
     background: var(--theme-indicator-color-later);
 }
+
+.avatar-letter {
+        color: white;
+        font-size: 32px;
+        font-weight: 500;
+    }
 </style>

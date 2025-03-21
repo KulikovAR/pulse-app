@@ -46,6 +46,15 @@ export default {
         text-align: left;
         text-underline-position: from-font;
         text-decoration-skip-ink: none;
+        
+        color: #6D6EFF;
+
+        font-family: Inter;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 100%;
+        letter-spacing: -0.18px;
+        vertical-align: middle;
 
     }
 </style>

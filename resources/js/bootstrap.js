@@ -9,6 +9,27 @@ window._ = require('lodash');
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.baseURL = 'https://pulse-back.pisateli-studio.ru/api/v1';
+
+// Import telegramAuth service
+import { telegramAuth } from './services/auth';
+
+// Restore token from localStorage if it exists
+const token = localStorage.getItem('token');
+if (token) {
+    window.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+
+/**
+ * Initialize Telegram WebApp and attempt automatic authentication
+ */
+if (window.Telegram && window.Telegram.WebApp) {
+    window.Telegram.WebApp.ready();
+}
+// Attempt automatic authentication
+telegramAuth.login().catch(error => {
+    console.error('Automatic authentication failed:', error);
+});
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
