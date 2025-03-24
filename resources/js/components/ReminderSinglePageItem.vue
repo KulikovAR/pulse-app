@@ -1,7 +1,7 @@
 <template>
     <div class="reminder-item__wrapper">
         <div class="container">
-            <div class="reminder-item">
+            <div :class="['reminder-item', { 'canceled': event?.is_cancelled }]">
                 <div class="reminder-item__header">
                     <router-link :to="{ name:'main' }">
                         <img class="reminder-item__back-arrow" src="/images/reminder/back-arrow.svg" alt="">
@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'ReminderSinglePageItem',
     data() {
@@ -95,8 +96,18 @@ export default {
         showCancelPopUp(){
             this.$emit('showCancelPopUp');
         },
-        cancel(){
-            alert('Запись отменена');
+        async cancel(){
+            try {
+                if (!this.event) {
+                    throw new Error('No event data available');
+                }
+                await axios.put(`/event/${this.event.id}/cancel`);
+                // alert('Запись отменена');
+                this.$router.push({ name: 'main' });
+            } catch (error) {
+                console.error('Error canceling event:', error);
+                alert('Ошибка при отмене записи');
+            }
         },
         async fetchEventData() {
             try {
@@ -131,6 +142,7 @@ export default {
         flex-direction: column;
     }
     .reminder-item{
+        position: relative;
         border-radius: 12px;
         flex-grow: 1; /* Растягиваем reminder-item внутри wrapper */
         display: flex;
@@ -139,6 +151,28 @@ export default {
         background: #fff;
         padding: 22px 16px;
         margin-bottom: 64px;
+    }
+
+    .reminder-item.canceled::after{
+        content: 'Canceled';
+        width: 50px;
+        height: 20px;
+        font-family: Microsoft Sans Serif;
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 10px;
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        border: 1px solid var(--theme-destructive-color);
+        border-radius: 12px;
+        background: var(--theme-destructive-color);
+        color: #fff;
     }
 
     .reminder-item__header{

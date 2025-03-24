@@ -8,7 +8,7 @@
                         СЕГОДНЯ
                     </div>
                     <div class="reminder-accordion__item__reminder-list">
-                        <router-link v-for="(item,index) in this.remindersToday" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" class="reminder-item">
+                        <router-link v-for="(item,index) in this.remindersToday" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'canceled': item.is_cancelled }]" >
                             <div class="reminder-item__header">
                                 <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
                                     <template v-if="item.company.image">
@@ -38,7 +38,7 @@
                         ЗАВТРА
                     </div>
                     <div class="reminder-accordion__item__reminder-list">
-                        <router-link v-for="(item,index) in this.remindersTomorrow" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" class="reminder-item">
+                        <router-link v-for="(item,index) in this.remindersTomorrow" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'canceled': item.is_cancelled }]">
                             <div class="reminder-item__header">
                                 <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
                                     <template v-if="item.company.image">
@@ -68,7 +68,7 @@
                         ПОТОМ
                     </div>
                     <div class="reminder-accordion__item__reminder-list">
-                        <router-link v-for="(item,index) in this.remindersLater" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" class="reminder-item">
+                        <router-link v-for="(item,index) in this.remindersLater" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'canceled': item.is_cancelled }]">
                             <div class="reminder-item__header">
                                 <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
                                     <template v-if="item.company.image">
@@ -247,6 +247,7 @@ export default {
 
 
     .reminder-item{
+        position: relative;
         padding: 12px;
         display: flex;
         flex-direction: column;
@@ -257,6 +258,28 @@ export default {
         border-radius: 12px;
 
         color: var(--theme-text-color-black);
+    }
+
+    .reminder-item.canceled::after{
+        content: 'Canceled';
+        width: 50px;
+        height: 20px;
+        font-family: Microsoft Sans Serif;
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 10px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        border: 1px solid var(--theme-destructive-color);
+        border-radius: 12px;
+        background: var(--theme-destructive-color);
+        color: #fff;
     }
 
     .reminder-item__header{
@@ -359,7 +382,7 @@ export default {
 
     .avatar-letter {
         color: white;
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 500;
     }
 </style>
