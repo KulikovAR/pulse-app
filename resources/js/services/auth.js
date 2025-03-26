@@ -21,6 +21,11 @@ export const telegramAuth = {
             console.log('Telegram initData:', window.Telegram.WebApp.initData);
             console.log('User data for server:', userData);
 
+            // Добавляем логирование URL перед запросом
+            const fullUrl = window.axios.defaults.baseURL + '/telegram/login';
+            Telegram.WebApp.showAlert(`Отправляем запрос на:\n${fullUrl}`);
+            console.log('Request URL:', fullUrl);
+
             const response = await axios.post('/telegram/login', userData);
 
             console.log('Auth response:', response);
