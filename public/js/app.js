@@ -24034,63 +24034,71 @@ var telegramAuth = {
             _context.next = 3;
             return Telegram.WebApp.showAlert('Starting login process...');
           case 3:
-            _context.next = 5;
-            return Telegram.WebApp.showAlert('Starting login process...2');
-          case 5:
-            _context.next = 7;
-            return Telegram.WebApp.showAlert('Starting login process...3');
-          case 7:
             if ((_window$Telegram = window.Telegram) !== null && _window$Telegram !== void 0 && (_window$Telegram = _window$Telegram.WebApp) !== null && _window$Telegram !== void 0 && _window$Telegram.initData) {
-              _context.next = 11;
+              _context.next = 7;
               break;
             }
-            _context.next = 10;
+            _context.next = 6;
             return Telegram.WebApp.showAlert('Error: Telegram WebApp data not available');
-          case 10:
+          case 6:
             throw new Error('Telegram WebApp data not available');
-          case 11:
-            _context.next = 13;
+          case 7:
+            _context.next = 9;
+            return Telegram.WebApp.showAlert('Checking authentication data...');
+          case 9:
+            _context.next = 11;
             return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/telegram/login', {
               initData: window.Telegram.WebApp.initData
             });
-          case 13:
+          case 11:
             response = _context.sent;
             console.log('Auth response:', response);
-            Telegram.WebApp.showAlert("Login response received: ".concat(response.data.data ? 'Success' : 'Failed'));
+            _context.next = 15;
+            return Telegram.WebApp.showAlert("Login response received: ".concat(response.data.data ? 'Success' : 'Failed'));
+          case 15:
             if (!(response.data.data && response.data.data.token)) {
               _context.next = 23;
               break;
             }
             localStorage.setItem('token', response.data.data.token);
             window.axios.defaults.headers.common['Authorization'] = "Bearer ".concat(response.data.data.token);
-            Telegram.WebApp.showAlert('Authentication successful! Token received.');
+            _context.next = 20;
+            return Telegram.WebApp.showAlert('Authentication successful! Token received.');
+          case 20:
             return _context.abrupt("return", response.data.data);
           case 23:
             if (!(response.data.data.error === "phone_required")) {
-              _context.next = 28;
+              _context.next = 29;
               break;
             }
-            Telegram.WebApp.showAlert('Phone verification required');
+            _context.next = 26;
+            return Telegram.WebApp.showAlert('Phone verification required');
+          case 26:
             _this.$router.push({
               name: 'confirm-phone'
             });
-            _context.next = 30;
+            _context.next = 32;
             break;
-          case 28:
-            Telegram.WebApp.showAlert('Error: Invalid response from server');
+          case 29:
+            _context.next = 31;
+            return Telegram.WebApp.showAlert('Error: Invalid response from server');
+          case 31:
             throw new Error('Invalid response from server');
-          case 30:
-            throw new Error('Invalid response from server');
-          case 33:
-            _context.prev = 33;
+          case 32:
+            _context.next = 39;
+            break;
+          case 34:
+            _context.prev = 34;
             _context.t0 = _context["catch"](0);
-            Telegram.WebApp.showAlert("Login error: ".concat(_context.t0.message));
+            _context.next = 38;
+            return Telegram.WebApp.showAlert("Login error: ".concat(_context.t0.message));
+          case 38:
             throw _context.t0;
-          case 37:
+          case 39:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 33]]);
+      }, _callee, null, [[0, 34]]);
     }))();
   },
   logout: function logout() {
