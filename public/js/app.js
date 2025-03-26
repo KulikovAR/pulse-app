@@ -24093,7 +24093,7 @@ var telegramAuth = {
             // Статус: ${errorInfo.status || 'N/A'}
             // Сообщение: ${errorInfo.message}
             // Ответ сервера: ${JSON.stringify(errorInfo.serverResponse)?.slice(0, 50)}...`;
-            alertMessage = "\u041E\u0442\u0432\u0435\u0442 \u0441\u0435\u0440\u0432\u0435\u0440\u0430: ".concat((_JSON$stringify = JSON.stringify(errorInfo.serverResponse)) === null || _JSON$stringify === void 0 ? void 0 : _JSON$stringify.slice(0, 200), "...");
+            alertMessage = "\u041E\u0442\u0432\u0435\u0442 \u0441\u0435\u0440\u0432\u0435\u0440\u0430: ".concat((_JSON$stringify = JSON.stringify(errorInfo.serverResponse)) === null || _JSON$stringify === void 0 ? void 0 : _JSON$stringify.slice(200, 400), "...");
             Telegram.WebApp.showAlert(alertMessage);
             console.error('Auth Error:', errorInfo);
             throw _context.t0;
