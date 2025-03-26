@@ -16,17 +16,13 @@ export const telegramAuth = {
                 phone: Telegram.WebApp.initDataUnsafe.user?.phone || null
             };
 
-            // Логируем все данные перед отправкой
-            // Combine all debug info into single alert
             const debugInfo = `📤 Sending request:
             Data: ${JSON.stringify(userData, null, 2)}
             URL: ${window.axios.defaults.baseURL}/telegram/login`;
             
             Telegram.WebApp.showAlert(debugInfo);
             console.log('Full Request Details:', debugInfo);
-            
-            // Add small delay before request
-            await new Promise(resolve => setTimeout(resolve, 300));
+
             const response = await axios.post('/telegram/login', userData);
 
             console.log('Auth response:', response);
