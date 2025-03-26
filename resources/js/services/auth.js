@@ -43,8 +43,6 @@ export const telegramAuth = {
             Telegram.WebApp.showAlert('Invalid response from server');
             throw new Error('Invalid response from server');
         } catch (error) {
-            Telegram.WebApp.showAlert('Sending POST to:', error.config.baseURL + '/telegram/login');
-            Telegram.WebApp.showAlert('User data:', JSON.stringify(userData, null, 2));
             const errorDetails = {
                 message: error.message,
                 code: error.code || 'N/A',

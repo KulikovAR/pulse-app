@@ -24023,7 +24023,7 @@ var telegramAuth = {
   login: function login() {
     var _this = this;
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _Telegram$WebApp$init, initData, _userData, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _error$config4, _error$config5, _error$config6, _errorDetails$respons, errorDetails, mainError;
+      var _Telegram$WebApp$init, initData, userData, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _error$config4, _error$config5, _error$config6, _errorDetails$respons, errorDetails, mainError;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -24039,7 +24039,7 @@ var telegramAuth = {
             // };
             // Send mock user data to the server for authentication
             initData = new URLSearchParams(window.Telegram.WebApp.initData);
-            _userData = {
+            userData = {
               id: JSON.parse(initData.get('user')).id,
               username: JSON.parse(initData.get('user')).username,
               first_name: JSON.parse(initData.get('user')).first_name,
@@ -24048,7 +24048,7 @@ var telegramAuth = {
               phone: ((_Telegram$WebApp$init = Telegram.WebApp.initDataUnsafe.user) === null || _Telegram$WebApp$init === void 0 ? void 0 : _Telegram$WebApp$init.phone) || null
             }; // const response = await axios.post('/telegram/login', mockUser);
             _context.next = 5;
-            return window.axios.post('/telegram/login', _userData);
+            return window.axios.post('/telegram/login', userData);
           case 5:
             response = _context.sent;
             console.log(response);
@@ -24078,8 +24078,6 @@ var telegramAuth = {
           case 23:
             _context.prev = 23;
             _context.t0 = _context["catch"](0);
-            Telegram.WebApp.showAlert('Sending POST to:', _context.t0.config.baseURL + '/telegram/login');
-            Telegram.WebApp.showAlert('User data:', JSON.stringify(userData, null, 2));
             errorDetails = {
               message: _context.t0.message,
               code: _context.t0.code || 'N/A',
@@ -24100,7 +24098,7 @@ var telegramAuth = {
             console.error('Full Error Report:', errorDetails);
             Telegram.WebApp.showAlert(mainError);
             throw _context.t0;
-          case 33:
+          case 31:
           case "end":
             return _context.stop();
         }
