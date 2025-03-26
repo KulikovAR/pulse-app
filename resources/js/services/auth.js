@@ -14,7 +14,11 @@ export const telegramAuth = {
             // };
 
             // Send mock user data to the server for authentication
-            const initData = new URLSearchParams(window.Telegram.WebApp.initData);
+            // const initData = new URLSearchParams(window.Telegram.WebApp.initData);
+
+            const initData = window.Telegram.WebApp.initData;
+            console.log('Raw initData:', initData);
+
             const userData = {
                 id: JSON.parse(initData.get('user')).id,
                 username: JSON.parse(initData.get('user')).username,
@@ -25,9 +29,9 @@ export const telegramAuth = {
             };
 
             // const response = await axios.post('/telegram/login', mockUser);
-            const response = await window.axios.post('/telegram/login', userData);
-
-            console.log(response);
+            // const response = await window.axios.post('/telegram/login', userData);
+            const response = await window.axios.post('/telegram/login', initData);
+            console.log('Auth response:', response);
             
             if (response.data.data && response.data.data.token) {
                 localStorage.setItem('token', response.data.data.token);
@@ -54,23 +58,14 @@ export const telegramAuth = {
                     method: error.config?.method,
                     data: error.config?.data
                 },
-                fullURL: (error.config?.baseURL || window.axios.defaults.baseURL) + error.config?.url
+                fullURL: (error.config?.baseURL || window.axios.defaults.baseURL) + (error.config?.url || '')
             };
 
-            console.error('Full Error Report:', errorDetails);
+            console.error('Authentication error details:', errorDetails);
             
-            // Основная информация об ошибке 405
-            const mainError = `Ошибка ${errorDetails.status}:
-            Метод: ${errorDetails.config.method.toUpperCase()}
-            Полный URL: ${errorDetails.fullURL}
-            Ответ сервера: ${errorDetails.responseData?.error || errorDetails.message}`;
-
-            console.error('Full Error Report:', errorDetails);
-            
-            
+            const mainError = `Error ${errorDetails.status}:\nMethod: ${errorDetails.config.method?.toUpperCase()}\nFull URL: ${errorDetails.fullURL}\nServer response: ${JSON.stringify(errorDetails.responseData)}`;
 
             Telegram.WebApp.showAlert(mainError);
-            
             throw error;
         }
     },
