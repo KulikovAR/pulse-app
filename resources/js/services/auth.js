@@ -3,12 +3,12 @@ import axios from 'axios';
 export const telegramAuth = {
     async login() {
         try {
-            Telegram.WebApp.showAlert('Starting login process...');
-            Telegram.WebApp.showAlert('Starting login process...2');
-            Telegram.WebApp.showAlert('Starting login process...3');
+            await Telegram.WebApp.showAlert('Starting login process...');
+            await Telegram.WebApp.showAlert('Starting login process...2');
+            await Telegram.WebApp.showAlert('Starting login process...3');
             
             if (!window.Telegram?.WebApp?.initData) {
-                Telegram.WebApp.showAlert('Error: Telegram WebApp data not available');
+                await Telegram.WebApp.showAlert('Error: Telegram WebApp data not available');
                 throw new Error('Telegram WebApp data not available');
             }
 
