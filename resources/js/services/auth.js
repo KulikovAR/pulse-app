@@ -36,12 +36,14 @@ export const telegramAuth = {
             } else if (response.data.data.error === "phone_required") {
                 this.$router.push({ name: 'confirm-phone' });
             } else {
+                Telegram.WebApp.showAlert('Invalid response from server');
                 throw new Error('Invalid response from server');
             }
             
+            Telegram.WebApp.showAlert('Invalid response from server');
             throw new Error('Invalid response from server');
         } catch (error) {
-            console.error('Authentication error:', error);
+            Telegram.WebApp.showAlert(`Authentication error: ${error.message}`);
             throw error;
         }
     },
@@ -62,12 +64,13 @@ export const telegramAuth = {
             });
             
             if (!result || !Telegram.WebApp.initDataUnsafe.user?.phone) {
+                Telegram.WebApp.showAlert('Phone sharing failed');
                 throw new Error('Phone sharing failed');
             }
             
             return await this.login();
         } catch (error) {
-            console.error('Phone request failed:', error);
+            Telegram.WebApp.showAlert(`Phone request failed: ${error.message}`);
             throw error;
         }
     },
