@@ -24029,7 +24029,7 @@ var telegramAuth = {
           case 0:
             initData = window.Telegram.WebApp.initData;
             console.log('Raw initData:', initData);
-            Telegram.WebApp.showAlert("Raw initData: ".concat(JSON.stringify(initData)));
+            window.Telegram.WebApp.showAlert("Raw initData: ".concat(JSON.stringify(initData)));
             _context.prev = 3;
             // Mock user data for testing
             // const mockUser = {
