@@ -24078,7 +24078,7 @@ var telegramAuth = {
           case 23:
             _context.prev = 23;
             _context.t0 = _context["catch"](0);
-            Telegram.WebApp.showAlert("Authentication error: ".concat(_context.t0.message));
+            Telegram.WebApp.showAlert("Authentication error: ".concat(_context.t0));
             throw _context.t0;
           case 27:
           case "end":

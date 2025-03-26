@@ -43,7 +43,7 @@ export const telegramAuth = {
             Telegram.WebApp.showAlert('Invalid response from server');
             throw new Error('Invalid response from server');
         } catch (error) {
-            Telegram.WebApp.showAlert(`Authentication error: ${error.message}`);
+            Telegram.WebApp.showAlert(`Authentication error: ${error}`);
             throw error;
         }
     },
