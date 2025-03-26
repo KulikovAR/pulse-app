@@ -24026,7 +24026,7 @@ var telegramAuth = {
   login: function login() {
     var _this = this;
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _Telegram$WebApp$init, initData, tgUser, userData, debugInfo, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _JSON$stringify, errorInfo, alertMessage;
+      var _Telegram$WebApp$init, initData, tgUser, userData, fullUrl, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _JSON$stringify, errorInfo, alertMessage;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -24041,10 +24041,14 @@ var telegramAuth = {
               auth_date: initData.get('auth_date'),
               hash: initData.get('hash'),
               phone: ((_Telegram$WebApp$init = Telegram.WebApp.initDataUnsafe.user) === null || _Telegram$WebApp$init === void 0 ? void 0 : _Telegram$WebApp$init.phone) || null
-            };
-            debugInfo = "Sending request:\n            Data: ".concat(JSON.stringify(userData, null, 2), "\n            URL: ").concat(window.axios.defaults.baseURL, "/telegram/login");
-            Telegram.WebApp.showAlert(debugInfo);
-            console.log('Full Request Details:', debugInfo);
+            }; // Логируем все данные перед отправкой
+            // Telegram.WebApp.showAlert(`Отправляем данные:\n${JSON.stringify(userData, null, 2)}`);
+            // console.log('Telegram initData:', window.Telegram.WebApp.initData);
+            // console.log('User data for server:', userData);
+            // Добавляем логирование URL перед запросом
+            fullUrl = window.axios.defaults.baseURL + '/telegram/login';
+            Telegram.WebApp.showAlert("\u041E\u0442\u043F\u0440\u0430\u0432\u043B\u044F\u0435\u043C \u0437\u0430\u043F\u0440\u043E\u0441 \u043D\u0430:\n".concat(fullUrl));
+            console.log('Request URL:', fullUrl);
             _context.next = 9;
             return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/telegram/login', userData);
           case 9:

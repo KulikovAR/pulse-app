@@ -16,12 +16,15 @@ export const telegramAuth = {
                 phone: Telegram.WebApp.initDataUnsafe.user?.phone || null
             };
 
-            const debugInfo = `Sending request:
-            Data: ${JSON.stringify(userData, null, 2)}
-            URL: ${window.axios.defaults.baseURL}/telegram/login`;
-            
-            Telegram.WebApp.showAlert(debugInfo);
-            console.log('Full Request Details:', debugInfo);
+            // Логируем все данные перед отправкой
+            // Telegram.WebApp.showAlert(`Отправляем данные:\n${JSON.stringify(userData, null, 2)}`);
+            // console.log('Telegram initData:', window.Telegram.WebApp.initData);
+            // console.log('User data for server:', userData);
+
+            // Добавляем логирование URL перед запросом
+            const fullUrl = window.axios.defaults.baseURL + '/telegram/login';
+            Telegram.WebApp.showAlert(`Отправляем запрос на:\n${fullUrl}`);
+            console.log('Request URL:', fullUrl);
 
             const response = await axios.post('/telegram/login', userData);
 
