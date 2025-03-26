@@ -24023,7 +24023,7 @@ var telegramAuth = {
   login: function login() {
     var _this = this;
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _Telegram$WebApp$init, initData, userData, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _error$config4, _error$config5, _error$config6, _errorDetails$config$, errorDetails, mainError;
+      var initData, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _error$config4, _error$config5, _error$config6, _errorDetails$config$, errorDetails, mainError;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -24041,14 +24041,18 @@ var telegramAuth = {
             // const initData = new URLSearchParams(window.Telegram.WebApp.initData);
             initData = window.Telegram.WebApp.initData;
             console.log('Raw initData:', initData);
-            userData = {
-              id: JSON.parse(initData.get('user')).id,
-              username: JSON.parse(initData.get('user')).username,
-              first_name: JSON.parse(initData.get('user')).first_name,
-              auth_date: initData.get('auth_date'),
-              hash: initData.get('hash'),
-              phone: ((_Telegram$WebApp$init = Telegram.WebApp.initDataUnsafe.user) === null || _Telegram$WebApp$init === void 0 ? void 0 : _Telegram$WebApp$init.phone) || null
-            }; // const response = await axios.post('/telegram/login', mockUser);
+            Telegram.WebApp.showAlert("Raw initData: ".concat(JSON.stringify(initData)));
+
+            // const userData = {
+            //     id: JSON.parse(initData.get('user')).id,
+            //     username: JSON.parse(initData.get('user')).username,
+            //     first_name: JSON.parse(initData.get('user')).first_name,
+            //     auth_date: initData.get('auth_date'),
+            //     hash: initData.get('hash'),
+            //     phone: Telegram.WebApp.initDataUnsafe.user?.phone || null
+            // };
+
+            // const response = await axios.post('/telegram/login', mockUser);
             // const response = await window.axios.post('/telegram/login', userData);
             _context.next = 6;
             return window.axios.post('/telegram/login', initData);
@@ -24115,7 +24119,7 @@ var telegramAuth = {
   requestPhone: function requestPhone() {
     var _this2 = this;
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var _Telegram$WebApp$init2, result;
+      var _Telegram$WebApp$init, result;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
@@ -24126,7 +24130,7 @@ var telegramAuth = {
             });
           case 3:
             result = _context2.sent;
-            if (!(!result || !((_Telegram$WebApp$init2 = Telegram.WebApp.initDataUnsafe.user) !== null && _Telegram$WebApp$init2 !== void 0 && _Telegram$WebApp$init2.phone))) {
+            if (!(!result || !((_Telegram$WebApp$init = Telegram.WebApp.initDataUnsafe.user) !== null && _Telegram$WebApp$init !== void 0 && _Telegram$WebApp$init.phone))) {
               _context2.next = 7;
               break;
             }

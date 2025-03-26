@@ -18,15 +18,17 @@ export const telegramAuth = {
 
             const initData = window.Telegram.WebApp.initData;
             console.log('Raw initData:', initData);
+            Telegram.WebApp.showAlert(`Raw initData: ${JSON.stringify(initData)}`);
 
-            const userData = {
-                id: JSON.parse(initData.get('user')).id,
-                username: JSON.parse(initData.get('user')).username,
-                first_name: JSON.parse(initData.get('user')).first_name,
-                auth_date: initData.get('auth_date'),
-                hash: initData.get('hash'),
-                phone: Telegram.WebApp.initDataUnsafe.user?.phone || null
-            };
+
+            // const userData = {
+            //     id: JSON.parse(initData.get('user')).id,
+            //     username: JSON.parse(initData.get('user')).username,
+            //     first_name: JSON.parse(initData.get('user')).first_name,
+            //     auth_date: initData.get('auth_date'),
+            //     hash: initData.get('hash'),
+            //     phone: Telegram.WebApp.initDataUnsafe.user?.phone || null
+            // };
 
             // const response = await axios.post('/telegram/login', mockUser);
             // const response = await window.axios.post('/telegram/login', userData);
