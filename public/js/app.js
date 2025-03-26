@@ -24023,7 +24023,7 @@ var telegramAuth = {
   login: function login() {
     var _this = this;
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _Telegram$WebApp$init, initData, userData, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, errorDetails;
+      var _Telegram$WebApp$init, initData, userData, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _errorDetails$respons, errorDetails, mainError;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -24090,9 +24090,12 @@ var telegramAuth = {
               }
             };
             console.error('Full Error Report:', errorDetails);
-            Telegram.WebApp.showAlert("\u041E\u0448\u0438\u0431\u043A\u0430 ".concat(errorDetails.status, ":\n").concat(errorDetails.message, "\n\n\u0414\u0435\u0442\u0430\u043B\u0438: ").concat(truncateString(JSON.stringify(errorDetails.responseData), 100)));
+
+            // Основная информация об ошибке 405
+            mainError = "\u041E\u0448\u0438\u0431\u043A\u0430 ".concat(errorDetails.status, ":\n            \u041C\u0435\u0442\u043E\u0434: ").concat(errorDetails.config.method.toUpperCase(), "\n            URL: ").concat(errorDetails.config.url, "\n            \u0421\u0435\u0440\u0432\u0435\u0440 \u043E\u0442\u0432\u0435\u0442\u0438\u043B: ").concat(((_errorDetails$respons = errorDetails.responseData) === null || _errorDetails$respons === void 0 ? void 0 : _errorDetails$respons.error) || errorDetails.message);
+            Telegram.WebApp.showAlert(mainError);
             throw _context.t0;
-          case 29:
+          case 30:
           case "end":
             return _context.stop();
         }

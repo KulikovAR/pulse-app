@@ -56,10 +56,15 @@ export const telegramAuth = {
             };
 
             console.error('Full Error Report:', errorDetails);
-            Telegram.WebApp.showAlert(
-                `Ошибка ${errorDetails.status}:\n${errorDetails.message}\n\nДетали: ${truncateString(JSON.stringify(errorDetails.responseData), 100)}`
-            );
+            
+            // Основная информация об ошибке 405
+            const mainError = `Ошибка ${errorDetails.status}:
+            Метод: ${errorDetails.config.method.toUpperCase()}
+            URL: ${errorDetails.config.url}
+            Сервер ответил: ${errorDetails.responseData?.error || errorDetails.message}`;
 
+            Telegram.WebApp.showAlert(mainError);
+            
             throw error;
         }
     },
