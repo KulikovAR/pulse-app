@@ -50,9 +50,11 @@ export const telegramAuth = {
                 responseData: error.response?.data || 'No response data',
                 config: {
                     url: error.config?.url,
+                    baseURL: error.config?.baseURL || window.axios.defaults.baseURL,
                     method: error.config?.method,
                     data: error.config?.data
-                }
+                },
+                fullURL: (error.config?.baseURL || window.axios.defaults.baseURL) + error.config?.url
             };
 
             console.error('Full Error Report:', errorDetails);
@@ -60,8 +62,12 @@ export const telegramAuth = {
             // Основная информация об ошибке 405
             const mainError = `Ошибка ${errorDetails.status}:
             Метод: ${errorDetails.config.method.toUpperCase()}
-            URL: ${errorDetails.config.url}
-            Сервер ответил: ${errorDetails.responseData?.error || errorDetails.message}`;
+            Полный URL: ${errorDetails.fullURL}
+            Ответ сервера: ${errorDetails.responseData?.error || errorDetails.message}`;
+
+            console.error('Full Error Report:', errorDetails);
+            
+            
 
             Telegram.WebApp.showAlert(mainError);
             
