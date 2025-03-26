@@ -43,13 +43,23 @@ export const telegramAuth = {
             Telegram.WebApp.showAlert('Invalid response from server');
             throw new Error('Invalid response from server');
         } catch (error) {
-            const status = error.response?.status;
-            const message = error.response?.data?.error || error.message;
-            
+            const errorDetails = {
+                message: error.message,
+                code: error.code || 'N/A',
+                status: error.response?.status || 'No status',
+                responseData: error.response?.data || 'No response data',
+                config: {
+                    url: error.config?.url,
+                    method: error.config?.method,
+                    data: error.config?.data
+                }
+            };
+
+            console.error('Full Error Report:', errorDetails);
             Telegram.WebApp.showAlert(
-                `Ошибка ${status || '000'}:\n${message}`
+                `Полная ошибка:\n${JSON.stringify(errorDetails, null, 2)}`
             );
-            
+
             throw error;
         }
     },

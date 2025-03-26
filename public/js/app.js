@@ -24023,7 +24023,7 @@ var telegramAuth = {
   login: function login() {
     var _this = this;
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _Telegram$WebApp$init, initData, userData, response, _error$response, _error$response2, status, message;
+      var _Telegram$WebApp$init, initData, userData, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, errorDetails;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -24078,9 +24078,19 @@ var telegramAuth = {
           case 23:
             _context.prev = 23;
             _context.t0 = _context["catch"](0);
-            status = (_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : _error$response.status;
-            message = ((_error$response2 = _context.t0.response) === null || _error$response2 === void 0 || (_error$response2 = _error$response2.data) === null || _error$response2 === void 0 ? void 0 : _error$response2.error) || _context.t0.message;
-            Telegram.WebApp.showAlert("\u041E\u0448\u0438\u0431\u043A\u0430 ".concat(status || '000', ":\n").concat(message));
+            errorDetails = {
+              message: _context.t0.message,
+              code: _context.t0.code || 'N/A',
+              status: ((_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : _error$response.status) || 'No status',
+              responseData: ((_error$response2 = _context.t0.response) === null || _error$response2 === void 0 ? void 0 : _error$response2.data) || 'No response data',
+              config: {
+                url: (_error$config = _context.t0.config) === null || _error$config === void 0 ? void 0 : _error$config.url,
+                method: (_error$config2 = _context.t0.config) === null || _error$config2 === void 0 ? void 0 : _error$config2.method,
+                data: (_error$config3 = _context.t0.config) === null || _error$config3 === void 0 ? void 0 : _error$config3.data
+              }
+            };
+            console.error('Full Error Report:', errorDetails);
+            Telegram.WebApp.showAlert("\u041F\u043E\u043B\u043D\u0430\u044F \u043E\u0448\u0438\u0431\u043A\u0430:\n".concat(JSON.stringify(errorDetails, null, 2)));
             throw _context.t0;
           case 29:
           case "end":
