@@ -60,7 +60,7 @@ export const telegramAuth = {
 // Сообщение: ${errorInfo.message}
 // Ответ сервера: ${JSON.stringify(errorInfo.serverResponse)?.slice(0, 50)}...`;
 
-            const alertMessage = `Ответ сервера: ${JSON.stringify(errorInfo.serverResponse?.slice(0, 200))}...`;
+            const alertMessage = `Ответ сервера: ${JSON.stringify(errorInfo.serverResponse)?.slice(0, 200)}...`;
 
             Telegram.WebApp.showAlert(alertMessage);
             console.error('Auth Error:', errorInfo);
