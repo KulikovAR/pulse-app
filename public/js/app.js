@@ -24032,55 +24032,57 @@ var telegramAuth = {
           case 0:
             _context.prev = 0;
             Telegram.WebApp.showAlert('Starting login process...');
+            Telegram.WebApp.showAlert('Starting login process...2');
+            Telegram.WebApp.showAlert('Starting login process...3');
             if ((_window$Telegram = window.Telegram) !== null && _window$Telegram !== void 0 && (_window$Telegram = _window$Telegram.WebApp) !== null && _window$Telegram !== void 0 && _window$Telegram.initData) {
-              _context.next = 5;
+              _context.next = 7;
               break;
             }
             Telegram.WebApp.showAlert('Error: Telegram WebApp data not available');
             throw new Error('Telegram WebApp data not available');
-          case 5:
-            _context.next = 7;
+          case 7:
+            _context.next = 9;
             return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/telegram/login', {
               initData: window.Telegram.WebApp.initData
             });
-          case 7:
+          case 9:
             response = _context.sent;
             console.log('Auth response:', response);
             Telegram.WebApp.showAlert("Login response received: ".concat(response.data.data ? 'Success' : 'Failed'));
             if (!(response.data.data && response.data.data.token)) {
-              _context.next = 17;
+              _context.next = 19;
               break;
             }
             localStorage.setItem('token', response.data.data.token);
             window.axios.defaults.headers.common['Authorization'] = "Bearer ".concat(response.data.data.token);
             Telegram.WebApp.showAlert('Authentication successful! Token received.');
             return _context.abrupt("return", response.data.data);
-          case 17:
+          case 19:
             if (!(response.data.data.error === "phone_required")) {
-              _context.next = 22;
+              _context.next = 24;
               break;
             }
             Telegram.WebApp.showAlert('Phone verification required');
             _this.$router.push({
               name: 'confirm-phone'
             });
-            _context.next = 24;
+            _context.next = 26;
             break;
-          case 22:
+          case 24:
             Telegram.WebApp.showAlert('Error: Invalid response from server');
             throw new Error('Invalid response from server');
-          case 24:
+          case 26:
             throw new Error('Invalid response from server');
-          case 27:
-            _context.prev = 27;
+          case 29:
+            _context.prev = 29;
             _context.t0 = _context["catch"](0);
             Telegram.WebApp.showAlert("Login error: ".concat(_context.t0.message));
             throw _context.t0;
-          case 31:
+          case 33:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 27]]);
+      }, _callee, null, [[0, 29]]);
     }))();
   },
   logout: function logout() {
