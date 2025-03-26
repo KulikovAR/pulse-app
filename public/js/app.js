@@ -24023,7 +24023,7 @@ var telegramAuth = {
   login: function login() {
     var _this = this;
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _Telegram$WebApp$init, initData, userData, response;
+      var _Telegram$WebApp$init, initData, userData, response, _error$response, _error$response2, status, message;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -24078,9 +24078,11 @@ var telegramAuth = {
           case 23:
             _context.prev = 23;
             _context.t0 = _context["catch"](0);
-            Telegram.WebApp.showAlert("Authentication error: ".concat(_context.t0));
+            status = (_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : _error$response.status;
+            message = ((_error$response2 = _context.t0.response) === null || _error$response2 === void 0 || (_error$response2 = _error$response2.data) === null || _error$response2 === void 0 ? void 0 : _error$response2.error) || _context.t0.message;
+            Telegram.WebApp.showAlert("\u041E\u0448\u0438\u0431\u043A\u0430 ".concat(status || '000', ":\n").concat(message));
             throw _context.t0;
-          case 27:
+          case 29:
           case "end":
             return _context.stop();
         }
