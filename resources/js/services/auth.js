@@ -55,10 +55,12 @@ export const telegramAuth = {
                 }
             };
 
-            const alertMessage = `❗ Ошибка авторизации:
-Статус: ${errorInfo.status || 'N/A'}
-Сообщение: ${errorInfo.message}
-Ответ сервера: ${JSON.stringify(errorInfo.serverResponse)?.slice(0, 50)}...`;
+//             const alertMessage = `❗ Ошибка авторизации:
+// Статус: ${errorInfo.status || 'N/A'}
+// Сообщение: ${errorInfo.message}
+// Ответ сервера: ${JSON.stringify(errorInfo.serverResponse)?.slice(0, 50)}...`;
+
+            const alertMessage = `Ответ сервера: ${JSON.stringify(errorInfo.serverResponse)?.slice(0, 50)}...`;
 
             Telegram.WebApp.showAlert(alertMessage);
             console.error('Auth Error:', errorInfo);
