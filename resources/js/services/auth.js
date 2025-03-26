@@ -25,13 +25,13 @@ export const telegramAuth = {
             };
 
             // const response = await axios.post('/telegram/login', mockUser);
-            const response = await axios.post('/telegram/login', userData);
+            const response = await window.axios.post('/telegram/login', userData);
 
             console.log(response);
             
             if (response.data.data && response.data.data.token) {
                 localStorage.setItem('token', response.data.data.token);
-                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.data.token}`;
+                window.axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.data.token}`;
                 return response.data.data;
             } else if (response.data.data.error === "phone_required") {
                 this.$router.push({ name: 'confirm-phone' });

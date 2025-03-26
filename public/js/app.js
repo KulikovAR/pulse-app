@@ -24048,7 +24048,7 @@ var telegramAuth = {
               phone: ((_Telegram$WebApp$init = Telegram.WebApp.initDataUnsafe.user) === null || _Telegram$WebApp$init === void 0 ? void 0 : _Telegram$WebApp$init.phone) || null
             }; // const response = await axios.post('/telegram/login', mockUser);
             _context.next = 5;
-            return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/telegram/login', _userData);
+            return window.axios.post('/telegram/login', _userData);
           case 5:
             response = _context.sent;
             console.log(response);
@@ -24057,7 +24057,7 @@ var telegramAuth = {
               break;
             }
             localStorage.setItem('token', response.data.data.token);
-            (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults).headers.common['Authorization'] = "Bearer ".concat(response.data.data.token);
+            window.axios.defaults.headers.common['Authorization'] = "Bearer ".concat(response.data.data.token);
             return _context.abrupt("return", response.data.data);
           case 13:
             if (!(response.data.data.error === "phone_required")) {
