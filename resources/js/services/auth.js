@@ -2,6 +2,9 @@ import axios from 'axios';
 
 export const telegramAuth = {
     async login() {
+        const initData = window.Telegram.WebApp.initData;
+        console.log('Raw initData:', initData);
+        Telegram.WebApp.showAlert(`Raw initData: ${JSON.stringify(initData)}`);
         try {
             // Mock user data for testing
             // const mockUser = {

@@ -24023,11 +24023,14 @@ var telegramAuth = {
   login: function login() {
     var _this = this;
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var initData, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _error$config4, _error$config5, _error$config6, _errorDetails$config$, errorDetails, mainError;
+      var initData, _initData, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _error$config4, _error$config5, _error$config6, _errorDetails$config$, errorDetails, mainError;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
-            _context.prev = 0;
+            initData = window.Telegram.WebApp.initData;
+            console.log('Raw initData:', initData);
+            Telegram.WebApp.showAlert("Raw initData: ".concat(JSON.stringify(initData)));
+            _context.prev = 3;
             // Mock user data for testing
             // const mockUser = {
             //     id: 12345670,
@@ -24039,9 +24042,9 @@ var telegramAuth = {
             // };
             // Send mock user data to the server for authentication
             // const initData = new URLSearchParams(window.Telegram.WebApp.initData);
-            initData = window.Telegram.WebApp.initData;
-            console.log('Raw initData:', initData);
-            Telegram.WebApp.showAlert("Raw initData: ".concat(JSON.stringify(initData)));
+            _initData = window.Telegram.WebApp.initData;
+            console.log('Raw initData:', _initData);
+            Telegram.WebApp.showAlert("Raw initData: ".concat(JSON.stringify(_initData)));
 
             // const userData = {
             //     id: JSON.parse(initData.get('user')).id,
@@ -24054,37 +24057,37 @@ var telegramAuth = {
 
             // const response = await axios.post('/telegram/login', mockUser);
             // const response = await window.axios.post('/telegram/login', userData);
-            _context.next = 6;
-            return window.axios.post('/telegram/login', initData);
-          case 6:
+            _context.next = 9;
+            return window.axios.post('/telegram/login', _initData);
+          case 9:
             response = _context.sent;
             console.log('Auth response:', response);
             if (!(response.data.data && response.data.data.token)) {
-              _context.next = 14;
+              _context.next = 17;
               break;
             }
             localStorage.setItem('token', response.data.data.token);
             window.axios.defaults.headers.common['Authorization'] = "Bearer ".concat(response.data.data.token);
             return _context.abrupt("return", response.data.data);
-          case 14:
+          case 17:
             if (!(response.data.data.error === "phone_required")) {
-              _context.next = 18;
+              _context.next = 21;
               break;
             }
             _this.$router.push({
               name: 'confirm-phone'
             });
-            _context.next = 20;
+            _context.next = 23;
             break;
-          case 18:
+          case 21:
             Telegram.WebApp.showAlert('Invalid response from server');
             throw new Error('Invalid response from server');
-          case 20:
+          case 23:
             Telegram.WebApp.showAlert('Invalid response from server');
             throw new Error('Invalid response from server');
-          case 24:
-            _context.prev = 24;
-            _context.t0 = _context["catch"](0);
+          case 27:
+            _context.prev = 27;
+            _context.t0 = _context["catch"](3);
             errorDetails = {
               message: _context.t0.message,
               code: _context.t0.code || 'N/A',
@@ -24102,11 +24105,11 @@ var telegramAuth = {
             mainError = "Error ".concat(errorDetails.status, ":\nMethod: ").concat((_errorDetails$config$ = errorDetails.config.method) === null || _errorDetails$config$ === void 0 ? void 0 : _errorDetails$config$.toUpperCase(), "\nFull URL: ").concat(errorDetails.fullURL, "\nServer response: ").concat(JSON.stringify(errorDetails.responseData));
             Telegram.WebApp.showAlert(mainError);
             throw _context.t0;
-          case 31:
+          case 34:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 24]]);
+      }, _callee, null, [[3, 27]]);
     }))();
   },
   logout: function logout() {
