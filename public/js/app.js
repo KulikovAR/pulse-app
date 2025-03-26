@@ -24023,7 +24023,7 @@ var telegramAuth = {
   login: function login() {
     var _this = this;
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _Telegram$WebApp$init, initData, userData, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _error$config4, _error$config5, _error$config6, _errorDetails$respons, errorDetails, mainError;
+      var _Telegram$WebApp$init, initData, _userData, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _error$config4, _error$config5, _error$config6, _errorDetails$respons, errorDetails, mainError;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -24039,7 +24039,7 @@ var telegramAuth = {
             // };
             // Send mock user data to the server for authentication
             initData = new URLSearchParams(window.Telegram.WebApp.initData);
-            userData = {
+            _userData = {
               id: JSON.parse(initData.get('user')).id,
               username: JSON.parse(initData.get('user')).username,
               first_name: JSON.parse(initData.get('user')).first_name,
@@ -24048,38 +24048,38 @@ var telegramAuth = {
               phone: ((_Telegram$WebApp$init = Telegram.WebApp.initDataUnsafe.user) === null || _Telegram$WebApp$init === void 0 ? void 0 : _Telegram$WebApp$init.phone) || null
             }; // const response = await axios.post('/telegram/login', mockUser);
             _context.next = 5;
-            return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/telegram/login', userData);
+            return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/telegram/login', _userData);
           case 5:
             response = _context.sent;
             console.log(response);
-            Telegram.WebApp.showAlert('Sending POST to:', window.axios.defaults.baseURL + '/telegram/login');
-            Telegram.WebApp.showAlert('User data:', JSON.stringify(userData, null, 2));
             if (!(response.data.data && response.data.data.token)) {
-              _context.next = 15;
+              _context.next = 13;
               break;
             }
             localStorage.setItem('token', response.data.data.token);
             (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults).headers.common['Authorization'] = "Bearer ".concat(response.data.data.token);
             return _context.abrupt("return", response.data.data);
-          case 15:
+          case 13:
             if (!(response.data.data.error === "phone_required")) {
-              _context.next = 19;
+              _context.next = 17;
               break;
             }
             _this.$router.push({
               name: 'confirm-phone'
             });
-            _context.next = 21;
+            _context.next = 19;
             break;
+          case 17:
+            Telegram.WebApp.showAlert('Invalid response from server');
+            throw new Error('Invalid response from server');
           case 19:
             Telegram.WebApp.showAlert('Invalid response from server');
             throw new Error('Invalid response from server');
-          case 21:
-            Telegram.WebApp.showAlert('Invalid response from server');
-            throw new Error('Invalid response from server');
-          case 25:
-            _context.prev = 25;
+          case 23:
+            _context.prev = 23;
             _context.t0 = _context["catch"](0);
+            Telegram.WebApp.showAlert('Sending POST to:', window.axios.defaults.baseURL + '/telegram/login');
+            Telegram.WebApp.showAlert('User data:', JSON.stringify(userData, null, 2));
             errorDetails = {
               message: _context.t0.message,
               code: _context.t0.code || 'N/A',
@@ -24104,7 +24104,7 @@ var telegramAuth = {
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 25]]);
+      }, _callee, null, [[0, 23]]);
     }))();
   },
   logout: function logout() {
