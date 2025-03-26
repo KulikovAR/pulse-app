@@ -24090,7 +24090,7 @@ var telegramAuth = {
               }
             };
             console.error('Full Error Report:', errorDetails);
-            Telegram.WebApp.showAlert("\u041F\u043E\u043B\u043D\u0430\u044F \u043E\u0448\u0438\u0431\u043A\u0430:\n".concat(JSON.stringify(errorDetails, null, 2)));
+            Telegram.WebApp.showAlert("\u041E\u0448\u0438\u0431\u043A\u0430 ".concat(errorDetails.status, ":\n").concat(errorDetails.message, "\n\n\u0414\u0435\u0442\u0430\u043B\u0438: ").concat(truncateString(JSON.stringify(errorDetails.responseData), 100)));
             throw _context.t0;
           case 29:
           case "end":
@@ -24142,6 +24142,9 @@ var telegramAuth = {
         }
       }, _callee2, null, [[0, 12]]);
     }))();
+  },
+  truncateString: function truncateString(str, maxLength) {
+    return str.length > maxLength ? str.substring(0, maxLength) + '...' : str;
   }
 };
 

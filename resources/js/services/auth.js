@@ -57,7 +57,7 @@ export const telegramAuth = {
 
             console.error('Full Error Report:', errorDetails);
             Telegram.WebApp.showAlert(
-                `Полная ошибка:\n${JSON.stringify(errorDetails, null, 2)}`
+                `Ошибка ${errorDetails.status}:\n${errorDetails.message}\n\nДетали: ${truncateString(JSON.stringify(errorDetails.responseData), 100)}`
             );
 
             throw error;
@@ -90,4 +90,8 @@ export const telegramAuth = {
             throw error;
         }
     },
+
+    truncateString(str, maxLength) {
+        return str.length > maxLength ? str.substring(0, maxLength) + '...' : str;
+    }
 };
