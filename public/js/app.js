@@ -24026,7 +24026,7 @@ var telegramAuth = {
   login: function login() {
     var _this = this;
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _Telegram$WebApp$init, initData, tgUser, userData, fullUrl, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _JSON$stringify, errorInfo, alertMessage;
+      var _Telegram$WebApp$init, initData, tgUser, userData, debugInfo, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _JSON$stringify, errorInfo, alertMessage;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -24042,42 +24042,45 @@ var telegramAuth = {
               hash: initData.get('hash'),
               phone: ((_Telegram$WebApp$init = Telegram.WebApp.initDataUnsafe.user) === null || _Telegram$WebApp$init === void 0 ? void 0 : _Telegram$WebApp$init.phone) || null
             }; // Логируем все данные перед отправкой
-            Telegram.WebApp.showAlert("\u041E\u0442\u043F\u0440\u0430\u0432\u043B\u044F\u0435\u043C \u0434\u0430\u043D\u043D\u044B\u0435:\n".concat(JSON.stringify(userData, null, 2)));
-            console.log('Telegram initData:', window.Telegram.WebApp.initData);
-            console.log('User data for server:', userData);
+            // Combine all debug info into single alert
+            debugInfo = "\uD83D\uDCE4 Sending request:\n            Data: ".concat(JSON.stringify(userData, null, 2), "\n            URL: ").concat(window.axios.defaults.baseURL, "/telegram/login");
+            Telegram.WebApp.showAlert(debugInfo);
+            console.log('Full Request Details:', debugInfo);
 
-            // Добавляем логирование URL перед запросом
-            fullUrl = window.axios.defaults.baseURL + '/telegram/login';
-            Telegram.WebApp.showAlert("\u041E\u0442\u043F\u0440\u0430\u0432\u043B\u044F\u0435\u043C \u0437\u0430\u043F\u0440\u043E\u0441 \u043D\u0430:\n".concat(fullUrl));
-            console.log('Request URL:', fullUrl);
-            _context.next = 12;
+            // Add small delay before request
+            _context.next = 9;
+            return new Promise(function (resolve) {
+              return setTimeout(resolve, 300);
+            });
+          case 9:
+            _context.next = 11;
             return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/telegram/login', userData);
-          case 12:
+          case 11:
             response = _context.sent;
             console.log('Auth response:', response);
             if (!(response.data.data && response.data.data.token)) {
-              _context.next = 20;
+              _context.next = 19;
               break;
             }
             localStorage.setItem('token', response.data.data.token);
             window.axios.defaults.headers.common['Authorization'] = "Bearer ".concat(response.data.data.token);
             return _context.abrupt("return", response.data.data);
-          case 20:
+          case 19:
             if (!(response.data.data.error === "phone_required")) {
-              _context.next = 24;
+              _context.next = 23;
               break;
             }
             _this.$router.push({
               name: 'confirm-phone'
             });
-            _context.next = 25;
+            _context.next = 24;
             break;
+          case 23:
+            throw new Error('Invalid response from server');
           case 24:
             throw new Error('Invalid response from server');
-          case 25:
-            throw new Error('Invalid response from server');
-          case 28:
-            _context.prev = 28;
+          case 27:
+            _context.prev = 27;
             _context.t0 = _context["catch"](0);
             // Детальный лог ошибки
             errorInfo = {
@@ -24094,11 +24097,11 @@ var telegramAuth = {
             Telegram.WebApp.showAlert(alertMessage);
             console.error('Auth Error:', errorInfo);
             throw _context.t0;
-          case 35:
+          case 34:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 28]]);
+      }, _callee, null, [[0, 27]]);
     }))();
   },
   logout: function logout() {
