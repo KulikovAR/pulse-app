@@ -33,7 +33,8 @@ export const telegramAuth = {
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Requested-With': 'XMLHttpRequest',
-                    'X-Telegram-InitData': rawInitData
+                    'X-Telegram-InitData': rawInitData,
+                    'Accept': 'application/json' // Explicit accept header
                 }
             });
 
