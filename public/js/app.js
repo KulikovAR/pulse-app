@@ -24078,7 +24078,7 @@ var telegramAuth = {
           case 23:
             _context.prev = 23;
             _context.t0 = _context["catch"](0);
-            Telegram.WebApp.showAlert('Sending POST to:', window.axios.defaults.baseURL + '/telegram/login');
+            Telegram.WebApp.showAlert('Sending POST to:', _context.t0.config.baseURL + '/telegram/login');
             Telegram.WebApp.showAlert('User data:', JSON.stringify(userData, null, 2));
             errorDetails = {
               message: _context.t0.message,
