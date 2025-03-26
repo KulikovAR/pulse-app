@@ -3,8 +3,8 @@ import axios from 'axios';
 export const telegramAuth = {
     async login() {
         try {
-            // Получаем реальные данные из Telegram WebApp
-            const initData = new URLSearchParams(window.Telegram.WebApp.initData);
+            const rawInitData = window.Telegram.WebApp.initData; // Сохраняем сырые данные
+            const initData = new URLSearchParams(rawInitData);
             const tgUser = JSON.parse(initData.get('user'));
             
             const userData = {
@@ -26,12 +26,21 @@ export const telegramAuth = {
             // Telegram.WebApp.showAlert(`Отправляем запрос на:\n${fullUrl}`);
             // console.log('Request URL:', fullUrl);
 
-            const response = await axios.post('/telegram/login', userData);
+            // const response = await axios.post('/telegram/login', userData);
+            
+            // Добавляем точные заголовки из curl
+            const response = await axios.post('/telegram/login', userData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-Telegram-InitData': rawInitData
+                }
+            });
 
             console.log('Auth response:', response);
             Telegram.WebApp.showAlert(`Ответ:\n${response}`);
             
-            if (response.data.data && response.data.data.token) {
+            if (response.data.data?.token) {
                 localStorage.setItem('token', response.data.data.token);
                 window.axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.data.token}`;
                 return response.data.data;
@@ -55,12 +64,12 @@ export const telegramAuth = {
                 }
             };
 
-//             const alertMessage = `❗ Ошибка авторизации:
-// Статус: ${errorInfo.status || 'N/A'}
-// Сообщение: ${errorInfo.message}
-// Ответ сервера: ${JSON.stringify(errorInfo.serverResponse)?.slice(0, 50)}...`;
+            const alertMessage = `❗ Ошибка авторизации:
+Статус: ${errorInfo.status || 'N/A'}
+Сообщение: ${errorInfo.message}
+Ответ сервера: ${JSON.stringify(errorInfo.serverResponse)?.slice(0, 50)}...`;
 
-            const alertMessage = `Ответ сервера: ${JSON.stringify(errorInfo.serverResponse)?.slice(200, 400)}...`;
+
 
             Telegram.WebApp.showAlert(alertMessage);
             console.error('Auth Error:', errorInfo);
