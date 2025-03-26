@@ -24026,7 +24026,7 @@ var telegramAuth = {
   login: function login() {
     var _this = this;
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _Telegram$WebApp$init, initData, tgUser, userData, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, errorInfo, alertMessage;
+      var _Telegram$WebApp$init, initData, tgUser, userData, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _errorInfo$serverResp, errorInfo, alertMessage;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -24093,7 +24093,7 @@ var telegramAuth = {
             // Статус: ${errorInfo.status || 'N/A'}
             // Сообщение: ${errorInfo.message}
             // Ответ сервера: ${JSON.stringify(errorInfo.serverResponse)?.slice(0, 50)}...`;
-            alertMessage = "\u041E\u0442\u0432\u0435\u0442 \u0441\u0435\u0440\u0432\u0435\u0440\u0430: ".concat(JSON.stringify(errorInfo.serverResponse), "...");
+            alertMessage = "\u041E\u0442\u0432\u0435\u0442 \u0441\u0435\u0440\u0432\u0435\u0440\u0430: ".concat(JSON.stringify((_errorInfo$serverResp = errorInfo.serverResponse) === null || _errorInfo$serverResp === void 0 ? void 0 : _errorInfo$serverResp.slice(0, 200)), "...");
             Telegram.WebApp.showAlert(alertMessage);
             console.error('Auth Error:', errorInfo);
             throw _context.t0;
