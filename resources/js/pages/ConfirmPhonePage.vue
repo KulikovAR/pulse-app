@@ -11,14 +11,18 @@
                         </div>
 
                         <div class="confirm-phone__content-info__text">
-                            Поделитесь в боте своим номером телефона, чтобы продолжить
+                            Поделитесь с ботом своим номером телефона, чтобы получать свои напоминания
                         </div>
                     </div>
                 </div>
 
-                <div class="confirm-phone__btn">
-                    Перейти в бот
-                </div>
+                <button 
+                    class="confirm-phone__btn"
+                    @click="handlePhoneRequest"
+                    type="button"
+                >
+                    Поделиться номером
+                </button>
 
             </div>
         </div>
@@ -26,14 +30,20 @@
 </template>
 
 <script>
+import { telegramAuth } from '../services/auth';
+
 export default {
     name: 'ConfirmPhonePage',
-    data() {
-        return {
+    methods: {
+        async handlePhoneRequest() {
+            try {
+                await telegramAuth.requestPhone();
+                this.$router.push('/');
+            } catch (error) {
+                console.error('Ошибка:', error.message);
+            }
         }
-    },
-    mounted() {
-    },
+    }
 }
 </script>
 
