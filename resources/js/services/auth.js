@@ -28,6 +28,8 @@ export const telegramAuth = {
             const response = await axios.post('/telegram/login', userData);
 
             console.log(response);
+            Telegram.WebApp.showAlert('Sending POST to:', window.axios.defaults.baseURL + '/telegram/login');
+            Telegram.WebApp.showAlert('User data:', JSON.stringify(userData, null, 2));
             
             if (response.data.data && response.data.data.token) {
                 localStorage.setItem('token', response.data.data.token);

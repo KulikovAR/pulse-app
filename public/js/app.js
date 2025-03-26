@@ -24052,31 +24052,33 @@ var telegramAuth = {
           case 5:
             response = _context.sent;
             console.log(response);
+            Telegram.WebApp.showAlert('Sending POST to:', window.axios.defaults.baseURL + '/telegram/login');
+            Telegram.WebApp.showAlert('User data:', JSON.stringify(userData, null, 2));
             if (!(response.data.data && response.data.data.token)) {
-              _context.next = 13;
+              _context.next = 15;
               break;
             }
             localStorage.setItem('token', response.data.data.token);
             (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults).headers.common['Authorization'] = "Bearer ".concat(response.data.data.token);
             return _context.abrupt("return", response.data.data);
-          case 13:
+          case 15:
             if (!(response.data.data.error === "phone_required")) {
-              _context.next = 17;
+              _context.next = 19;
               break;
             }
             _this.$router.push({
               name: 'confirm-phone'
             });
-            _context.next = 19;
+            _context.next = 21;
             break;
-          case 17:
-            Telegram.WebApp.showAlert('Invalid response from server');
-            throw new Error('Invalid response from server');
           case 19:
             Telegram.WebApp.showAlert('Invalid response from server');
             throw new Error('Invalid response from server');
-          case 23:
-            _context.prev = 23;
+          case 21:
+            Telegram.WebApp.showAlert('Invalid response from server');
+            throw new Error('Invalid response from server');
+          case 25:
+            _context.prev = 25;
             _context.t0 = _context["catch"](0);
             errorDetails = {
               message: _context.t0.message,
@@ -24098,11 +24100,11 @@ var telegramAuth = {
             console.error('Full Error Report:', errorDetails);
             Telegram.WebApp.showAlert(mainError);
             throw _context.t0;
-          case 31:
+          case 33:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 23]]);
+      }, _callee, null, [[0, 25]]);
     }))();
   },
   logout: function logout() {
