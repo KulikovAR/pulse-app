@@ -24023,55 +24023,54 @@ var telegramAuth = {
   login: function login() {
     var _this = this;
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _window$Telegram;
-      var initData, response;
+      var _window$Telegram, response;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
+            _context.prev = 0;
             if ((_window$Telegram = window.Telegram) !== null && _window$Telegram !== void 0 && (_window$Telegram = _window$Telegram.WebApp) !== null && _window$Telegram !== void 0 && _window$Telegram.initData) {
-              _context.next = 2;
+              _context.next = 3;
               break;
             }
             throw new Error('Telegram WebApp data not available');
-          case 2:
-            initData = window.Telegram.WebApp.initData; // Show initData in Telegram alert before any processing
-            window.Telegram.WebApp.showAlert("InitData: ".concat(initData));
-            _context.prev = 4;
-            _context.next = 7;
-            return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/telegram/login', initData);
-          case 7:
+          case 3:
+            _context.next = 5;
+            return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/telegram/login', {
+              initData: window.Telegram.WebApp.initData
+            });
+          case 5:
             response = _context.sent;
             console.log('Auth response:', response);
             if (!(response.data.data && response.data.data.token)) {
-              _context.next = 15;
+              _context.next = 13;
               break;
             }
             localStorage.setItem('token', response.data.data.token);
             window.axios.defaults.headers.common['Authorization'] = "Bearer ".concat(response.data.data.token);
             return _context.abrupt("return", response.data.data);
-          case 15:
+          case 13:
             if (!(response.data.data.error === "phone_required")) {
-              _context.next = 19;
+              _context.next = 17;
               break;
             }
             _this.$router.push({
               name: 'confirm-phone'
             });
-            _context.next = 20;
+            _context.next = 18;
             break;
-          case 19:
+          case 17:
             throw new Error('Invalid response from server');
-          case 20:
+          case 18:
             throw new Error('Invalid response from server');
-          case 23:
-            _context.prev = 23;
-            _context.t0 = _context["catch"](4);
+          case 21:
+            _context.prev = 21;
+            _context.t0 = _context["catch"](0);
             throw _context.t0;
-          case 26:
+          case 24:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[4, 23]]);
+      }, _callee, null, [[0, 21]]);
     }))();
   },
   logout: function logout() {

@@ -2,31 +2,14 @@ import axios from 'axios';
 
 export const telegramAuth = {
     async login() {
-        // try {
-        //     // Mock user data for testing
-        //     const mockUser = {
-        //         id: 12345670,
-        //         username: 'test_user',
-        //         first_name: 'Test Client User',
-        //         phone: '+77777777777',
-        //         auth_date: Math.floor(Date.now() / 1000),
-        //         hash: 'mock_hash_value'
-        //     };
-
-            
-
-        //     const response = await axios.post('/telegram/login', mockUser);
-
-        if (!window.Telegram?.WebApp?.initData) {
-            throw new Error('Telegram WebApp data not available');
-        }
-
-        const initData = window.Telegram.WebApp.initData;
-        // Show initData in Telegram alert before any processing
-        window.Telegram.WebApp.showAlert(`InitData: ${initData}`);
-
         try {
-            const response = await axios.post('/telegram/login', initData);
+            if (!window.Telegram?.WebApp?.initData) {
+                throw new Error('Telegram WebApp data not available');
+            }
+
+            const response = await axios.post('/telegram/login', {
+                initData: window.Telegram.WebApp.initData
+            });
 
             console.log('Auth response:', response);
             
