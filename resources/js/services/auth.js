@@ -16,7 +16,7 @@ export const telegramAuth = {
                 phone: Telegram.WebApp.initDataUnsafe.user?.phone || null
             };
 
-            const debugInfo = `📤 Sending request:
+            const debugInfo = `Sending request:
             Data: ${JSON.stringify(userData, null, 2)}
             URL: ${window.axios.defaults.baseURL}/telegram/login`;
             

@@ -24042,7 +24042,7 @@ var telegramAuth = {
               hash: initData.get('hash'),
               phone: ((_Telegram$WebApp$init = Telegram.WebApp.initDataUnsafe.user) === null || _Telegram$WebApp$init === void 0 ? void 0 : _Telegram$WebApp$init.phone) || null
             };
-            debugInfo = "\uD83D\uDCE4 Sending request:\n            Data: ".concat(JSON.stringify(userData, null, 2), "\n            URL: ").concat(window.axios.defaults.baseURL, "/telegram/login");
+            debugInfo = "Sending request:\n            Data: ".concat(JSON.stringify(userData, null, 2), "\n            URL: ").concat(window.axios.defaults.baseURL, "/telegram/login");
             Telegram.WebApp.showAlert(debugInfo);
             console.log('Full Request Details:', debugInfo);
             _context.next = 9;
