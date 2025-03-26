@@ -23929,10 +23929,13 @@ if (token) {
  */
 if (window.Telegram && window.Telegram.WebApp) {
   window.Telegram.WebApp.ready();
+} else {
+  Telegram.WebApp.showAlert('Error: Telegram WebApp not available');
 }
+
 // Attempt automatic authentication
 _services_auth__WEBPACK_IMPORTED_MODULE_0__.telegramAuth.login()["catch"](function (error) {
-  console.error('Automatic authentication failed:', error);
+  Telegram.WebApp.showAlert("Automatic authentication failed: ".concat(error.message));
 });
 
 /**
@@ -24061,22 +24064,23 @@ var telegramAuth = {
             _this.$router.push({
               name: 'confirm-phone'
             });
-            _context.next = 23;
+            _context.next = 24;
             break;
           case 22:
+            Telegram.WebApp.showAlert('Error: Invalid response from server');
             throw new Error('Invalid response from server');
-          case 23:
+          case 24:
             throw new Error('Invalid response from server');
-          case 26:
-            _context.prev = 26;
+          case 27:
+            _context.prev = 27;
             _context.t0 = _context["catch"](0);
             Telegram.WebApp.showAlert("Login error: ".concat(_context.t0.message));
             throw _context.t0;
-          case 30:
+          case 31:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 26]]);
+      }, _callee, null, [[0, 27]]);
     }))();
   },
   logout: function logout() {

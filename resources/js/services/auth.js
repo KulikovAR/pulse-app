@@ -4,6 +4,7 @@ export const telegramAuth = {
     async login() {
         try {
             Telegram.WebApp.showAlert('Starting login process...');
+            
             if (!window.Telegram?.WebApp?.initData) {
                 Telegram.WebApp.showAlert('Error: Telegram WebApp data not available');
                 throw new Error('Telegram WebApp data not available');
@@ -25,6 +26,7 @@ export const telegramAuth = {
                 Telegram.WebApp.showAlert('Phone verification required');
                 this.$router.push({ name: 'confirm-phone' });
             } else {
+                Telegram.WebApp.showAlert('Error: Invalid response from server');
                 throw new Error('Invalid response from server');
             }
             

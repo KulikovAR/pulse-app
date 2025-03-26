@@ -25,10 +25,13 @@ if (token) {
  */
 if (window.Telegram && window.Telegram.WebApp) {
     window.Telegram.WebApp.ready();
+} else {
+    Telegram.WebApp.showAlert('Error: Telegram WebApp not available');
 }
+
 // Attempt automatic authentication
 telegramAuth.login().catch(error => {
-    console.error('Automatic authentication failed:', error);
+    Telegram.WebApp.showAlert(`Automatic authentication failed: ${error.message}`);
 });
 
 /**
