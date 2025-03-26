@@ -7,14 +7,14 @@ export const telegramAuth = {
         window.Telegram.WebApp.showAlert(`Raw initData: ${JSON.stringify(initData)}`);
         try {
             // Mock user data for testing
-            // const mockUser = {
-            //     id: 12345670,
-            //     username: 'test_user',
-            //     first_name: 'Test Client User',
-            //     phone: '+77777777777',
-            //     auth_date: Math.floor(Date.now() / 1000),
-            //     hash: 'mock_hash_value'
-            // };
+            const mockUser = {
+                id: 12345670,
+                username: 'test_user',
+                first_name: 'Test Client User',
+                phone: '+77777777777',
+                auth_date: Math.floor(Date.now() / 1000),
+                hash: 'mock_hash_value'
+            };
 
             // Send mock user data to the server for authentication
             // const initData = new URLSearchParams(window.Telegram.WebApp.initData);
@@ -33,9 +33,9 @@ export const telegramAuth = {
             //     phone: Telegram.WebApp.initDataUnsafe.user?.phone || null
             // };
 
-            // const response = await axios.post('/telegram/login', mockUser);
+            const response = await axios.post('/telegram/login', mockUser);
             // const response = await window.axios.post('/telegram/login', userData);
-            const response = await window.axios.post('/telegram/login', initData);
+            // const response = await window.axios.post('/telegram/login', initData);
             console.log('Auth response:', response);
             
             if (response.data.data && response.data.data.token) {
