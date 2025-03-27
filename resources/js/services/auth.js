@@ -18,9 +18,9 @@ export const telegramAuth = {
             };
 
             // Логируем все данные перед отправкой
-            Telegram.WebApp.showAlert(`Отправляем данные:\n${JSON.stringify(userData, null, 2)}`);
-            console.log('Telegram initData:', window.Telegram.WebApp.initData);
-            console.log('User data for server:', userData);
+            // Telegram.WebApp.showAlert(`Отправляем данные:\n${JSON.stringify(userData, null, 2)}`);
+            // console.log('Telegram initData:', window.Telegram.WebApp.initData);
+            // console.log('User data for server:', userData);
             
             const response = await axios.post('https://pulse-back.pisateli-studio.ru/api/v1/telegram/login', userData, {
                 headers: {
