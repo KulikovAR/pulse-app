@@ -48,7 +48,7 @@ export const telegramAuth = {
             
             throw new Error('Invalid response from server');
         } catch (error) {
-
+            throw new Error(error);
             if(error.response?.data?.data?.error === "phone_required") {
                 router.push({ name: 'confirm-phone' });
             }
