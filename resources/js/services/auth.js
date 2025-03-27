@@ -29,6 +29,10 @@ export const telegramAuth = {
             // const response = await axios.post('/telegram/login', userData);
             
             // Добавляем точные заголовки из curl
+            // Добавьте перед запросом
+            console.log('Full request URL:', window.axios.defaults.baseURL + '/telegram/login');
+            Telegram.WebApp.showAlert('Full request URL:', window.axios.defaults.baseURL + '/telegram/login');
+            
             const response = await axios.post('/telegram/login', userData, {
                 headers: {
                     'Content-Type': 'application/json',
