@@ -114,7 +114,7 @@ export default {
     methods: {
         async fetchReminders() {
             try {
-                const response = await axios.get('/events');
+                const response = await window.axios.get('/events');
                 console.log(response);
                 this.reminders = response.data.data;
                 this.remindersDistribution();

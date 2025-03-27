@@ -101,7 +101,7 @@ export default {
                 if (!this.event) {
                     throw new Error('No event data available');
                 }
-                await axios.put(`/event/${this.event.id}/cancel`);
+                await window.axios.put(`/event/${this.event.id}/cancel`);
                 // alert('Запись отменена');
                 this.$router.push({ name: 'main' });
             } catch (error) {
@@ -114,7 +114,7 @@ export default {
                 if (!this.$route.params.id) {
                     throw new Error('Event ID is missing');
                 }
-                const response = await axios.get(`/event/${this.$route.params.id}`);
+                const response = await window.axios.get(`/event/${this.$route.params.id}`);
                 this.event = response.data.data;
             } catch (error) {
                 console.error('Error fetching event data:', error);

@@ -89,7 +89,7 @@ export default {
 
         async fetchReminders() {
             try {
-                const response = await axios.get('/events');
+                const response = await window.axios.get('/events');
                 this.reminders = response.data.data;
                 this.remindersIndicatorDistribution();
             } catch (error) {
