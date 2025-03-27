@@ -59,9 +59,10 @@ export default {
     methods: {
         async fetchServices() {
             try {
-                const response = await axios.get('/companies/client', {
-                    headers: window.axios.defaults.headers.common
-                });
+                // const response = await axios.get('/companies/client', {
+                //     headers: window.axios.defaults.headers.common
+                // });
+                const response = await window.axios.get('/companies/client');
                 this.services = response.data.data;
                 Telegram.WebApp.showAlert(`Получили services:\n${response.data.data}`);
             } catch (error) {
