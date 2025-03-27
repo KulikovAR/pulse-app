@@ -14,23 +14,13 @@ export const telegramAuth = {
                 first_name: tgUser.first_name,
                 auth_date: initData.get('auth_date'),
                 hash: initData.get('hash'),
-                phone: Telegram.WebApp.initDataUnsafe.user?.phone_number || null
+                phone: Telegram.WebApp.initDataUnsafe.user?.phone || null
             };
 
             // Логируем все данные перед отправкой
             Telegram.WebApp.showAlert(`Отправляем данные:\n${JSON.stringify(userData, null, 2)}`);
             console.log('Telegram initData:', window.Telegram.WebApp.initData);
             console.log('User data for server:', userData);
-
-            // Добавляем логирование URL перед запросом
-            // const fullUrl = window.axios.defaults.baseURL + '/telegram/login';
-            // Telegram.WebApp.showAlert(`Отправляем запрос на:\n${fullUrl}`);
-            // console.log('Request URL:', fullUrl);
-
-            // const response = await axios.post('/telegram/login', userData);
-            
-            // Добавляем точные заголовки из curl
-            // Добавьте перед запросом
             
             const response = await axios.post('https://pulse-back.pisateli-studio.ru/api/v1/telegram/login', userData, {
                 headers: {
@@ -47,9 +37,10 @@ export const telegramAuth = {
             if (response.data.data?.token) {
                 localStorage.setItem('token', response.data.data.token);
                 window.axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.data.token}`;
+                Telegram.WebApp.showAlert(`Получили токен:\n${response.data.data.token}`);
                 return response.data.data;
             } else if (response.data.data.error === "phone_required") {
-                router.push({ name: 'confirm-phone' });  // Remove 'this.'
+                router.push({ name: 'confirm-phone' }); 
             } else {
                 throw new Error('Invalid response from server');
             }
@@ -58,7 +49,7 @@ export const telegramAuth = {
         } catch (error) {
 
             if(error.response?.data?.data?.error === "phone_required") {
-                router.push({ name: 'confirm-phone' });  // Remove 'this.'
+                router.push({ name: 'confirm-phone' });
             }
             // Детальный лог ошибки
             const errorInfo = {
