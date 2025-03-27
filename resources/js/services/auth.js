@@ -101,14 +101,18 @@ export const telegramAuth = {
                 Telegram.WebApp.requestContact(resolve);
             });
             
-            if (!result || !Telegram.WebApp.initDataUnsafe.user?.phone) {
-                Telegram.WebApp.showAlert('Phone sharing failed');
-                throw new Error('Phone sharing failed');
+            // Check the result object directly instead of initDataUnsafe
+            if (!result?.phone_number) {
+                Telegram.WebApp.showAlert('Не удалось получить номер телефона');
+                throw new Error('Phone number not found in sharing result');
             }
+            
+            // Update phone in initDataUnsafe manually
+            Telegram.WebApp.initDataUnsafe.user.phone = result.phone_number;
             
             return await this.login();
         } catch (error) {
-            Telegram.WebApp.showAlert(`Phone request failed: ${error.message}`);
+            Telegram.WebApp.showAlert(`Ошибка: ${error.message}`);
             throw error;
         }
     },
