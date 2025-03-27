@@ -66,7 +66,7 @@ export default {
                 console.error('Error fetching services:', error);
                 // Telegram.WebApp.showAlert(`services get error: ${error}`);
                 // Telegram.WebApp.showAlert(`services get error: ${error.response.data}`);
-                Telegram.WebApp.showAlert(`services get error:\n${JSON.stringify(error.response.data, null, 2)}`);
+                Telegram.WebApp.showAlert(`services get error:\n${JSON.stringify(error.config, null, 2)}`);
             }
         },
         setFallbackImage(index) {
