@@ -72,7 +72,7 @@ export const telegramAuth = {
 
 
             // Telegram.WebApp.showAlert(alertMessage);
-            Telegram.WebApp.showAlert(`login error:\n${JSON.stringify(error, null, 2)}`);
+            Telegram.WebApp.showAlert(`login error:\n${JSON.stringify(error.response, null, 2)}`);
             console.error('Auth Error:', errorInfo);
             
             throw error;
