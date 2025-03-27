@@ -51,30 +51,10 @@ export const telegramAuth = {
             
             throw new Error('Invalid response from server');
         } catch (error) {
-            throw new Error(error);
             if(error.response?.data?.data?.error === "phone_required") {
                 router.push({ name: 'confirm-phone' });
             }
-            // Детальный лог ошибки
-//             const errorInfo = {
-//                 status: error.response?.status,
-//                 message: error.message,
-//                 serverResponse: error.response?.data,
-//                 request: {
-//                     url: error.config?.url,
-//                     method: error.config?.method,
-//                     data: error.config?.data
-//                 }
-//             };
-
-//             const alertMessage = `❗ Ошибка авторизации:
-// Статус: ${errorInfo.status || 'N/A'}
-// Сообщение: ${errorInfo.message}
-// Ответ сервера: ${JSON.stringify(errorInfo.serverResponse)?.slice(0, 50)}...`;
-
-
-
-            // Telegram.WebApp.showAlert(alertMessage);
+           
             Telegram.WebApp.showAlert(`login error:\n${JSON.stringify(error.response, null, 2)}`);
             console.error('Auth Error:', errorInfo);
             
