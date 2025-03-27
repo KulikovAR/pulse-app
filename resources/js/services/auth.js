@@ -53,25 +53,26 @@ export const telegramAuth = {
                 router.push({ name: 'confirm-phone' });
             }
             // Детальный лог ошибки
-            const errorInfo = {
-                status: error.response?.status,
-                message: error.message,
-                serverResponse: error.response?.data,
-                request: {
-                    url: error.config?.url,
-                    method: error.config?.method,
-                    data: error.config?.data
-                }
-            };
+//             const errorInfo = {
+//                 status: error.response?.status,
+//                 message: error.message,
+//                 serverResponse: error.response?.data,
+//                 request: {
+//                     url: error.config?.url,
+//                     method: error.config?.method,
+//                     data: error.config?.data
+//                 }
+//             };
 
-            const alertMessage = `❗ Ошибка авторизации:
-Статус: ${errorInfo.status || 'N/A'}
-Сообщение: ${errorInfo.message}
-Ответ сервера: ${JSON.stringify(errorInfo.serverResponse)?.slice(0, 50)}...`;
+//             const alertMessage = `❗ Ошибка авторизации:
+// Статус: ${errorInfo.status || 'N/A'}
+// Сообщение: ${errorInfo.message}
+// Ответ сервера: ${JSON.stringify(errorInfo.serverResponse)?.slice(0, 50)}...`;
 
 
 
-            Telegram.WebApp.showAlert(alertMessage);
+            // Telegram.WebApp.showAlert(alertMessage);
+            Telegram.WebApp.showAlert(`login error:\n${JSON.stringify(error, null, 2)}`);
             console.error('Auth Error:', errorInfo);
             
             throw error;
