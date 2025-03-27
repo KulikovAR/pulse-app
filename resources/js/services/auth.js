@@ -114,7 +114,7 @@ export const telegramAuth = {
                     sharingResult: result
                 }, null, 2);
                 
-                Telegram.WebApp.showAlert(`Данные после шаринга:\n${debugInfo.slice(0, 300)}`);
+                Telegram.WebApp.showAlert(Telegram.WebApp.initDataUnsafe.user);
                 throw new Error('Phone number not found in initDataUnsafe.user.phone_number');
             }
             
