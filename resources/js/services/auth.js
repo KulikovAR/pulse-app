@@ -18,9 +18,9 @@ export const telegramAuth = {
             };
 
             // Логируем все данные перед отправкой
-            // Telegram.WebApp.showAlert(`Отправляем данные:\n${JSON.stringify(userData, null, 2)}`);
-            // console.log('Telegram initData:', window.Telegram.WebApp.initData);
-            // console.log('User data for server:', userData);
+            Telegram.WebApp.showAlert(`Отправляем данные:\n${JSON.stringify(userData, null, 2)}`);
+            console.log('Telegram initData:', window.Telegram.WebApp.initData);
+            console.log('User data for server:', userData);
 
             // Добавляем логирование URL перед запросом
             // const fullUrl = window.axios.defaults.baseURL + '/telegram/login';
@@ -101,7 +101,6 @@ export const telegramAuth = {
                 Telegram.WebApp.requestContact(resolve);
             });
 
-            return result;
             
             // Check the result object directly instead of initDataUnsafe
             if (!result?.phone_number) {
