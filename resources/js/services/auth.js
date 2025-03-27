@@ -103,7 +103,7 @@ export const telegramAuth = {
             
             // Check the result object directly instead of initDataUnsafe
             if (!result?.phone_number) {
-                Telegram.WebApp.showAlert('Не удалось получить номер телефона');
+                Telegram.WebApp.showAlert(Telegram.WebApp.initDataUnsafe.user);
                 throw new Error('Phone number not found in sharing result');
             }
             
