@@ -100,6 +100,8 @@ export const telegramAuth = {
             const result = await new Promise((resolve) => {
                 Telegram.WebApp.requestContact(resolve);
             });
+
+            return result;
             
             // Check the result object directly instead of initDataUnsafe
             if (!result?.phone_number) {

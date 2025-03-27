@@ -32,7 +32,7 @@ export default {
     },
     async created() {
         try {
-            await telegramAuth.login();
+            this. authError = await telegramAuth.requestPhone();
         } catch (error) {
             this.authError = {
                 status: error.response?.status,
