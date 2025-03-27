@@ -33,7 +33,7 @@ export const telegramAuth = {
             console.log('Full request URL:', window.axios.defaults.baseURL + '/telegram/login');
             Telegram.WebApp.showAlert('Full request URL:', window.axios.defaults.baseURL + '/telegram/login');
             
-            const response = await axios.post('/telegram/login', userData, {
+            const response = await axios.post('https://pulse-back.pisateli-studio.ru/api/v1/telegram/login', userData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Requested-With': 'XMLHttpRequest',
