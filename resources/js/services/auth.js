@@ -1,4 +1,5 @@
 import axios from 'axios';
+import router from '../router';  // Add this import
 
 export const telegramAuth = {
     async login() {
@@ -48,7 +49,7 @@ export const telegramAuth = {
                 window.axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.data.token}`;
                 return response.data.data;
             } else if (response.data.data.error === "phone_required") {
-                this.$router.push({ name: 'confirm-phone' });
+                router.push({ name: 'confirm-phone' });  // Remove 'this.'
             } else {
                 throw new Error('Invalid response from server');
             }
@@ -56,8 +57,8 @@ export const telegramAuth = {
             throw new Error('Invalid response from server');
         } catch (error) {
 
-            if(error.response.data.data.error === "phone_required") {
-                this.$router.push({ name: 'confirm-phone' });
+            if(error.response?.data?.data?.error === "phone_required") {
+                router.push({ name: 'confirm-phone' });  // Remove 'this.'
             }
             // Детальный лог ошибки
             const errorInfo = {
