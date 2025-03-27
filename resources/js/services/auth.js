@@ -103,8 +103,20 @@ export const telegramAuth = {
             
             // Check the result object directly instead of initDataUnsafe
             if (!result?.phone_number) {
-                Telegram.WebApp.showAlert(JSON.stringify(Telegram.WebApp.initDataUnsafe, null, 2));
-                throw new Error('Phone number not found in sharing result');
+                // Форматируем весь объект initDataUnsafe
+                const debugData = JSON.stringify({
+                    initDataUnsafe: Telegram.WebApp.initDataUnsafe,
+                    sharingResult: result
+                }, null, 2);
+                
+                // Обрезаем до 300 символов чтобы влезло в алерт
+                Telegram.WebApp.showAlert(`Данные отладки:\n${debugData.slice(0, 300)}...`);
+                
+                // Полные данные в консоль
+                console.log('Debug initData:', Telegram.WebApp.initDataUnsafe);
+                console.log('Sharing result:', result);
+                
+                throw new Error('Не удалось получить номер телефона');
             }
             
             // Update phone in initDataUnsafe manually
