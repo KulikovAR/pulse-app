@@ -4,7 +4,7 @@ import router from '../router';  // Add this import
 export const telegramAuth = {
     async login() {
         try {
-            const rawInitData = window.Telegram.WebApp.initData; // Сохраняем сырые данные
+            const rawInitData = window.Telegram.WebApp.initData;
             const initData = new URLSearchParams(rawInitData);
             const tgUser = JSON.parse(initData.get('user'));
             
@@ -22,23 +22,16 @@ export const telegramAuth = {
             // console.log('Telegram initData:', window.Telegram.WebApp.initData);
             // console.log('User data for server:', userData);
             
-            const response = await axios.post('https://pulse-back.pisateli-studio.ru/api/v1/telegram/login', userData, {
+            const response = await window.axios.post('/telegram/login', userData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Requested-With': 'XMLHttpRequest',
                     'X-Telegram-InitData': rawInitData,
-                    'Accept': 'application/json' // Explicit accept header
+                    'Accept': 'application/json'
                 }
             });
-
-            console.log('Auth response:', response);
-            // if(response.data.ok){
-            //     Telegram.WebApp.showAlert(`ok`);
-            // }
-            // Telegram.WebApp.showAlert(`Ответ:\n${JSON.stringify(response, null, 2)}}`);
             
             if (response.data.data?.token) {
-                // Telegram.WebApp.showAlert(`Получили токен!!`);
                 localStorage.setItem('token', response.data.data.token);
                 window.axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.data.token}`;
                 // Telegram.WebApp.showAlert(`Получили токен:\n${response.data.data.token}`);
@@ -55,9 +48,6 @@ export const telegramAuth = {
             if(error.response?.data?.data?.error === "phone_required") {
                 router.push({ name: 'confirm-phone' });
             }
-           
-            Telegram.WebApp.showAlert(`login error:\n${JSON.stringify(error.response, null, 2)}`);
-            console.error('Auth Error:', errorInfo);
             
             throw error;
         }
@@ -87,12 +77,6 @@ export const telegramAuth = {
             // Get phone from responseUnsafe.contact according to typings
             const phone = info?.responseUnsafe?.contact?.phone_number;
             if (!phone) {
-                const debugInfo = JSON.stringify({
-                    requestResponse: info,
-                    initDataUnsafe: Telegram.WebApp.initDataUnsafe
-                }, null, 2);
-                
-                Telegram.WebApp.showAlert(`Данные контакта:\n${debugInfo.slice(0, 250)}...`);
                 throw new Error('Phone number not found in contact response');
             }
             
