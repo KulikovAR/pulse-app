@@ -101,16 +101,21 @@ export const telegramAuth = {
                 Telegram.WebApp.requestContact(resolve);
             });
             
-            // Correct check according to documentation
             if (result !== true) {
-                Telegram.WebApp.showAlert('Не удалось получить номер телефона');
                 throw new Error('User denied phone sharing');
             }
             
-            // Phone should be available in initDataUnsafe after successful sharing
-            const phone = Telegram.WebApp.initDataUnsafe.user?.phone;
+            // Правильное место для телефона после шаринга
+            const phone = Telegram.WebApp.initDataUnsafe.user?.phone_number;
             if (!phone) {
-                throw new Error('Phone number not found after sharing');
+                // Добавляем отладочную информацию
+                const debugInfo = JSON.stringify({
+                    initDataUnsafe: Telegram.WebApp.initDataUnsafe,
+                    sharingResult: result
+                }, null, 2);
+                
+                Telegram.WebApp.showAlert(`Данные после шаринга:\n${debugInfo.slice(0, 300)}`);
+                throw new Error('Phone number not found in initDataUnsafe.user.phone_number');
             }
             
             return await this.login();
