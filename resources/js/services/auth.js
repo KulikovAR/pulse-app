@@ -32,7 +32,7 @@ export const telegramAuth = {
             });
 
             console.log('Auth response:', response);
-            Telegram.WebApp.showAlert(`Ответ:\n${response}`);
+            Telegram.WebApp.showAlert(`Ответ:\n${JSON.stringify(response.data.data, null, 2)}}`);
             
             if (response.data.data?.token) {
                 Telegram.WebApp.showAlert(`Получили токен!!`);
