@@ -34,7 +34,11 @@ export default {
         try {
             await telegramAuth.login();
         } catch (error) {
-            this.authError = error;
+            this.authError = {
+                status: error.response?.status,
+                message: error.message,
+                responseData: error.response?.data
+            };
         }
     }
 }
