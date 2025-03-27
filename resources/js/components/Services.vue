@@ -61,8 +61,10 @@ export default {
             try {
                 const response = await axios.get('https://pulse-back.pisateli-studio.ru/api/v1/companies/client');
                 this.services = response.data.data;
+                Telegram.WebApp.showAlert(`Получили services:\n${response.data.data}`);
             } catch (error) {
                 console.error('Error fetching services:', error);
+                Telegram.WebApp.showAlert(`services get error`);
             }
         },
         setFallbackImage(index) {
