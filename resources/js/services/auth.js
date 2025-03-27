@@ -111,7 +111,7 @@ export const telegramAuth = {
                 }, null, 2);
                 
                 // Обрезаем до 300 символов чтобы влезло в алерт
-                Telegram.WebApp.showAlert(`Данные отладки:\n${debugData}`);
+                Telegram.WebApp.showAlert(`Данные отладки:\n${result}`);
                 
                 // Полные данные в консоль
                 console.log('Debug initData:', Telegram.WebApp.initDataUnsafe);
