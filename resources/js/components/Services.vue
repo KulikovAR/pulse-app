@@ -59,7 +59,9 @@ export default {
     methods: {
         async fetchServices() {
             try {
-                const response = await axios.get('https://pulse-back.pisateli-studio.ru/api/v1/companies/client');
+                const response = await axios.get('https://pulse-back.pisateli-studio.ru/api/v1/companies/client', {
+                    headers: window.axios.defaults.headers.common
+                });
                 this.services = response.data.data;
                 Telegram.WebApp.showAlert(`Получили services:\n${response.data.data}`);
             } catch (error) {
