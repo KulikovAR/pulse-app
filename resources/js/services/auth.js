@@ -38,7 +38,7 @@ export const telegramAuth = {
             // Telegram.WebApp.showAlert(`Ответ:\n${JSON.stringify(response, null, 2)}}`);
             
             if (response.data.data?.token) {
-                Telegram.WebApp.showAlert(`Получили токен!!`);
+                // Telegram.WebApp.showAlert(`Получили токен!!`);
                 localStorage.setItem('token', response.data.data.token);
                 window.axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.data.token}`;
                 Telegram.WebApp.showAlert(`Получили токен:\n${response.data.data.token}`);
