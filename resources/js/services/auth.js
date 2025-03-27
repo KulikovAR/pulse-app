@@ -14,7 +14,8 @@ export const telegramAuth = {
                 first_name: tgUser.first_name,
                 auth_date: initData.get('auth_date'),
                 hash: initData.get('hash'),
-                phone: Telegram.WebApp.initDataUnsafe.user?.phone || null
+                phone: Telegram.WebApp.initDataUnsafe.contact?.phone_number || null
+                // phone: Telegram.WebApp.initDataUnsafe.user?.phone || null
             };
 
             // Логируем все данные перед отправкой
