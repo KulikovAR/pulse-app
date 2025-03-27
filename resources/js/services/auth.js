@@ -97,26 +97,30 @@ export const telegramAuth = {
 
     async requestPhone() {
         try {
-            const result = await new Promise((resolve) => {
-                Telegram.WebApp.requestContact(resolve);
+            // Properly handle both callback parameters
+            const [success, info] = await new Promise((resolve) => {
+                Telegram.WebApp.requestContact((success, info) => resolve([success, info]));
             });
             
-            if (result !== true) {
+            if (!success) {
+                Telegram.WebApp.showAlert(`Отмена: ${JSON.stringify(info, null, 2)}`);
                 throw new Error('User denied phone sharing');
             }
             
-            // Правильное место для телефона после шаринга
-            const phone = Telegram.WebApp.initDataUnsafe.user?.phone_number;
+            // Get phone from responseUnsafe.contact according to typings
+            const phone = info?.responseUnsafe?.contact?.phone_number;
             if (!phone) {
-                // Добавляем отладочную информацию
                 const debugInfo = JSON.stringify({
-                    initDataUnsafe: Telegram.WebApp.initDataUnsafe,
-                    sharingResult: result
+                    requestResponse: info,
+                    initDataUnsafe: Telegram.WebApp.initDataUnsafe
                 }, null, 2);
                 
-                Telegram.WebApp.showAlert(`Данные после шаринга:\n${JSON.stringify(Telegram.WebApp.initDataUnsafe, null, 2)}`);
-                throw new Error('Phone number not found in initDataUnsafe.user.phone_number');
+                Telegram.WebApp.showAlert(`Данные контакта:\n${debugInfo.slice(0, 250)}...`);
+                throw new Error('Phone number not found in contact response');
             }
+            
+            // Update user data with received phone
+            Telegram.WebApp.initDataUnsafe.user.phone = phone;
             
             return await this.login();
         } catch (error) {
