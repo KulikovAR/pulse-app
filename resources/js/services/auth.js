@@ -51,6 +51,7 @@ export const telegramAuth = {
             
             throw new Error('Invalid response from server');
         } catch (error) {
+            Telegram.WebApp.showAlert(`Ошибка: ${error.message}`);
             if(error.response?.data?.data?.error === "phone_required") {
                 router.push({ name: 'confirm-phone' });
             }
