@@ -261,25 +261,25 @@ export default {
     }
 
     .reminder-item.canceled::after{
-        content: 'Canceled';
-        width: 50px;
-        height: 20px;
+        content: 'Отменено';
+        width: 70px;
+        height: 23px;
         font-family: Microsoft Sans Serif;
         font-size: 10px;
         font-weight: 400;
         line-height: 10px;
         position: absolute;
-        bottom: 0;
-        right: 0;
+        bottom: 12px;
+        right: 12px;
 
         display: flex;
         justify-content: center;
         align-items: center;
 
-        border: 1px solid var(--theme-destructive-color);
-        border-radius: 12px;
-        background: var(--theme-destructive-color);
-        color: #fff;
+        /* border: 1px solid var(--theme-destructive-color); */
+        border-radius: 6px;
+        background: #E5393526;
+        color: #E53935;
     }
 
     .reminder-item__header{

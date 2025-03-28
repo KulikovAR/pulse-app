@@ -55,9 +55,12 @@
                     </div>
                 </div>
 
+                <div v-if="event.is_cancelled" class="reminder-item__service-info-item canceled"> 
+                    Отменено
+                </div>
             </div>
 
-            <div class="reminder-btns__wrapper">
+            <div v-if="!event.is_cancelled" class="reminder-btns__wrapper">
                 <div class="reminder-btns">
                     <div class="reminder-btn cancel" @click="showCancelPopUp">
                         Отменить
@@ -153,7 +156,7 @@ export default {
         margin-bottom: 64px;
     }
 
-    .reminder-item.canceled::after{
+    /* .reminder-item.canceled::after{
         content: 'Canceled';
         width: 50px;
         height: 20px;
@@ -173,6 +176,23 @@ export default {
         border-radius: 12px;
         background: var(--theme-destructive-color);
         color: #fff;
+    } */
+
+    .reminder-item__service-info-item.canceled{
+        width: 70px;
+        height: 23px;
+        font-family: Microsoft Sans Serif;
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 10px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        border-radius: 6px;
+        background: #E5393526;
+        color: #E53935;
     }
 
     .reminder-item__header{
