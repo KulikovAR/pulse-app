@@ -265,9 +265,11 @@ export default {
         width: 70px;
         height: 23px;
         font-family: Microsoft Sans Serif;
-        font-size: 10px;
         font-weight: 400;
-        line-height: 10px;
+        font-size: 15px;
+        line-height: 100%;
+        letter-spacing: 0px;
+
         position: absolute;
         bottom: 12px;
         right: 12px;
