@@ -156,6 +156,10 @@ export default {
         margin-bottom: 64px;
     }
 
+    .reminder-item.canceled{
+        margin-bottom: 8px;
+    }
+
     /* .reminder-item.canceled::after{
         content: 'Canceled';
         width: 50px;
@@ -179,6 +183,7 @@ export default {
     } */
 
     .reminder-item__service-info-item.canceled{
+        margin-top: 24px;
         width: 70px;
         height: 23px;
         font-family: Microsoft Sans Serif;
