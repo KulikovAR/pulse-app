@@ -184,8 +184,8 @@ export default {
 
     .reminder-item__service-info-item.canceled{
         margin-top: 24px;
-        width: 70px;
-        height: 23px;
+        width: 80px;
+        height: 25px;
 
         font-family: Microsoft Sans Serif;
         font-weight: 400;

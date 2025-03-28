@@ -264,11 +264,13 @@ export default {
         content: 'Отменено';
         width: 70px;
         height: 23px;
+
         font-family: Microsoft Sans Serif;
         font-weight: 400;
-        font-size: 15px;
+        font-size: 13px;
         line-height: 100%;
         letter-spacing: 0px;
+
 
         position: absolute;
         bottom: 12px;
