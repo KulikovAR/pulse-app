@@ -55,12 +55,12 @@
                     </div>
                 </div>
 
-                <div v-if="event.is_cancelled" class="reminder-item__service-info-item canceled"> 
+                <div v-if="event?.is_cancelled" class="reminder-item__service-info-item canceled"> 
                     Отменено
                 </div>
             </div>
 
-            <div v-if="!event.is_cancelled" class="reminder-btns__wrapper">
+            <div v-if="!event?.is_cancelled" class="reminder-btns__wrapper">
                 <div class="reminder-btns">
                     <div class="reminder-btn cancel" @click="showCancelPopUp">
                         Отменить
