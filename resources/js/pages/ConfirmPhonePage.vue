@@ -38,7 +38,7 @@ export default {
         async handlePhoneRequest() {
             try {
                 await telegramAuth.requestPhone();
-                this.$router.push('/');
+                this.$router.replace('/');
             } catch (error) {
                 console.error('Ошибка:', error.message);
             }

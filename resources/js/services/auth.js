@@ -39,17 +39,17 @@ export const telegramAuth = {
             } else if (response.data.data.error === "phone_required") {
                 router.push({ name: 'confirm-phone' }); 
             } else {
-                throw new Error('Invalid response from server');
+                // throw new Error('Invalid response from server');
             }
             
-            throw new Error('Invalid response from server');
+            // throw new Error('Invalid response from server');
         } catch (error) {
-            Telegram.WebApp.showAlert(`Ошибка: ${error.message}`);
+            // Telegram.WebApp.showAlert(`Ошибка: ${error.message}`);
             if(error.response?.data?.data?.error === "phone_required") {
                 router.push({ name: 'confirm-phone' });
             }
             
-            throw error;
+            // throw error;
         }
     },
 
@@ -70,22 +70,25 @@ export const telegramAuth = {
             });
             
             if (!success) {
-                Telegram.WebApp.showAlert(`Отмена: ${JSON.stringify(info, null, 2)}`);
-                throw new Error('User denied phone sharing');
+                // Telegram.WebApp.showAlert(`Отмена: ${JSON.stringify(info, null, 2)}`);
+                // throw new Error('User denied phone sharing');
             }
             
             // Get phone from responseUnsafe.contact according to typings
             const phone = info?.responseUnsafe?.contact?.phone_number;
             if (!phone) {
-                throw new Error('Phone number not found in contact response');
+                // throw new Error('Phone number not found in contact response');
             }
             
             // Update user data with received phone
             Telegram.WebApp.initDataUnsafe.user.phone = phone;
             
-            return await this.login();
+            await this.login();
+            router.replace('/');
+            
+            return true;
         } catch (error) {
-            Telegram.WebApp.showAlert(`Ошибка: ${error.message}`);
+            // Telegram.WebApp.showAlert(`Ошибка: ${error.message}`);
             throw error;
         }
     },
