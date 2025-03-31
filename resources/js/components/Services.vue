@@ -227,19 +227,21 @@ export default {
     position: absolute;
     top: 0;
     right: 5px;
-    border: 2px solid #fff;
 }
 
 .services-list__item.today::after {
     background: var(--theme-indicator-color-today);
+    border: 2px solid #fff;
 }
 
 .services-list__item.tomorrow::after {
     background: var(--theme-indicator-color-tomorrow);
+    border: 2px solid #fff;
 }
 
 .services-list__item.later::after {
     background: var(--theme-indicator-color-later);
+    border: 2px solid #fff;
 }
 
 .avatar-letter {
