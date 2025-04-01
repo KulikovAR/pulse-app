@@ -220,12 +220,18 @@ export default {
 
 
     .reminder-accordion__list{
+        width: 100%;
         display: flex;
         flex-direction: column;
         flex-grow: 1;
     }
 
+    .reminder-accordion__item{
+        width: 100%;
+    }
+
     .reminder-accordion__item__title{
+        width: 100%;
         position: relative;
         font-family: Microsoft Sans Serif;
         font-size: 24px;
