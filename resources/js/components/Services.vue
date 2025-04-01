@@ -155,13 +155,12 @@ export default {
     position: relative;
     width: 100%;
     overflow: hidden; /* Маскируем края */
-    max-width: 500px;
+    max-width: 768px;
 }
 
 /* Список сервисов */
 .services-list {
     display: flex;
-    padding: 14px 0;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-behavior: smooth;
