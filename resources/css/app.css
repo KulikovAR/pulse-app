@@ -12,9 +12,19 @@ body {
 }
 
 .container{
-    max-width: 768px;
+    max-width: 400px;
     width: 100%;
     margin: 0 auto;
     padding: 0 16px;
-    /* background: var(--theme-text-color-gray); */
+    /* Fix для iPhone */
+    padding-left: calc(16px + env(safe-area-inset-left)) !important;
+    padding-right: calc(16px + env(safe-area-inset-right)) !important;
+    box-sizing: border-box;
+}
+
+@supports (padding: max(0px)) {
+    .container {
+        padding-left: max(16px, env(safe-area-inset-left)) !important;
+        padding-right: max(16px, env(safe-area-inset-right)) !important;
+    }
 }
