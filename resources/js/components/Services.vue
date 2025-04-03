@@ -178,7 +178,7 @@ export default {
 /* Элемент слайдера */
 .services-list__item {
     position: relative;
-    width: 75px;
+    width: 69px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
