@@ -1,7 +1,7 @@
 <template>
     <div class="main-page">
         <Header/>
-        <Services/>
+        <!-- <Services/> -->
         <ReminderAccordion/>
     </div>
 </template>
