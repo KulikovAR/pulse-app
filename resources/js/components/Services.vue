@@ -148,6 +148,8 @@ export default {
     padding: 0;
     margin: 0;
     max-width: unset;
+    padding-left: unset !important;
+    padding-right: unset !important;
 }
 
 /* Обертка для маскирования краев */
