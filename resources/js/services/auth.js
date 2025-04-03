@@ -7,26 +7,35 @@ export const telegramAuth = {
             const rawInitData = window.Telegram.WebApp.initData;
             const initData = new URLSearchParams(rawInitData);
             const tgUser = JSON.parse(initData.get('user'));
-            
-            const userData = {
-                id: tgUser.id,
-                username: tgUser.username,
-                first_name: tgUser.first_name,
-                auth_date: initData.get('auth_date'),
-                hash: initData.get('hash'),
-                phone: Telegram.WebApp.initDataUnsafe.user?.phone || null
+
+            const mockUser = {
+                id: 123456780,
+                username: 'test_user',
+                first_name: 'Test User',
+                phone: '+1234567899',
+                auth_date: Math.floor(Date.now() / 1000),
+                hash: 'mock_hash_value'
             };
+            
+            // const userData = {
+            //     id: tgUser.id,
+            //     username: tgUser.username,
+            //     first_name: tgUser.first_name,
+            //     auth_date: initData.get('auth_date'),
+            //     hash: initData.get('hash'),
+            //     phone: Telegram.WebApp.initDataUnsafe.user?.phone || null
+            // };
 
             // Логируем все данные перед отправкой
             // Telegram.WebApp.showAlert(`Отправляем данные:\n${JSON.stringify(userData, null, 2)}`);
             // console.log('Telegram initData:', window.Telegram.WebApp.initData);
             // console.log('User data for server:', userData);
             
-            const response = await window.axios.post('/telegram/login', userData, {
+            const response = await window.axios.post('/telegram/login', mockUser, {
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Requested-With': 'XMLHttpRequest',
-                    'X-Telegram-InitData': rawInitData,
+                    // 'X-Telegram-InitData': rawInitData,
                     'Accept': 'application/json'
                 }
             });
