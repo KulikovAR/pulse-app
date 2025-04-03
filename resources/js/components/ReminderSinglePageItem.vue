@@ -109,7 +109,7 @@ export default {
                 this.$router.push({ name: 'main' });
             } catch (error) {
                 console.error('Error canceling event:', error);
-                alert('Ошибка при отмене записи:', error);
+                Telegram.WebApp.showAlert(`Ошибка: ${error.message}`);
             }
         },
         async fetchEventData() {
