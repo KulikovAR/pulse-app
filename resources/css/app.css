@@ -16,15 +16,12 @@ body {
     width: 100%;
     margin: 0 auto;
     padding: 0 16px;
-    /* Fix для iPhone */
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-    box-sizing: border-box;
+    /* background: var(--theme-text-color-gray); */
 }
 
-@supports (padding: max(0px)) {
-    .container {
-        padding-left: 16px !important;
-        padding-right: 16px !important;
+@supports (-webkit-overflow-scrolling: touch) {
+    body.keyboard-closed {
+        position: fixed;
+        width: 100%;
     }
 }
