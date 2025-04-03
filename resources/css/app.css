@@ -24,7 +24,7 @@ body {
 
 @supports (padding: max(0px)) {
     .container {
-        padding-left: max(16px, env(safe-area-inset-left)) !important;
-        padding-right: max(16px, env(safe-area-inset-right)) !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
     }
 }
