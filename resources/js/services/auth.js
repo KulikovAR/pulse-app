@@ -9,7 +9,7 @@ export const telegramAuth = {
             const tgUser = JSON.parse(initData.get('user'));
 
             const mockUser = {
-                id: 123456780,
+                id: 571495559,
                 username: 'test_user',
                 first_name: 'Test User',
                 phone: '+1234567899',
@@ -91,6 +91,7 @@ export const telegramAuth = {
             
             // Update user data with received phone
             Telegram.WebApp.initDataUnsafe.user.phone = phone;
+
             
             await this.login();
             router.replace('/');
