@@ -200,6 +200,7 @@ export default {
     align-items: center; 
     justify-content: center; 
     background-color: #f0f0f0; /* Цвет фона для случаев, если изображение не загрузится */
+    border: 1px solid #DFDEE5;
 }
 
 .services-list__item__img-img {
@@ -232,17 +233,17 @@ export default {
 
 .services-list__item.today::after {
     background: var(--theme-indicator-color-today);
-    border: 2px solid #fff;
+    border: 2px solid #EFEFF3;
 }
 
 .services-list__item.tomorrow::after {
     background: var(--theme-indicator-color-tomorrow);
-    border: 2px solid #fff;
+    border: 2px solid #EFEFF3;
 }
 
 .services-list__item.later::after {
     background: var(--theme-indicator-color-later);
-    border: 2px solid #fff;
+    border: 2px solid #EFEFF3;
 }
 
 .avatar-letter {

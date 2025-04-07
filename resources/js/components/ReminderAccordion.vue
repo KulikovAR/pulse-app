@@ -8,7 +8,7 @@
                         СЕГОДНЯ
                     </div>
                     <div class="reminder-accordion__item__reminder-list">
-                        <router-link v-for="(item,index) in this.remindersToday" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'canceled': item.is_cancelled }]" >
+                        <router-link v-for="(item,index) in this.remindersToday" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'cancelled': item.status === 'cancelled', 'unread': item.status === 'unread', 'confirmed': item.status === 'confirmed' }]" >
                             <div class="reminder-item__header">
                                 <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
                                     <template v-if="item.company.image">
@@ -25,8 +25,15 @@
                             <div class="reminder-item__service-content">
                                 {{formatServiceNames(item.services)}}
                             </div>
-                            <div class="reminder-item__service-time">
-                                <span class="service-time">Время: </span> {{this.getServiceTime(item.event_time)}}
+                            <div class="reminder-item__service-date-time">
+                                <div class="reminder-item__service-time">
+                                    <img class="reminder-item__service-time__img" src="/images/reminder/time.svg">
+                                    <span class="service-time">{{this.getServiceTime(item.event_time)}}</span>
+                                </div>
+                                <div class="reminder-item__service-date">
+                                    <img class="reminder-item__service-time__img" src="/images/reminder/date.svg">
+                                    <span class="service-time">{{this.getServiceDate(item.event_time)}}</span>
+                                </div>
                             </div>
                         </router-link>
 
@@ -38,7 +45,7 @@
                         ЗАВТРА
                     </div>
                     <div class="reminder-accordion__item__reminder-list">
-                        <router-link v-for="(item,index) in this.remindersTomorrow" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'canceled': item.is_cancelled }]">
+                        <router-link v-for="(item,index) in this.remindersTomorrow" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'cancelled': item.status === 'cancelled', 'unread': item.status === 'unread', 'confirmed': item.status === 'confirmed' }]">
                             <div class="reminder-item__header">
                                 <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
                                     <template v-if="item.company.image">
@@ -55,8 +62,15 @@
                             <div class="reminder-item__service-content">
                                 {{formatServiceNames(item.services)}}
                             </div>
-                            <div class="reminder-item__service-time">
-                                <span class="service-time">Время: </span> {{this.getServiceTime(item.event_time)}}
+                            <div class="reminder-item__service-date-time">
+                                <div class="reminder-item__service-time">
+                                    <img class="reminder-item__service-time__img" src="/images/reminder/time.svg">
+                                    <span class="service-time">{{this.getServiceTime(item.event_time)}}</span>
+                                </div>
+                                <div class="reminder-item__service-date">
+                                    <img class="reminder-item__service-time__img" src="/images/reminder/date.svg">
+                                    <span class="service-time">{{this.getServiceDate(item.event_time)}}</span>
+                                </div>
                             </div>
                         </router-link>
 
@@ -68,7 +82,7 @@
                         ПОТОМ
                     </div>
                     <div class="reminder-accordion__item__reminder-list">
-                        <router-link v-for="(item,index) in this.remindersLater" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'canceled': item.is_cancelled }]">
+                        <router-link v-for="(item,index) in this.remindersLater" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'cancelled': item.status === 'cancelled', 'unread': item.status === 'unread', 'confirmed': item.status === 'confirmed' }]">
                             <div class="reminder-item__header">
                                 <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
                                     <template v-if="item.company.image">
@@ -85,8 +99,15 @@
                             <div class="reminder-item__service-content">
                                 {{formatServiceNames(item.services)}}
                             </div>
-                            <div class="reminder-item__service-time">
-                                <span class="service-time">Время: </span> {{this.getServiceTime(item.event_time)}}
+                            <div class="reminder-item__service-date-time">
+                                <div class="reminder-item__service-time">
+                                    <img class="reminder-item__service-time__img" src="/images/reminder/time.svg">
+                                    <span class="service-time">{{this.getServiceTime(item.event_time)}}</span>
+                                </div>
+                                <div class="reminder-item__service-date">
+                                    <img class="reminder-item__service-time__img" src="/images/reminder/date.svg">
+                                    <span class="service-time">{{this.getServiceDate(item.event_time)}}</span>
+                                </div>
                             </div>
                         </router-link>
 
@@ -197,6 +218,22 @@ export default {
             const time = `${hours}:${minutes}`;
             // console.log(time);
             return time;
+        },
+        getServiceDate(date_time){
+
+            const originalDate = new Date(date_time);
+
+            const date = new Date(originalDate.getTime() - originalDate.getTimezoneOffset() * 60000);
+
+            // Format day and month with leading zeros
+            const day = String(date.getDate()).padStart(2, "0");
+            const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+            
+            // Get short weekday name in Russian
+            const weekdays = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
+            const weekday = weekdays[date.getDay()];
+            
+            return `${day}.${month}. ${weekday}`;
         }
     },
     mounted(){
@@ -266,7 +303,7 @@ export default {
         color: var(--theme-text-color-black);
     }
 
-    .reminder-item.canceled::after{
+    .reminder-item.cancelled::after{
         content: 'Отменено';
         width: 70px;
         height: 23px;
@@ -290,6 +327,58 @@ export default {
         border-radius: 6px;
         background: #E5393526;
         color: #E53935;
+    }
+
+    .reminder-item.unread::after{
+        content: 'Не подтверждено';
+        width: 116px;
+        height: 23px;
+
+        font-family: Microsoft Sans Serif;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 100%;
+        letter-spacing: 0px;
+
+
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* border: 1px solid var(--theme-destructive-color); */
+        border-radius: 6px;
+        background: #EDEDEE;
+        color: #707579;
+    }
+
+    .reminder-item.confirmed::after{
+        content: 'Подтверждено';
+        width: 99px;
+        height: 23px;
+
+        font-family: Microsoft Sans Serif;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 100%;
+        letter-spacing: 0px;
+
+
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* border: 1px solid var(--theme-destructive-color); */
+        border-radius: 6px;
+        background: #3390EC26;
+        color: #3390EC;
     }
 
     .reminder-item__header{
@@ -341,6 +430,11 @@ export default {
         margin-bottom: 12px;
     }
 
+    .reminder-item__service-date-time{
+        display: flex;
+        align-items: center;
+    }
+
     .reminder-item__service-time{
         font-family: Microsoft Sans Serif;
         font-size: 13px;
@@ -349,11 +443,32 @@ export default {
         text-align: left;
         text-underline-position: from-font;
         text-decoration-skip-ink: none;
+        display: flex;
+        align-items: center;
+    }
 
+    .reminder-item__service-time__img{
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+    }
+
+    .reminder-item__service-date{
+        display: flex;
+        align-items: center;
+        margin-left: 12px;
     }
 
     span.service-time{
-        color: var(--theme-text-color-gray);
+        font-family: Microsoft Sans Serif;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 100%;
+        letter-spacing: 0px;
+        color: #000000;
+        display: flex;
+        height: 16px;
+        align-items: center;
     }
 
     .reminder-accordion__item.later .reminder-accordion__item__title {

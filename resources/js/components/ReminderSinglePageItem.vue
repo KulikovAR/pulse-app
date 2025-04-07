@@ -1,7 +1,7 @@
 <template>
     <div class="reminder-item__wrapper">
         <div class="container">
-            <div :class="['reminder-item', { 'canceled': event?.is_cancelled }]">
+            <div :class="['reminder-item', { 'cancelled': event?.status === 'cancelled' }]">
                 <div class="reminder-item__header">
                     <router-link :to="{ name:'main' }">
                         <img class="reminder-item__back-arrow" src="/images/reminder/back-arrow.svg" alt="">
@@ -20,15 +20,23 @@
                             {{ event ? getServiceTime(event.event_time) : 'Loading...' }}
                         </span>
                     </div>
-                    <!-- <div class="reminder-item__service-info-item address">
+                    <div class="reminder-item__service-info-item time">
+                        <span class="service-info-title-span">
+                            Когда: 
+                        </span>
+                        <span class="service-info-content-span">
+                            {{ event ? getServiceDate(event.event_time) : 'Loading...' }}
+                        </span>
+                    </div>
+                    <div class="reminder-item__service-info-item address">
                         <span class="service-info-title-span">
                             Адрес: 
                         </span>
                         <span class="service-info-content-span">
-                            Ул. Красноармейская 112, к3
+                            {{ event ? event.company.address : 'Loading...' }}
                         </span>
                     </div>
-                    <div class="reminder-item__service-info-item master">
+                    <!-- <div class="reminder-item__service-info-item master">
                         <span class="service-info-title-span">
                             Мастер: 
                         </span>
@@ -47,23 +55,26 @@
                             за: 1 час
                         </div>
                     </div>
-                    <div class="reminder-item__settings-item interval">
+                    <div v-if="event?.repeat_type || event?.target_time" class="reminder-item__settings-item interval">
                         <img class="reminder-item__settings-img" src="/images/reminder/interval.svg" alt="">
                         <div class="reminder-item__settings-info">
-                            Каждые 2 недели
+                            {{this.getRepeatText(event)}}
                         </div>
                     </div>
                 </div>
 
-                <div v-if="event?.is_cancelled" class="reminder-item__service-info-item canceled"> 
-                    Отменено
+                <div v-if="event?.status" :class="['reminder-item__service-info-item status', { 'cancelled': event.status === 'cancelled', 'unread': event.status === 'unread', 'confirmed': event.status === 'confirmed' }]"> 
+                    {{this.getEventStatus(event?.status)}}
                 </div>
             </div>
 
-            <div v-if="!event?.is_cancelled" class="reminder-btns__wrapper">
+            <div v-if="!(event?.status === 'cancelled')" class="reminder-btns__wrapper">
                 <div class="reminder-btns">
                     <div class="reminder-btn cancel" @click="showCancelPopUp">
                         Отменить
+                    </div>
+                    <div v-if="!(event?.status === 'confirmed')" class="reminder-btn confirm" @click="showConfirmPopUp">
+                        Подтвердить
                     </div>
                 </div>
             </div>
@@ -96,8 +107,53 @@ export default {
             const minutes = String(date.getMinutes()).padStart(2, "0");
             return `${hours}:${minutes}`;
         },
+        getServiceDate(date_time){
+            if (!date_time) return 'N/A';
+            const originalDate = new Date(date_time);
+            const date = new Date(originalDate.getTime() - originalDate.getTimezoneOffset() * 60000);
+            // Format day and month with leading zeros
+            const day = String(date.getDate()).padStart(2, "0");
+            const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+            // Get short weekday name in Russian
+            const weekdays = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
+            const weekday = weekdays[date.getDay()];
+            return `${day}.${month}. ${weekday}`;
+        },
+        getEventStatus(status) {
+            switch (status) {
+                case 'confirmed':
+                    return 'Подтверждено';
+                case 'unread':
+                    return 'Не подтверждено';
+                case 'cancelled':
+                    return 'Отменено';
+                default:
+                    return 'Неизвестный статус';
+            }
+        },
+        getRepeatText(event) {
+            if (!event) return 'N/A';
+            
+            if (event.repeat_type) {
+                const types = {
+                    weekly: 'Каждую неделю',
+                    biweekly: 'Каждые 2 недели',
+                    monthly: 'Каждый месяц'
+                };
+                return types[event.repeat_type] || 'Без повтора';
+            }
+            
+            if (event.target_time) {
+                return this.getServiceDate(event.target_time);
+            }
+            
+            return 'Без повтора';
+        },
         showCancelPopUp(){
             this.$emit('showCancelPopUp');
+        },
+        showConfirmPopUp(){
+            this.$emit('showConfirmPopUp');
         },
         async cancel(){
             try {
@@ -105,6 +161,19 @@ export default {
                     throw new Error('No event data available');
                 }
                 await window.axios.put(`/event/${this.event.id}/cancel`);
+                // alert('Запись отменена');
+                this.$router.push({ name: 'main' });
+            } catch (error) {
+                console.error('Error canceling event:', error);
+                Telegram.WebApp.showAlert(`Ошибка: ${error.message}`);
+            }
+        },
+        async confirm(){
+            try {
+                if (!this.event) {
+                    throw new Error('No event data available');
+                }
+                await window.axios.put(`/event/${this.event.id}/confirm`);
                 // alert('Запись отменена');
                 this.$router.push({ name: 'main' });
             } catch (error) {
@@ -156,7 +225,7 @@ export default {
         margin-bottom: 64px;
     }
 
-    .reminder-item.canceled{
+    .reminder-item.cancelled{
         margin-bottom: 8px;
     }
 
@@ -182,14 +251,14 @@ export default {
         color: #fff;
     } */
 
-    .reminder-item__service-info-item.canceled{
+    .reminder-item__service-info-item.status{
         margin-top: 24px;
         width: 80px;
-        height: 25px;
+        height: 23px;
 
         font-family: Microsoft Sans Serif;
         font-weight: 400;
-        font-size: 15px;
+        font-size: 13px;
         line-height: 100%;
         letter-spacing: 0px;
 
@@ -200,6 +269,18 @@ export default {
         border-radius: 6px;
         background: #E5393526;
         color: #E53935;
+    }
+
+    .reminder-item__service-info-item.status.unread{
+        width: 116px;
+        background: #EDEDEE;
+        color: #707579;
+    }
+
+    .reminder-item__service-info-item.status.confirmed{
+        width: 99px;
+        background: #3390EC26;
+        color: #3390EC;
     }
 
     .reminder-item__header{
@@ -314,7 +395,7 @@ export default {
         gap: 12px;
 
         /* margin-bottom: 20px; */
-        max-width: 400px;
+        /* max-width: 400px; */
         padding: 0 16px;
     }
 
@@ -341,5 +422,9 @@ export default {
     }
     .reminder-btn.cancel{
         color: rgba(255, 59, 48, 1);
+    }
+    .reminder-btn.confirm{
+        color: #F4F4F5;
+        background: #3390EC;
     }
 </style>

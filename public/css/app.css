@@ -12,10 +12,17 @@ body {
 }
   
 .container{
-    max-width: 400px;
+    max-width: 768px;
     width: 100%;
     margin: 0 auto;
     padding: 0 16px;
     /* background: var(--theme-text-color-gray); */
+}
+  
+@supports (-webkit-overflow-scrolling: touch) {
+    body.keyboard-closed {
+        position: fixed;
+        width: 100%;
+    }
 }
 

@@ -10,9 +10,9 @@ export const telegramAuth = {
 
             const mockUser = {
                 id: 571495559,
-                username: 'test_user',
-                first_name: 'Test User',
-                phone: '+1234567899',
+                username: 'default_blank',
+                first_name: 'Vlad',
+                phone: '+79493316512',
                 auth_date: Math.floor(Date.now() / 1000),
                 hash: 'mock_hash_value'
             };

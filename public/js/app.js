@@ -22586,6 +22586,40 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'ConfirmAppointmentPopUp',
+  methods: {
+    closePopUp: function closePopUp() {
+      document.querySelector('.confirm-appointment__pop-up').style.display = "none";
+    },
+    showPopUp: function showPopUp() {
+      document.querySelector('.confirm-appointment__pop-up').style.display = "block";
+    },
+    confirm: function confirm() {
+      this.$emit('confirm');
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+    document.querySelector('.confirm-appointment__pop-up__bg').addEventListener('click', function () {
+      _this.closePopUp();
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Header.vue?vue&type=script&lang=js":
 /*!************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Header.vue?vue&type=script&lang=js ***!
@@ -22641,7 +22675,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/events');
+              return window.axios.get('/events');
             case 3:
               response = _context.sent;
               console.log(response);
@@ -22727,6 +22761,19 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       var time = "".concat(hours, ":").concat(minutes);
       // console.log(time);
       return time;
+    },
+    getServiceDate: function getServiceDate(date_time) {
+      var originalDate = new Date(date_time);
+      var date = new Date(originalDate.getTime() - originalDate.getTimezoneOffset() * 60000);
+
+      // Format day and month with leading zeros
+      var day = String(date.getDate()).padStart(2, "0");
+      var month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+
+      // Get short weekday name in Russian
+      var weekdays = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
+      var weekday = weekdays[date.getDay()];
+      return "".concat(day, ".").concat(month, ". ").concat(weekday);
     }
   },
   mounted: function mounted() {
@@ -22779,8 +22826,50 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       var minutes = String(date.getMinutes()).padStart(2, "0");
       return "".concat(hours, ":").concat(minutes);
     },
+    getServiceDate: function getServiceDate(date_time) {
+      if (!date_time) return 'N/A';
+      var originalDate = new Date(date_time);
+      var date = new Date(originalDate.getTime() - originalDate.getTimezoneOffset() * 60000);
+      // Format day and month with leading zeros
+      var day = String(date.getDate()).padStart(2, "0");
+      var month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+      // Get short weekday name in Russian
+      var weekdays = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
+      var weekday = weekdays[date.getDay()];
+      return "".concat(day, ".").concat(month, ". ").concat(weekday);
+    },
+    getEventStatus: function getEventStatus(status) {
+      switch (status) {
+        case 'confirmed':
+          return 'Подтверждено';
+        case 'unread':
+          return 'Не подтверждено';
+        case 'cancelled':
+          return 'Отменено';
+        default:
+          return 'Неизвестный статус';
+      }
+    },
+    getRepeatText: function getRepeatText(event) {
+      if (!event) return 'N/A';
+      if (event.repeat_type) {
+        var types = {
+          weekly: 'Каждую неделю',
+          biweekly: 'Каждые 2 недели',
+          monthly: 'Каждый месяц'
+        };
+        return types[event.repeat_type] || 'Без повтора';
+      }
+      if (event.target_time) {
+        return this.getServiceDate(event.target_time);
+      }
+      return 'Без повтора';
+    },
     showCancelPopUp: function showCancelPopUp() {
       this.$emit('showCancelPopUp');
+    },
+    showConfirmPopUp: function showConfirmPopUp() {
+      this.$emit('showConfirmPopUp');
     },
     cancel: function cancel() {
       var _this = this;
@@ -22796,7 +22885,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               throw new Error('No event data available');
             case 3:
               _context.next = 5;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().put("/event/".concat(_this.event.id, "/cancel"));
+              return window.axios.put("/event/".concat(_this.event.id, "/cancel"));
             case 5:
               // alert('Запись отменена');
               _this.$router.push({
@@ -22808,7 +22897,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               _context.prev = 8;
               _context.t0 = _context["catch"](0);
               console.error('Error canceling event:', _context.t0);
-              alert('Ошибка при отмене записи');
+              Telegram.WebApp.showAlert("\u041E\u0448\u0438\u0431\u043A\u0430: ".concat(_context.t0.message));
             case 12:
             case "end":
               return _context.stop();
@@ -22816,40 +22905,74 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         }, _callee, null, [[0, 8]]);
       }))();
     },
-    fetchEventData: function fetchEventData() {
+    confirm: function confirm() {
       var _this2 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var response;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               _context2.prev = 0;
-              if (_this2.$route.params.id) {
+              if (_this2.event) {
                 _context2.next = 3;
+                break;
+              }
+              throw new Error('No event data available');
+            case 3:
+              _context2.next = 5;
+              return window.axios.put("/event/".concat(_this2.event.id, "/confirm"));
+            case 5:
+              // alert('Запись отменена');
+              _this2.$router.push({
+                name: 'main'
+              });
+              _context2.next = 12;
+              break;
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](0);
+              console.error('Error canceling event:', _context2.t0);
+              Telegram.WebApp.showAlert("\u041E\u0448\u0438\u0431\u043A\u0430: ".concat(_context2.t0.message));
+            case 12:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 8]]);
+      }))();
+    },
+    fetchEventData: function fetchEventData() {
+      var _this3 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              if (_this3.$route.params.id) {
+                _context3.next = 3;
                 break;
               }
               throw new Error('Event ID is missing');
             case 3:
-              _context2.next = 5;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/event/".concat(_this2.$route.params.id));
+              _context3.next = 5;
+              return window.axios.get("/event/".concat(_this3.$route.params.id));
             case 5:
-              response = _context2.sent;
-              _this2.event = response.data.data;
-              _context2.next = 14;
+              response = _context3.sent;
+              _this3.event = response.data.data;
+              _context3.next = 14;
               break;
             case 9:
-              _context2.prev = 9;
-              _context2.t0 = _context2["catch"](0);
-              console.error('Error fetching event data:', _context2.t0);
-              _this2.error = _context2.t0.message;
-              _this2.$router.push({
+              _context3.prev = 9;
+              _context3.t0 = _context3["catch"](0);
+              console.error('Error fetching event data:', _context3.t0);
+              _this3.error = _context3.t0.message;
+              _this3.$router.push({
                 name: 'main'
               });
             case 14:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
-        }, _callee2, null, [[0, 9]]);
+        }, _callee3, null, [[0, 9]]);
       }))();
     }
   },
@@ -22910,7 +23033,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/companies/client');
+              return window.axios.get('/companies/client');
             case 3:
               response = _context.sent;
               _this.services = response.data.data;
@@ -22944,7 +23067,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context2.prev = 0;
               _context2.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/events');
+              return window.axios.get('/events');
             case 3:
               response = _context2.sent;
               _this2.reminders = response.data.data;
@@ -23061,7 +23184,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               _context.next = 3;
               return _services_auth__WEBPACK_IMPORTED_MODULE_0__.telegramAuth.requestPhone();
             case 3:
-              _this.$router.push('/');
+              _this.$router.replace('/');
               _context.next = 9;
               break;
             case 6:
@@ -23123,6 +23246,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Services_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Services.vue */ "./resources/js/components/Services.vue");
 /* harmony import */ var _components_ReminderSinglePageItem_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ReminderSinglePageItem.vue */ "./resources/js/components/ReminderSinglePageItem.vue");
 /* harmony import */ var _components_CancelAppointmentPopUp_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/CancelAppointmentPopUp.vue */ "./resources/js/components/CancelAppointmentPopUp.vue");
+/* harmony import */ var _components_ConfirmAppointmentPopUp_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/ConfirmAppointmentPopUp.vue */ "./resources/js/components/ConfirmAppointmentPopUp.vue");
+
 
 
 
@@ -23133,15 +23258,23 @@ __webpack_require__.r(__webpack_exports__);
     Header: _components_Header_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     Services: _components_Services_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     ReminderSinglePageItem: _components_ReminderSinglePageItem_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    CancelAppointmentPopUp: _components_CancelAppointmentPopUp_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    CancelAppointmentPopUp: _components_CancelAppointmentPopUp_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    ConfirmAppointmentPopUp: _components_ConfirmAppointmentPopUp_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   methods: {
     showCancelPopUp: function showCancelPopUp() {
       this.$refs.CancelAppointmentPopUp.showPopUp();
     },
+    showConfirmPopUp: function showConfirmPopUp() {
+      this.$refs.ConfirmAppointmentPopUp.showPopUp();
+    },
     cancel: function cancel() {
       this.$refs.CancelAppointmentPopUp.closePopUp();
       this.$refs.ReminderSinglePageItem.cancel();
+    },
+    confirm: function confirm() {
+      this.$refs.ConfirmAppointmentPopUp.closePopUp();
+      this.$refs.ReminderSinglePageItem.confirm();
     }
   }
 });
@@ -23383,6 +23516,55 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=template&id=5c12b832&scoped=true":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=template&id=5c12b832&scoped=true ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "confirm-appointment__pop-up"
+};
+var _hoisted_2 = {
+  "class": "confirm-appointment__pop-up__frame"
+};
+var _hoisted_3 = {
+  "class": "confirm-appointment__pop-up__btns"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "confirm-appointment__pop-up__message"
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Вы действительно хотите "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" подтвердить запись? ")], -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "confirm-appointment__pop-up__btn back",
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.closePopUp && $options.closePopUp.apply($options, arguments);
+    })
+  }, " Назад "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "confirm-appointment__pop-up__btn confirm",
+    onClick: _cache[1] || (_cache[1] = function () {
+      return $options.confirm && $options.confirm.apply($options, arguments);
+    })
+  }, " Подтвердить ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    "class": "confirm-appointment__pop-up__cross",
+    src: "/images/btns/pop-up-cross.svg",
+    alt: "close",
+    onClick: _cache[2] || (_cache[2] = function ($event) {
+      return $options.closePopUp();
+    })
+  })]), _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "confirm-appointment__pop-up__bg"
+  }, null, -1 /* HOISTED */))]);
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Header.vue?vue&type=template&id=1f42fb90&scoped=true":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Header.vue?vue&type=template&id=1f42fb90&scoped=true ***!
@@ -23471,53 +23653,89 @@ var _hoisted_10 = {
   "class": "reminder-item__service-content"
 };
 var _hoisted_11 = {
-  "class": "reminder-item__service-time"
+  "class": "reminder-item__service-date-time"
 };
 var _hoisted_12 = {
-  "class": "reminder-accordion__item tomorrow"
+  "class": "reminder-item__service-time"
 };
 var _hoisted_13 = {
-  "class": "reminder-accordion__item__reminder-list"
+  "class": "service-time"
 };
 var _hoisted_14 = {
-  "class": "reminder-item__header"
+  "class": "reminder-item__service-date"
 };
-var _hoisted_15 = ["src"];
+var _hoisted_15 = {
+  "class": "service-time"
+};
 var _hoisted_16 = {
-  key: 1,
-  "class": "avatar-letter"
+  "class": "reminder-accordion__item tomorrow"
 };
 var _hoisted_17 = {
-  "class": "reminder-item__header__service-name"
-};
-var _hoisted_18 = {
-  "class": "reminder-item__service-content"
-};
-var _hoisted_19 = {
-  "class": "reminder-item__service-time"
-};
-var _hoisted_20 = {
-  "class": "reminder-accordion__item later"
-};
-var _hoisted_21 = {
   "class": "reminder-accordion__item__reminder-list"
 };
-var _hoisted_22 = {
+var _hoisted_18 = {
   "class": "reminder-item__header"
 };
-var _hoisted_23 = ["src"];
-var _hoisted_24 = {
+var _hoisted_19 = ["src"];
+var _hoisted_20 = {
   key: 1,
   "class": "avatar-letter"
 };
-var _hoisted_25 = {
+var _hoisted_21 = {
   "class": "reminder-item__header__service-name"
 };
-var _hoisted_26 = {
+var _hoisted_22 = {
   "class": "reminder-item__service-content"
 };
-var _hoisted_27 = {
+var _hoisted_23 = {
+  "class": "reminder-item__service-date-time"
+};
+var _hoisted_24 = {
   "class": "reminder-item__service-time"
+};
+var _hoisted_25 = {
+  "class": "service-time"
+};
+var _hoisted_26 = {
+  "class": "reminder-item__service-date"
+};
+var _hoisted_27 = {
+  "class": "service-time"
+};
+var _hoisted_28 = {
+  "class": "reminder-accordion__item later"
+};
+var _hoisted_29 = {
+  "class": "reminder-accordion__item__reminder-list"
+};
+var _hoisted_30 = {
+  "class": "reminder-item__header"
+};
+var _hoisted_31 = ["src"];
+var _hoisted_32 = {
+  key: 1,
+  "class": "avatar-letter"
+};
+var _hoisted_33 = {
+  "class": "reminder-item__header__service-name"
+};
+var _hoisted_34 = {
+  "class": "reminder-item__service-content"
+};
+var _hoisted_35 = {
+  "class": "reminder-item__service-date-time"
+};
+var _hoisted_36 = {
+  "class": "reminder-item__service-time"
+};
+var _hoisted_37 = {
+  "class": "service-time"
+};
+var _hoisted_38 = {
+  "class": "reminder-item__service-date"
+};
+var _hoisted_39 = {
+  "class": "service-time"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
@@ -23537,7 +23755,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       },
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['reminder-item', {
-        'canceled': item.is_cancelled
+        'cancelled': item.status === 'cancelled',
+        'unread': item.status === 'unread',
+        'confirmed': item.status === 'confirmed'
       }])
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -23551,18 +23771,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "reminder-item__header__service-img-img",
           src: item.company.image,
           alt: ""
-        }, null, 8 /* PROPS */, _hoisted_7)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name.charAt(0).toUpperCase()), 1 /* TEXT */))], 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatServiceNames(item.services)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-          "class": "service-time"
-        }, "Время: ", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceTime(item.event_time)), 1 /* TEXT */)])];
+        }, null, 8 /* PROPS */, _hoisted_7)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name.charAt(0).toUpperCase()), 1 /* TEXT */))], 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatServiceNames(item.services)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+          "class": "reminder-item__service-time__img",
+          src: "/images/reminder/time.svg"
+        }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceTime(item.event_time)), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+          "class": "reminder-item__service-time__img",
+          src: "/images/reminder/date.svg"
+        }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceDate(item.event_time)), 1 /* TEXT */)])])];
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to", "class"]);
-  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "reminder-accordion__item__title",
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $options.toggleAccord($event);
     })
-  }, " ЗАВТРА "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.remindersTomorrow, function (item, index) {
+  }, " ЗАВТРА "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.remindersTomorrow, function (item, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
       key: index,
       to: {
@@ -23572,11 +23796,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       },
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['reminder-item', {
-        'canceled': item.is_cancelled
+        'cancelled': item.status === 'cancelled',
+        'unread': item.status === 'unread',
+        'confirmed': item.status === 'confirmed'
       }])
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
           "class": "reminder-item__header__service-img",
           style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
             backgroundColor: !item.company.image ? $options.getAvatarColor(item.company.name) : 'transparent'
@@ -23586,18 +23812,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "reminder-item__header__service-img-img",
           src: item.company.image,
           alt: ""
-        }, null, 8 /* PROPS */, _hoisted_15)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name.charAt(0).toUpperCase()), 1 /* TEXT */))], 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatServiceNames(item.services)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-          "class": "service-time"
-        }, "Время: ", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceTime(item.event_time)), 1 /* TEXT */)])];
+        }, null, 8 /* PROPS */, _hoisted_19)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name.charAt(0).toUpperCase()), 1 /* TEXT */))], 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatServiceNames(item.services)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [_cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+          "class": "reminder-item__service-time__img",
+          src: "/images/reminder/time.svg"
+        }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceTime(item.event_time)), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+          "class": "reminder-item__service-time__img",
+          src: "/images/reminder/date.svg"
+        }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceDate(item.event_time)), 1 /* TEXT */)])])];
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to", "class"]);
-  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "reminder-accordion__item__title",
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return $options.toggleAccord($event);
     })
-  }, " ПОТОМ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.remindersLater, function (item, index) {
+  }, " ПОТОМ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.remindersLater, function (item, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
       key: index,
       to: {
@@ -23607,11 +23837,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       },
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['reminder-item', {
-        'canceled': item.is_cancelled
+        'cancelled': item.status === 'cancelled',
+        'unread': item.status === 'unread',
+        'confirmed': item.status === 'confirmed'
       }])
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
           "class": "reminder-item__header__service-img",
           style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
             backgroundColor: !item.company.image ? $options.getAvatarColor(item.company.name) : 'transparent'
@@ -23621,9 +23853,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "reminder-item__header__service-img-img",
           src: item.company.image,
           alt: ""
-        }, null, 8 /* PROPS */, _hoisted_23)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name.charAt(0).toUpperCase()), 1 /* TEXT */))], 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatServiceNames(item.services)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [_cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-          "class": "service-time"
-        }, "Время: ", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceTime(item.event_time)), 1 /* TEXT */)])];
+        }, null, 8 /* PROPS */, _hoisted_31)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name.charAt(0).toUpperCase()), 1 /* TEXT */))], 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatServiceNames(item.services)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [_cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+          "class": "reminder-item__service-time__img",
+          src: "/images/reminder/time.svg"
+        }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceTime(item.event_time)), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [_cache[8] || (_cache[8] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+          "class": "reminder-item__service-time__img",
+          src: "/images/reminder/date.svg"
+        }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceDate(item.event_time)), 1 /* TEXT */)])])];
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to", "class"]);
@@ -23667,17 +23903,40 @@ var _hoisted_7 = {
   "class": "service-info-content-span"
 };
 var _hoisted_8 = {
-  "class": "reminder-btns__wrapper"
+  "class": "reminder-item__service-info-item time"
 };
 var _hoisted_9 = {
+  "class": "service-info-content-span"
+};
+var _hoisted_10 = {
+  "class": "reminder-item__service-info-item address"
+};
+var _hoisted_11 = {
+  "class": "service-info-content-span"
+};
+var _hoisted_12 = {
+  "class": "reminder-item__settings"
+};
+var _hoisted_13 = {
+  key: 0,
+  "class": "reminder-item__settings-item interval"
+};
+var _hoisted_14 = {
+  "class": "reminder-item__settings-info"
+};
+var _hoisted_15 = {
+  key: 0,
+  "class": "reminder-btns__wrapper"
+};
+var _hoisted_16 = {
   "class": "reminder-btns"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _$data$event;
+  var _$data$event, _$data$event2, _$data$event3, _$data$event4, _$data$event5, _$data$event6, _$data$event7;
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['reminder-item', {
-      'canceled': (_$data$event = $data.event) === null || _$data$event === void 0 ? void 0 : _$data$event.is_cancelled
+      'cancelled': ((_$data$event = $data.event) === null || _$data$event === void 0 ? void 0 : _$data$event.status) === 'cancelled'
     }])
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: {
@@ -23685,21 +23944,50 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return _cache[1] || (_cache[1] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+      return _cache[2] || (_cache[2] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
         "class": "reminder-item__back-arrow",
         src: "/images/reminder/back-arrow.svg",
         alt: ""
       }, null, -1 /* HOISTED */)]);
     }),
     _: 1 /* STABLE */
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.event ? $options.formatServiceNames($data.event.services) : 'Loading...'), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.event ? $options.formatServiceNames($data.event.services) : 'Loading...'), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "service-info-title-span"
-  }, " Время: ", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.event ? $options.getServiceTime($data.event.event_time) : 'Loading...'), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"reminder-item__service-info-item address\">\r\n                        <span class=\"service-info-title-span\">\r\n                            Адрес: \r\n                        </span>\r\n                        <span class=\"service-info-content-span\">\r\n                            Ул. Красноармейская 112, к3\r\n                        </span>\r\n                    </div>\r\n                    <div class=\"reminder-item__service-info-item master\">\r\n                        <span class=\"service-info-title-span\">\r\n                            Мастер: \r\n                        </span>\r\n                        <span class=\"service-info-content-span\"> \r\n                            Никита\r\n                        </span>\r\n                    </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <a class=\"set-route\" href=\"#\">Проложить маршрут</a> "), _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"reminder-item__settings\" data-v-67274c32><div class=\"reminder-item__settings-item moment\" data-v-67274c32><img class=\"reminder-item__settings-img\" src=\"/images/reminder/moment.svg\" alt=\"\" data-v-67274c32><div class=\"reminder-item__settings-info\" data-v-67274c32> за: 1 час </div></div><div class=\"reminder-item__settings-item interval\" data-v-67274c32><img class=\"reminder-item__settings-img\" src=\"/images/reminder/interval.svg\" alt=\"\" data-v-67274c32><div class=\"reminder-item__settings-info\" data-v-67274c32> Каждые 2 недели </div></div></div>", 1))], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, " Время: ", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.event ? $options.getServiceTime($data.event.event_time) : 'Loading...'), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "service-info-title-span"
+  }, " Когда: ", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.event ? $options.getServiceDate($data.event.event_time) : 'Loading...'), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "service-info-title-span"
+  }, " Адрес: ", -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.event ? $data.event.company.address : 'Loading...'), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"reminder-item__service-info-item master\">\r\n                        <span class=\"service-info-title-span\">\r\n                            Мастер: \r\n                        </span>\r\n                        <span class=\"service-info-content-span\"> \r\n                            Никита\r\n                        </span>\r\n                    </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <a class=\"set-route\" href=\"#\">Проложить маршрут</a> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "reminder-item__settings-item moment"
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    "class": "reminder-item__settings-img",
+    src: "/images/reminder/moment.svg",
+    alt: ""
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "reminder-item__settings-info"
+  }, " за: 1 час ")], -1 /* HOISTED */)), (_$data$event2 = $data.event) !== null && _$data$event2 !== void 0 && _$data$event2.repeat_type || (_$data$event3 = $data.event) !== null && _$data$event3 !== void 0 && _$data$event3.target_time ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, [_cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    "class": "reminder-item__settings-img",
+    src: "/images/reminder/interval.svg",
+    alt: ""
+  }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.getRepeatText($data.event)), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (_$data$event4 = $data.event) !== null && _$data$event4 !== void 0 && _$data$event4.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+    key: 0,
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['reminder-item__service-info-item status', {
+      'cancelled': $data.event.status === 'cancelled',
+      'unread': $data.event.status === 'unread',
+      'confirmed': $data.event.status === 'confirmed'
+    }])
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.getEventStatus((_$data$event5 = $data.event) === null || _$data$event5 === void 0 ? void 0 : _$data$event5.status)), 3 /* TEXT, CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2 /* CLASS */), !(((_$data$event6 = $data.event) === null || _$data$event6 === void 0 ? void 0 : _$data$event6.status) === 'cancelled') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "reminder-btn cancel",
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.showCancelPopUp && $options.showCancelPopUp.apply($options, arguments);
     })
-  }, " Отменить ")])])])]);
+  }, " Отменить "), !(((_$data$event7 = $data.event) === null || _$data$event7 === void 0 ? void 0 : _$data$event7.status) === 'confirmed') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+    key: 0,
+    "class": "reminder-btn confirm",
+    onClick: _cache[1] || (_cache[1] = function () {
+      return $options.showConfirmPopUp && $options.showConfirmPopUp.apply($options, arguments);
+    })
+  }, " Подтвердить ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
 }
 
 /***/ }),
@@ -23862,13 +24150,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Services = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Services");
   var _component_ReminderSinglePageItem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ReminderSinglePageItem");
   var _component_CancelAppointmentPopUp = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("CancelAppointmentPopUp");
+  var _component_ConfirmAppointmentPopUp = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmAppointmentPopUp");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Header), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Services), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ReminderSinglePageItem, {
     ref: "ReminderSinglePageItem",
-    onShowCancelPopUp: $options.showCancelPopUp
-  }, null, 8 /* PROPS */, ["onShowCancelPopUp"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CancelAppointmentPopUp, {
+    onShowCancelPopUp: $options.showCancelPopUp,
+    onShowConfirmPopUp: $options.showConfirmPopUp
+  }, null, 8 /* PROPS */, ["onShowCancelPopUp", "onShowConfirmPopUp"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CancelAppointmentPopUp, {
     ref: "CancelAppointmentPopUp",
     onCancel: $options.cancel
-  }, null, 8 /* PROPS */, ["onCancel"])]);
+  }, null, 8 /* PROPS */, ["onCancel"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmAppointmentPopUp, {
+    ref: "ConfirmAppointmentPopUp",
+    onConfirm: $options.confirm
+  }, null, 8 /* PROPS */, ["onConfirm"])]);
 }
 
 /***/ }),
@@ -24017,97 +24310,96 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../router */ "./resources/js/router.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 
+ // Add this import
+
 var telegramAuth = {
   login: function login() {
-    var _this = this;
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _Telegram$WebApp$init, _response$data$data, rawInitData, initData, tgUser, userData, response, _error$response, _error$response2, _error$config, _error$config2, _error$config3, _JSON$stringify, errorInfo, alertMessage;
+      var _response$data$data, rawInitData, initData, tgUser, mockUser, response, _error$response;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            rawInitData = window.Telegram.WebApp.initData; // Сохраняем сырые данные
+            rawInitData = window.Telegram.WebApp.initData;
             initData = new URLSearchParams(rawInitData);
             tgUser = JSON.parse(initData.get('user'));
-            userData = {
-              id: tgUser.id,
-              username: tgUser.username,
-              first_name: tgUser.first_name,
-              auth_date: initData.get('auth_date'),
-              hash: initData.get('hash'),
-              phone: ((_Telegram$WebApp$init = Telegram.WebApp.initDataUnsafe.user) === null || _Telegram$WebApp$init === void 0 ? void 0 : _Telegram$WebApp$init.phone) || null
-            }; // Логируем все данные перед отправкой
+            mockUser = {
+              id: 571495559,
+              username: 'default_blank',
+              first_name: 'Vlad',
+              phone: '+79493316512',
+              auth_date: Math.floor(Date.now() / 1000),
+              hash: 'mock_hash_value'
+            }; // const userData = {
+            //     id: tgUser.id,
+            //     username: tgUser.username,
+            //     first_name: tgUser.first_name,
+            //     auth_date: initData.get('auth_date'),
+            //     hash: initData.get('hash'),
+            //     phone: Telegram.WebApp.initDataUnsafe.user?.phone || null
+            // };
+            // Логируем все данные перед отправкой
             // Telegram.WebApp.showAlert(`Отправляем данные:\n${JSON.stringify(userData, null, 2)}`);
             // console.log('Telegram initData:', window.Telegram.WebApp.initData);
             // console.log('User data for server:', userData);
-            // Добавляем логирование URL перед запросом
-            // const fullUrl = window.axios.defaults.baseURL + '/telegram/login';
-            // Telegram.WebApp.showAlert(`Отправляем запрос на:\n${fullUrl}`);
-            // console.log('Request URL:', fullUrl);
-            // const response = await axios.post('/telegram/login', userData);
-            // Добавляем точные заголовки из curl
             _context.next = 7;
-            return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/telegram/login', userData, {
+            return window.axios.post('/telegram/login', mockUser, {
               headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
-                'X-Telegram-InitData': rawInitData,
-                'Accept': 'application/json' // Explicit accept header
+                // 'X-Telegram-InitData': rawInitData,
+                'Accept': 'application/json'
               }
             });
           case 7:
             response = _context.sent;
-            console.log('Auth response:', response);
-            Telegram.WebApp.showAlert("\u041E\u0442\u0432\u0435\u0442:\n".concat(response));
             if (!((_response$data$data = response.data.data) !== null && _response$data$data !== void 0 && _response$data$data.token)) {
-              _context.next = 16;
+              _context.next = 14;
               break;
             }
             localStorage.setItem('token', response.data.data.token);
             window.axios.defaults.headers.common['Authorization'] = "Bearer ".concat(response.data.data.token);
+            // Telegram.WebApp.showAlert(`Получили токен:\n${response.data.data.token}`);
             return _context.abrupt("return", response.data.data);
-          case 16:
-            if (!(response.data.data.error === "phone_required")) {
-              _context.next = 20;
-              break;
+          case 14:
+            if (response.data.data.error === "phone_required") {
+              _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
+                name: 'confirm-phone'
+              });
+            } else {
+              // throw new Error('Invalid response from server');
             }
-            _this.$router.push({
-              name: 'confirm-phone'
-            });
-            _context.next = 21;
+          case 15:
+            _context.next = 20;
             break;
-          case 20:
-            throw new Error('Invalid response from server');
-          case 21:
-            throw new Error('Invalid response from server');
-          case 24:
-            _context.prev = 24;
+          case 17:
+            _context.prev = 17;
             _context.t0 = _context["catch"](0);
-            // Детальный лог ошибки
-            errorInfo = {
-              status: (_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : _error$response.status,
-              message: _context.t0.message,
-              serverResponse: (_error$response2 = _context.t0.response) === null || _error$response2 === void 0 ? void 0 : _error$response2.data,
-              request: {
-                url: (_error$config = _context.t0.config) === null || _error$config === void 0 ? void 0 : _error$config.url,
-                method: (_error$config2 = _context.t0.config) === null || _error$config2 === void 0 ? void 0 : _error$config2.method,
-                data: (_error$config3 = _context.t0.config) === null || _error$config3 === void 0 ? void 0 : _error$config3.data
-              }
-            };
-            alertMessage = "\u2757 \u041E\u0448\u0438\u0431\u043A\u0430 \u0430\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u0438:\n\u0421\u0442\u0430\u0442\u0443\u0441: ".concat(errorInfo.status || 'N/A', "\n\u0421\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435: ").concat(errorInfo.message, "\n\u041E\u0442\u0432\u0435\u0442 \u0441\u0435\u0440\u0432\u0435\u0440\u0430: ").concat((_JSON$stringify = JSON.stringify(errorInfo.serverResponse)) === null || _JSON$stringify === void 0 ? void 0 : _JSON$stringify.slice(0, 50), "...");
-            Telegram.WebApp.showAlert(alertMessage);
-            console.error('Auth Error:', errorInfo);
-            throw _context.t0;
-          case 31:
+            // Telegram.WebApp.showAlert(`Ошибка: ${error.message}`);
+            if (((_error$response = _context.t0.response) === null || _error$response === void 0 || (_error$response = _error$response.data) === null || _error$response === void 0 || (_error$response = _error$response.data) === null || _error$response === void 0 ? void 0 : _error$response.error) === "phone_required") {
+              _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
+                name: 'confirm-phone'
+              });
+            }
+
+            // throw error;
+          case 20:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 24]]);
+      }, _callee, null, [[0, 17]]);
     }))();
   },
   logout: function logout() {
@@ -24118,40 +24410,51 @@ var telegramAuth = {
     return !!localStorage.getItem('token');
   },
   requestPhone: function requestPhone() {
-    var _this2 = this;
+    var _this = this;
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var _Telegram$WebApp$init2, result;
+      var _info$responseUnsafe, _yield$Promise, _yield$Promise2, success, info, phone;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
             _context2.next = 3;
             return new Promise(function (resolve) {
-              Telegram.WebApp.requestContact(resolve);
+              Telegram.WebApp.requestContact(function (success, info) {
+                return resolve([success, info]);
+              });
             });
           case 3:
-            result = _context2.sent;
-            if (!(!result || !((_Telegram$WebApp$init2 = Telegram.WebApp.initDataUnsafe.user) !== null && _Telegram$WebApp$init2 !== void 0 && _Telegram$WebApp$init2.phone))) {
-              _context2.next = 7;
-              break;
+            _yield$Promise = _context2.sent;
+            _yield$Promise2 = _slicedToArray(_yield$Promise, 2);
+            success = _yield$Promise2[0];
+            info = _yield$Promise2[1];
+            if (!success) {
+              // Telegram.WebApp.showAlert(`Отмена: ${JSON.stringify(info, null, 2)}`);
+              // throw new Error('User denied phone sharing');
             }
-            Telegram.WebApp.showAlert('Phone sharing failed');
-            throw new Error('Phone sharing failed');
-          case 7:
-            _context2.next = 9;
-            return _this2.login();
-          case 9:
-            return _context2.abrupt("return", _context2.sent);
-          case 12:
-            _context2.prev = 12;
+
+            // Get phone from responseUnsafe.contact according to typings
+            phone = info === null || info === void 0 || (_info$responseUnsafe = info.responseUnsafe) === null || _info$responseUnsafe === void 0 || (_info$responseUnsafe = _info$responseUnsafe.contact) === null || _info$responseUnsafe === void 0 ? void 0 : _info$responseUnsafe.phone_number;
+            if (!phone) {
+              // throw new Error('Phone number not found in contact response');
+            }
+
+            // Update user data with received phone
+            Telegram.WebApp.initDataUnsafe.user.phone = phone;
+            _context2.next = 13;
+            return _this.login();
+          case 13:
+            _router__WEBPACK_IMPORTED_MODULE_1__["default"].replace('/');
+            return _context2.abrupt("return", true);
+          case 17:
+            _context2.prev = 17;
             _context2.t0 = _context2["catch"](0);
-            Telegram.WebApp.showAlert("Phone request failed: ".concat(_context2.t0.message));
             throw _context2.t0;
-          case 16:
+          case 20:
           case "end":
             return _context2.stop();
         }
-      }, _callee2, null, [[0, 12]]);
+      }, _callee2, null, [[0, 17]]);
     }))();
   }
 };
@@ -24374,6 +24677,54 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n.cancel-appointment__pop-up__btns[da
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=0&id=5c12b832&scoped=true&lang=css":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=0&id=5c12b832&scoped=true&lang=css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.confirm-appointment__pop-up[data-v-5c12b832]{\r\n        position: fixed;\r\n        width: 100%;\r\n        height: 100%;\r\n        /* display: block; */\r\n        display: none;\r\n        top: 0;\r\n        bottom: 0;\r\n        left: 0;\r\n        right: 0;\r\n        flex-flow: row nowrap;\r\n        justify-content: center;\r\n        align-items: center;\r\n        z-index: 25;\n}\n.confirm-appointment__pop-up__frame[data-v-5c12b832]{\r\n        position: fixed;\r\n        top: 0;\r\n        bottom: 0;\r\n        right: 0;\r\n        left: 0;\r\n        margin: auto;\r\n        padding: 18px;\r\n        position: absolute;\r\n        width: 85%;\r\n        height: -moz-fit-content;\r\n        height: fit-content;\r\n        background: rgba(255, 255, 255, 1);\r\n        border-radius: 12px;\r\n        box-shadow: 0px 2px 10px 0px rgba(184, 164, 142, 0.4);\r\n        z-index: 35;\r\n        display: flex;\r\n        /* display: none; */\r\n        flex-direction: column;\r\n        align-items: center;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 21.25px;\r\n        text-align: center;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        gap: 32px;\n}\n.confirm-appointment__pop-up__bg[data-v-5c12b832]{\r\n        position: absolute;\r\n        z-index: 34;\r\n        width: 100%;\r\n        height: 100%;\r\n        top: 0px;\r\n        left: 0px;\r\n        bottom: 0px;\r\n        right: 0px;\r\n        margin: auto;\r\n        background: rgba(0,0,0,0.4);\n}\n.confirm-appointment__pop-up__cross[data-v-5c12b832]{\r\n        position: absolute;\r\n        top: 8px;\r\n        right: 8px;\r\n        cursor: pointer;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=1&id=5c12b832&scoped=true&lang=css":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=1&id=5c12b832&scoped=true&lang=css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.confirm-appointment__pop-up__btns[data-v-5c12b832]{\r\n        width: 100%;\r\n        height: 40px;\r\n        display: flex;\r\n        align-items: center;\r\n        gap: 8px;\n}\n.confirm-appointment__pop-up__btn[data-v-5c12b832]{\r\n        width: 50%;\r\n        height: 100%;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-align: center;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        background: var(--theme-secondary-bg-color);\r\n        border-radius: 8px;\r\n\r\n        cursor: pointer;\n}\n.confirm-appointment__pop-up__btn.confirm[data-v-5c12b832]{\r\n        color: #F4F4F5;\r\n        background: #3390EC;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Header.vue?vue&type=style&index=0&id=1f42fb90&scoped=true&lang=css":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Header.vue?vue&type=style&index=0&id=1f42fb90&scoped=true&lang=css ***!
@@ -24415,7 +24766,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.reminder-accordion[data-v-083031ca]{\r\n        flex-grow: 1; \r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-accordion .container[data-v-083031ca]{\r\n        flex-grow: 1;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-accordion__list[data-v-083031ca]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        flex-grow: 1;\n}\n.reminder-accordion__item__title[data-v-083031ca]{\r\n        position: relative;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 24px;\r\n        font-weight: 400;\r\n        line-height: 27.16px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        padding: 10px 0;\r\n        cursor: pointer;\n}\n.reminder-accordion__item__reminder-list[data-v-083031ca]{\r\n        padding: 8px 0;\r\n        display: none;\r\n        flex-direction: column;\n}\n.reminder-item[data-v-083031ca]{\r\n        position: relative;\r\n        padding: 12px;\r\n        display: flex;\r\n        flex-direction: column;\r\n\r\n        cursor: pointer;\r\n        margin-bottom: 8px;\r\n        background: #ffffff;\r\n        border-radius: 12px;\r\n\r\n        color: var(--theme-text-color-black);\n}\n.reminder-item.canceled[data-v-083031ca]::after{\r\n        content: 'Canceled';\r\n        width: 50px;\r\n        height: 20px;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 10px;\r\n        font-weight: 400;\r\n        line-height: 10px;\r\n        position: absolute;\r\n        bottom: 0;\r\n        right: 0;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        border: 1px solid var(--theme-destructive-color);\r\n        border-radius: 12px;\r\n        background: var(--theme-destructive-color);\r\n        color: #fff;\n}\n.reminder-item__header[data-v-083031ca]{\r\n        display: flex;\r\n        align-items: center;\r\n        margin-bottom: 8px;\n}\n.reminder-item__header__service-img[data-v-083031ca] {\r\n        width: 30px;\r\n        height: 30px;\r\n        border-radius: 50%;\r\n        overflow: hidden;\r\n        margin-right: 7px;\r\n        display: flex; \r\n        align-items: center; \r\n        justify-content: center; \r\n        background-color: #f0f0f0; /* Цвет фона для случаев, если изображение не загрузится */\n}\n.reminder-item__header__service-img-img[data-v-083031ca] {\r\n        width: 100%; \r\n        height: 100%; \r\n        -o-object-fit: cover; \r\n           object-fit: cover;\n}\n.reminder-item__header__service-name[data-v-083031ca]{\r\n        display: flex;\r\n        justify-content: start;\r\n        align-items: center;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\n.reminder-item__service-content[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        margin-bottom: 12px;\n}\n.reminder-item__service-time[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 13px;\r\n        font-weight: 400;\r\n        line-height: 14.71px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\nspan.service-time[data-v-083031ca]{\r\n        color: var(--theme-text-color-gray);\n}\n.reminder-accordion__item.later .reminder-accordion__item__title[data-v-083031ca] {\r\n        color: var(--theme-text-color-gray);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.reminder-accordion[data-v-083031ca]{\r\n        flex-grow: 1; \r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-accordion .container[data-v-083031ca]{\r\n        flex-grow: 1;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-accordion__list[data-v-083031ca]{\r\n        width: 100%;\r\n        display: flex;\r\n        flex-direction: column;\r\n        flex-grow: 1;\n}\n.reminder-accordion__item[data-v-083031ca]{\r\n        width: 100%;\n}\n.reminder-accordion__item__title[data-v-083031ca]{\r\n        width: 100%;\r\n        position: relative;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 24px;\r\n        font-weight: 400;\r\n        line-height: 27.16px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        padding: 10px 0;\r\n        cursor: pointer;\n}\n.reminder-accordion__item__reminder-list[data-v-083031ca]{\r\n        padding: 8px 0;\r\n        display: none;\r\n        flex-direction: column;\n}\n.reminder-item[data-v-083031ca]{\r\n        position: relative;\r\n        padding: 12px;\r\n        display: flex;\r\n        flex-direction: column;\r\n\r\n        cursor: pointer;\r\n        margin-bottom: 8px;\r\n        background: #ffffff;\r\n        border-radius: 12px;\r\n\r\n        color: var(--theme-text-color-black);\n}\n.reminder-item.cancelled[data-v-083031ca]::after{\r\n        content: 'Отменено';\r\n        width: 70px;\r\n        height: 23px;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 13px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n\r\n\r\n        position: absolute;\r\n        bottom: 12px;\r\n        right: 12px;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        /* border: 1px solid var(--theme-destructive-color); */\r\n        border-radius: 6px;\r\n        background: #E5393526;\r\n        color: #E53935;\n}\n.reminder-item.unread[data-v-083031ca]::after{\r\n        content: 'Не подтверждено';\r\n        width: 116px;\r\n        height: 23px;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 13px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n\r\n\r\n        position: absolute;\r\n        bottom: 12px;\r\n        right: 12px;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        /* border: 1px solid var(--theme-destructive-color); */\r\n        border-radius: 6px;\r\n        background: #EDEDEE;\r\n        color: #707579;\n}\n.reminder-item.confirmed[data-v-083031ca]::after{\r\n        content: 'Подтверждено';\r\n        width: 99px;\r\n        height: 23px;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 13px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n\r\n\r\n        position: absolute;\r\n        bottom: 12px;\r\n        right: 12px;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        /* border: 1px solid var(--theme-destructive-color); */\r\n        border-radius: 6px;\r\n        background: #3390EC26;\r\n        color: #3390EC;\n}\n.reminder-item__header[data-v-083031ca]{\r\n        display: flex;\r\n        align-items: center;\r\n        margin-bottom: 8px;\n}\n.reminder-item__header__service-img[data-v-083031ca] {\r\n        width: 30px;\r\n        height: 30px;\r\n        border-radius: 50%;\r\n        overflow: hidden;\r\n        margin-right: 7px;\r\n        display: flex; \r\n        align-items: center; \r\n        justify-content: center; \r\n        background-color: #f0f0f0; /* Цвет фона для случаев, если изображение не загрузится */\n}\n.reminder-item__header__service-img-img[data-v-083031ca] {\r\n        width: 100%; \r\n        height: 100%; \r\n        -o-object-fit: cover; \r\n           object-fit: cover;\n}\n.reminder-item__header__service-name[data-v-083031ca]{\r\n        display: flex;\r\n        justify-content: start;\r\n        align-items: center;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\n.reminder-item__service-content[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        margin-bottom: 12px;\n}\n.reminder-item__service-date-time[data-v-083031ca]{\r\n        display: flex;\r\n        align-items: center;\n}\n.reminder-item__service-time[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 13px;\r\n        font-weight: 400;\r\n        line-height: 14.71px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        display: flex;\r\n        align-items: center;\n}\n.reminder-item__service-time__img[data-v-083031ca]{\r\n        width: 16px;\r\n        height: 16px;\r\n        margin-right: 4px;\n}\n.reminder-item__service-date[data-v-083031ca]{\r\n        display: flex;\r\n        align-items: center;\r\n        margin-left: 12px;\n}\nspan.service-time[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 14px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n        color: #000000;\r\n        display: flex;\r\n        height: 16px;\r\n        align-items: center;\n}\n.reminder-accordion__item.later .reminder-accordion__item__title[data-v-083031ca] {\r\n        color: var(--theme-text-color-gray);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -24487,7 +24838,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.reminder-item__wrapper[data-v-67274c32]{\r\n        padding: 12px 0;\r\n        flex-grow: 1; /* Занимаем оставшееся пространство после Header и Services */\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-item__wrapper .container[data-v-67274c32]{\r\n        flex-grow: 1;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-item[data-v-67274c32]{\r\n        position: relative;\r\n        border-radius: 12px;\r\n        flex-grow: 1; /* Растягиваем reminder-item внутри wrapper */\r\n        display: flex;\r\n        flex-direction: column;\r\n\r\n        background: #fff;\r\n        padding: 22px 16px;\r\n        margin-bottom: 64px;\n}\n.reminder-item.canceled[data-v-67274c32]::after{\r\n        content: 'Canceled';\r\n        width: 50px;\r\n        height: 20px;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 10px;\r\n        font-weight: 400;\r\n        line-height: 10px;\r\n        position: absolute;\r\n        top: 0;\r\n        right: 0;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        border: 1px solid var(--theme-destructive-color);\r\n        border-radius: 12px;\r\n        background: var(--theme-destructive-color);\r\n        color: #fff;\n}\n.reminder-item__header[data-v-67274c32]{\r\n        display: flex;\r\n        justify-content: start;\r\n        align-items: start;\r\n        margin-bottom: 34px;\n}\n.reminder-item__back-arrow[data-v-67274c32]{\r\n        width: 6px;\r\n        height: 30px;\r\n        cursor: pointer;\r\n        margin-right: 12px;\n}\n.reminder-item__service-content[data-v-67274c32]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 24px;\r\n        font-weight: 400;\r\n        line-height: 27.16px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\n.reminder-item__service-info[data-v-67274c32]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        margin-bottom: 24px;\n}\n.reminder-item__service-info-item+.reminder-item__service-info-item[data-v-67274c32]{\r\n        margin-top: 12px;\n}\nspan.service-info-title-span[data-v-67274c32]{\r\n        color: var(--theme-text-color-gray);\n}\n.set-route[data-v-67274c32]{\r\n        padding: 10px 24px;\r\n        text-decoration: none;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: rgba(0, 122, 255, 1);\r\n\r\n        width: -moz-fit-content;\r\n\r\n        width: fit-content;\r\n        background: var(--theme-bg-color-white);\r\n        border-radius: 12px;\r\n\r\n        margin-bottom: 24px;\n}\n.reminder-item__settings[data-v-67274c32]{\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-item__settings-item[data-v-67274c32]{\r\n        display: flex;\r\n        align-items: center;\n}\n.reminder-item__settings-item+.reminder-item__settings-item[data-v-67274c32]{\r\n        margin-top: 18px;\n}\n.reminder-item__settings-img[data-v-67274c32]{\r\n        width: 20px;\r\n        height: 20px;\r\n        margin-right: 6px;\n}\n.reminder-item__settings-info[data-v-67274c32]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: var(--theme-text-color-gray);\n}\n.reminder-btns__wrapper[data-v-67274c32]{\r\n        position: fixed;\r\n        left: 0;\r\n        right: 0;\r\n        bottom: 0;\r\n        margin: 0 auto;\r\n\r\n        background: #EFEFF3;\r\n        padding: 12px 0 20px;\r\n        display: flex;\r\n        justify-content: center;\n}\n.reminder-btns[data-v-67274c32]{\r\n        width: 100%;\r\n        height: 44px;\r\n        display: flex;\r\n        align-items: center;\r\n        gap: 12px;\r\n\r\n        /* margin-bottom: 20px; */\r\n        max-width: 400px;\r\n        padding: 0 16px;\n}\n.reminder-btn[data-v-67274c32]{\r\n        width: 100%;\r\n        height: 100%;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: center;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: var(--theme-text-color-black);\r\n        background: #FFFFFF;\r\n        border-radius: 12px;\r\n\r\n        cursor: pointer;\n}\n.reminder-btn.cancel[data-v-67274c32]{\r\n        color: rgba(255, 59, 48, 1);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.reminder-item__wrapper[data-v-67274c32]{\r\n        padding: 12px 0;\r\n        flex-grow: 1; /* Занимаем оставшееся пространство после Header и Services */\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-item__wrapper .container[data-v-67274c32]{\r\n        flex-grow: 1;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-item[data-v-67274c32]{\r\n        position: relative;\r\n        border-radius: 12px;\r\n        flex-grow: 1; /* Растягиваем reminder-item внутри wrapper */\r\n        display: flex;\r\n        flex-direction: column;\r\n\r\n        background: #fff;\r\n        padding: 22px 16px;\r\n        margin-bottom: 64px;\n}\n.reminder-item.cancelled[data-v-67274c32]{\r\n        margin-bottom: 8px;\n}\r\n\r\n    /* .reminder-item.canceled::after{\r\n        content: 'Canceled';\r\n        width: 50px;\r\n        height: 20px;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 10px;\r\n        font-weight: 400;\r\n        line-height: 10px;\r\n        position: absolute;\r\n        top: 0;\r\n        right: 0;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        border: 1px solid var(--theme-destructive-color);\r\n        border-radius: 12px;\r\n        background: var(--theme-destructive-color);\r\n        color: #fff;\r\n    } */\n.reminder-item__service-info-item.status[data-v-67274c32]{\r\n        margin-top: 24px;\r\n        width: 80px;\r\n        height: 23px;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 13px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        border-radius: 6px;\r\n        background: #E5393526;\r\n        color: #E53935;\n}\n.reminder-item__service-info-item.status.unread[data-v-67274c32]{\r\n        width: 116px;\r\n        background: #EDEDEE;\r\n        color: #707579;\n}\n.reminder-item__service-info-item.status.confirmed[data-v-67274c32]{\r\n        width: 99px;\r\n        background: #3390EC26;\r\n        color: #3390EC;\n}\n.reminder-item__header[data-v-67274c32]{\r\n        display: flex;\r\n        justify-content: start;\r\n        align-items: start;\r\n        margin-bottom: 34px;\n}\n.reminder-item__back-arrow[data-v-67274c32]{\r\n        width: 6px;\r\n        height: 30px;\r\n        cursor: pointer;\r\n        margin-right: 12px;\n}\n.reminder-item__service-content[data-v-67274c32]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 24px;\r\n        font-weight: 400;\r\n        line-height: 27.16px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\n.reminder-item__service-info[data-v-67274c32]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        margin-bottom: 24px;\n}\n.reminder-item__service-info-item+.reminder-item__service-info-item[data-v-67274c32]{\r\n        margin-top: 12px;\n}\nspan.service-info-title-span[data-v-67274c32]{\r\n        color: var(--theme-text-color-gray);\n}\n.set-route[data-v-67274c32]{\r\n        padding: 10px 24px;\r\n        text-decoration: none;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: rgba(0, 122, 255, 1);\r\n\r\n        width: -moz-fit-content;\r\n\r\n        width: fit-content;\r\n        background: var(--theme-bg-color-white);\r\n        border-radius: 12px;\r\n\r\n        margin-bottom: 24px;\n}\n.reminder-item__settings[data-v-67274c32]{\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-item__settings-item[data-v-67274c32]{\r\n        display: flex;\r\n        align-items: center;\n}\n.reminder-item__settings-item+.reminder-item__settings-item[data-v-67274c32]{\r\n        margin-top: 18px;\n}\n.reminder-item__settings-img[data-v-67274c32]{\r\n        width: 20px;\r\n        height: 20px;\r\n        margin-right: 6px;\n}\n.reminder-item__settings-info[data-v-67274c32]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: var(--theme-text-color-gray);\n}\n.reminder-btns__wrapper[data-v-67274c32]{\r\n        position: fixed;\r\n        left: 0;\r\n        right: 0;\r\n        bottom: 0;\r\n        margin: 0 auto;\r\n\r\n        background: #EFEFF3;\r\n        padding: 12px 0 20px;\r\n        display: flex;\r\n        justify-content: center;\n}\n.reminder-btns[data-v-67274c32]{\r\n        width: 100%;\r\n        height: 44px;\r\n        display: flex;\r\n        align-items: center;\r\n        gap: 12px;\r\n\r\n        /* margin-bottom: 20px; */\r\n        /* max-width: 400px; */\r\n        padding: 0 16px;\n}\n.reminder-btn[data-v-67274c32]{\r\n        width: 100%;\r\n        height: 100%;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: center;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: var(--theme-text-color-black);\r\n        background: #FFFFFF;\r\n        border-radius: 12px;\r\n\r\n        cursor: pointer;\n}\n.reminder-btn.cancel[data-v-67274c32]{\r\n        color: rgba(255, 59, 48, 1);\n}\n.reminder-btn.confirm[data-v-67274c32]{\r\n        color: #F4F4F5;\r\n        background: #3390EC;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -24511,7 +24862,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\r\n/* Основной контейнер */\n.services[data-v-30b0c6c9] {\r\n    padding: 14px 0;\n}\n.services .container[data-v-30b0c6c9] {\r\n    position: relative;\r\n    width: 100%;\r\n    display: flex;\r\n    justify-content: center;\r\n    padding: 0;\r\n    margin: 0;\r\n    max-width: unset;\n}\r\n\r\n/* Обертка для маскирования краев */\n.services-wrapper[data-v-30b0c6c9] {\r\n    position: relative;\r\n    width: 100%;\r\n    overflow: hidden; /* Маскируем края */\r\n    max-width: 500px;\n}\r\n\r\n/* Список сервисов */\n.services-list[data-v-30b0c6c9] {\r\n    display: flex;\r\n    padding: 14px 0;\r\n    overflow-x: auto;\r\n    overflow-y: hidden;\r\n    scroll-behavior: smooth;\r\n    -ms-overflow-style: none; /* IE и Edge */\r\n    scrollbar-width: none; /* Firefox */\r\n    padding: 0 16px;\n}\n.services-list[data-v-30b0c6c9]::-webkit-scrollbar {\r\n    display: none; /* Chrome, Safari, Opera */\n}\r\n\r\n/* Элемент слайдера */\n.services-list__item[data-v-30b0c6c9] {\r\n    position: relative;\r\n    width: 75px;\r\n    flex-shrink: 0;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    margin-right: 12px;\n}\n.services-list__item[data-v-30b0c6c9]:last-child {\r\n    margin-right: 0;\n}\n.services-list__item__img[data-v-30b0c6c9] {\r\n    position: relative;\r\n    width: 64px;\r\n    height: 64px;\r\n    border-radius: 50%;\r\n    overflow: hidden;\r\n    margin-bottom: 8px;\r\n    display: flex; \r\n    align-items: center; \r\n    justify-content: center; \r\n    background-color: #f0f0f0; /* Цвет фона для случаев, если изображение не загрузится */\n}\n.services-list__item__img-img[data-v-30b0c6c9] {\r\n    width: 100%; \r\n    height: 100%; \r\n    -o-object-fit: cover; \r\n       object-fit: cover;\n}\n.services-list__item__name[data-v-30b0c6c9] {\r\n    font-family: Microsoft Sans Serif;\r\n    font-size: 13px;\r\n    font-weight: 400;\r\n    line-height: 14.71px;\r\n    text-align: center;\r\n    text-underline-position: from-font;\r\n    -webkit-text-decoration-skip-ink: none;\r\n            text-decoration-skip-ink: none;\n}\r\n\r\n/* Индикаторы дат */\n.services-list__item[data-v-30b0c6c9]::after {\r\n    content: '';\r\n    display: block;\r\n    width: 10px;\r\n    height: 10px;\r\n    border-radius: 50%;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 5px;\r\n    border: 2px solid #fff;\n}\n.services-list__item.today[data-v-30b0c6c9]::after {\r\n    background: var(--theme-indicator-color-today);\n}\n.services-list__item.tomorrow[data-v-30b0c6c9]::after {\r\n    background: var(--theme-indicator-color-tomorrow);\n}\n.services-list__item.later[data-v-30b0c6c9]::after {\r\n    background: var(--theme-indicator-color-later);\n}\n.avatar-letter[data-v-30b0c6c9] {\r\n        color: white;\r\n        font-size: 32px;\r\n        font-weight: 500;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\r\n/* Основной контейнер */\n.services[data-v-30b0c6c9] {\r\n    padding: 14px 0;\n}\n.services .container[data-v-30b0c6c9] {\r\n    position: relative;\r\n    width: 100%;\r\n    display: flex;\r\n    justify-content: center;\r\n    padding: 0;\r\n    margin: 0;\r\n    max-width: unset;\r\n    padding-left: unset !important;\r\n    padding-right: unset !important;\n}\r\n\r\n/* Обертка для маскирования краев */\n.services-wrapper[data-v-30b0c6c9] {\r\n    position: relative;\r\n    width: 100%;\r\n    overflow: hidden; /* Маскируем края */\r\n    max-width: 768px;\n}\r\n\r\n/* Список сервисов */\n.services-list[data-v-30b0c6c9] {\r\n    display: flex;\r\n    overflow-x: auto;\r\n    overflow-y: hidden;\r\n    scroll-behavior: smooth;\r\n    -ms-overflow-style: none; /* IE и Edge */\r\n    scrollbar-width: none; /* Firefox */\r\n    padding: 0 16px;\n}\n.services-list[data-v-30b0c6c9]::-webkit-scrollbar {\r\n    display: none; /* Chrome, Safari, Opera */\n}\r\n\r\n/* Элемент слайдера */\n.services-list__item[data-v-30b0c6c9] {\r\n    position: relative;\r\n    width: 69px;\r\n    flex-shrink: 0;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    margin-right: 12px;\n}\n.services-list__item[data-v-30b0c6c9]:last-child {\r\n    margin-right: 0;\n}\n.services-list__item__img[data-v-30b0c6c9] {\r\n    position: relative;\r\n    width: 64px;\r\n    height: 64px;\r\n    border-radius: 50%;\r\n    overflow: hidden;\r\n    margin-bottom: 8px;\r\n    display: flex; \r\n    align-items: center; \r\n    justify-content: center; \r\n    background-color: #f0f0f0; /* Цвет фона для случаев, если изображение не загрузится */\r\n    border: 1px solid #DFDEE5;\n}\n.services-list__item__img-img[data-v-30b0c6c9] {\r\n    width: 100%; \r\n    height: 100%; \r\n    -o-object-fit: cover; \r\n       object-fit: cover;\n}\n.services-list__item__name[data-v-30b0c6c9] {\r\n    font-family: Microsoft Sans Serif;\r\n    font-size: 13px;\r\n    font-weight: 400;\r\n    line-height: 14.71px;\r\n    text-align: center;\r\n    text-underline-position: from-font;\r\n    -webkit-text-decoration-skip-ink: none;\r\n            text-decoration-skip-ink: none;\n}\r\n\r\n/* Индикаторы дат */\n.services-list__item[data-v-30b0c6c9]::after {\r\n    content: '';\r\n    display: block;\r\n    width: 10px;\r\n    height: 10px;\r\n    border-radius: 50%;\r\n    position: absolute;\r\n    top: 0;\r\n    right: 5px;\n}\n.services-list__item.today[data-v-30b0c6c9]::after {\r\n    background: var(--theme-indicator-color-today);\r\n    border: 2px solid #EFEFF3;\n}\n.services-list__item.tomorrow[data-v-30b0c6c9]::after {\r\n    background: var(--theme-indicator-color-tomorrow);\r\n    border: 2px solid #EFEFF3;\n}\n.services-list__item.later[data-v-30b0c6c9]::after {\r\n    background: var(--theme-indicator-color-later);\r\n    border: 2px solid #EFEFF3;\n}\n.avatar-letter[data-v-30b0c6c9] {\r\n        color: white;\r\n        font-size: 32px;\r\n        font-weight: 500;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -42392,6 +42743,66 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=0&id=5c12b832&scoped=true&lang=css":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=0&id=5c12b832&scoped=true&lang=css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmAppointmentPopUp_vue_vue_type_style_index_0_id_5c12b832_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ConfirmAppointmentPopUp.vue?vue&type=style&index=0&id=5c12b832&scoped=true&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=0&id=5c12b832&scoped=true&lang=css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmAppointmentPopUp_vue_vue_type_style_index_0_id_5c12b832_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmAppointmentPopUp_vue_vue_type_style_index_0_id_5c12b832_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=1&id=5c12b832&scoped=true&lang=css":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=1&id=5c12b832&scoped=true&lang=css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmAppointmentPopUp_vue_vue_type_style_index_1_id_5c12b832_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ConfirmAppointmentPopUp.vue?vue&type=style&index=1&id=5c12b832&scoped=true&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=1&id=5c12b832&scoped=true&lang=css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmAppointmentPopUp_vue_vue_type_style_index_1_id_5c12b832_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmAppointmentPopUp_vue_vue_type_style_index_1_id_5c12b832_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Header.vue?vue&type=style&index=0&id=1f42fb90&scoped=true&lang=css":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Header.vue?vue&type=style&index=0&id=1f42fb90&scoped=true&lang=css ***!
@@ -43097,6 +43508,39 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/ConfirmAppointmentPopUp.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/ConfirmAppointmentPopUp.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ConfirmAppointmentPopUp_vue_vue_type_template_id_5c12b832_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ConfirmAppointmentPopUp.vue?vue&type=template&id=5c12b832&scoped=true */ "./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=template&id=5c12b832&scoped=true");
+/* harmony import */ var _ConfirmAppointmentPopUp_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ConfirmAppointmentPopUp.vue?vue&type=script&lang=js */ "./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=script&lang=js");
+/* harmony import */ var _ConfirmAppointmentPopUp_vue_vue_type_style_index_0_id_5c12b832_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ConfirmAppointmentPopUp.vue?vue&type=style&index=0&id=5c12b832&scoped=true&lang=css */ "./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=0&id=5c12b832&scoped=true&lang=css");
+/* harmony import */ var _ConfirmAppointmentPopUp_vue_vue_type_style_index_1_id_5c12b832_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ConfirmAppointmentPopUp.vue?vue&type=style&index=1&id=5c12b832&scoped=true&lang=css */ "./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=1&id=5c12b832&scoped=true&lang=css");
+/* harmony import */ var d_OpenServer_domains_Pulse_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+
+
+
+const __exports__ = /*#__PURE__*/(0,d_OpenServer_domains_Pulse_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_4__["default"])(_ConfirmAppointmentPopUp_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ConfirmAppointmentPopUp_vue_vue_type_template_id_5c12b832_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-5c12b832"],['__file',"resources/js/components/ConfirmAppointmentPopUp.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/Header.vue":
 /*!********************************************!*\
   !*** ./resources/js/components/Header.vue ***!
@@ -43397,6 +43841,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=script&lang=js":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmAppointmentPopUp_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmAppointmentPopUp_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ConfirmAppointmentPopUp.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/Header.vue?vue&type=script&lang=js":
 /*!********************************************************************!*\
   !*** ./resources/js/components/Header.vue?vue&type=script&lang=js ***!
@@ -43569,6 +44029,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CancelAppointmentPopUp_vue_vue_type_template_id_011dd09c_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CancelAppointmentPopUp_vue_vue_type_template_id_011dd09c_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CancelAppointmentPopUp.vue?vue&type=template&id=011dd09c&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/CancelAppointmentPopUp.vue?vue&type=template&id=011dd09c&scoped=true");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=template&id=5c12b832&scoped=true":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=template&id=5c12b832&scoped=true ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmAppointmentPopUp_vue_vue_type_template_id_5c12b832_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmAppointmentPopUp_vue_vue_type_template_id_5c12b832_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ConfirmAppointmentPopUp.vue?vue&type=template&id=5c12b832&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=template&id=5c12b832&scoped=true");
 
 
 /***/ }),
@@ -43814,6 +44290,32 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CancelAppointmentPopUp_vue_vue_type_style_index_1_id_011dd09c_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CancelAppointmentPopUp.vue?vue&type=style&index=1&id=011dd09c&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/CancelAppointmentPopUp.vue?vue&type=style&index=1&id=011dd09c&scoped=true&lang=css");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=0&id=5c12b832&scoped=true&lang=css":
+/*!*********************************************************************************************************************!*\
+  !*** ./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=0&id=5c12b832&scoped=true&lang=css ***!
+  \*********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmAppointmentPopUp_vue_vue_type_style_index_0_id_5c12b832_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ConfirmAppointmentPopUp.vue?vue&type=style&index=0&id=5c12b832&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=0&id=5c12b832&scoped=true&lang=css");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=1&id=5c12b832&scoped=true&lang=css":
+/*!*********************************************************************************************************************!*\
+  !*** ./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=1&id=5c12b832&scoped=true&lang=css ***!
+  \*********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmAppointmentPopUp_vue_vue_type_style_index_1_id_5c12b832_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ConfirmAppointmentPopUp.vue?vue&type=style&index=1&id=5c12b832&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConfirmAppointmentPopUp.vue?vue&type=style&index=1&id=5c12b832&scoped=true&lang=css");
 
 
 /***/ }),
