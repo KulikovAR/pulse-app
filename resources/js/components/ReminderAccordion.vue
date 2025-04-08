@@ -177,31 +177,42 @@ export default {
         remindersDistribution(){
             const now = new Date();
             const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
             const startOfTomorrow = new Date(startOfToday);
             startOfTomorrow.setDate(startOfTomorrow.getDate() + 1);
-            
             const startOfDayAfterTomorrow = new Date(startOfTomorrow);
             startOfDayAfterTomorrow.setDate(startOfDayAfterTomorrow.getDate() + 1);
-            
 
-            // console.log('startOfToday: ',startOfToday);
-            // console.log('startOfTomorrow: ',startOfTomorrow);
-            // console.log('startOfDayAfterTomorrow: ',startOfDayAfterTomorrow);
+            // Clear previous data
+            this.remindersToday = [];
+            this.remindersTomorrow = [];
+            this.remindersLater = [];
 
-            this.reminders.forEach((reminder)=>{
-                const originalReminderDate = new Date(reminder.event_time);
-                const reminderDate = new Date(originalReminderDate.getTime() - originalReminderDate.getTimezoneOffset() * 60000);
+            const processEvent = (event) => {
+                const originalDate = new Date(event.event_time);
+                const eventDate = new Date(originalDate.getTime() - originalDate.getTimezoneOffset() * 60000);
 
-                // console.log('now: ',now,' --- ', reminderDate);
-                // console.log(reminderDate.getHours());
+                if (eventDate >= startOfToday && eventDate < startOfTomorrow) {
+                    this.remindersToday.push(event);
+                } else if (eventDate >= startOfTomorrow && eventDate < startOfDayAfterTomorrow) {
+                    this.remindersTomorrow.push(event);
+                } else if (eventDate >= startOfDayAfterTomorrow) {
+                    this.remindersLater.push(event);
+                }
+            };
 
-                if (reminderDate >= startOfToday && reminderDate < startOfTomorrow) {
-                    this.remindersToday.push(reminder);
-                } else if (reminderDate >= startOfTomorrow && reminderDate < startOfDayAfterTomorrow) {
-                    this.remindersTomorrow.push(reminder);
-                } else if (reminderDate >= startOfDayAfterTomorrow) {
-                    this.remindersLater.push(reminder);
+            this.reminders.forEach(originalEvent => {
+                // Process main event
+                processEvent(originalEvent);
+                
+                // Process all repeats
+                if(originalEvent.repeats && originalEvent.repeats.length) {
+                    originalEvent.repeats.forEach(repeat => {
+                        const repeatEvent = {
+                            ...originalEvent,
+                            event_time: repeat.event_time,
+                        };
+                        processEvent(repeatEvent);
+                    });
                 }
             });
         },

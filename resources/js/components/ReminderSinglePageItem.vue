@@ -187,13 +187,20 @@ export default {
                     throw new Error('Event ID is missing');
                 }
                 const response = await window.axios.get(`/event/${this.$route.params.id}`);
-                this.event = response.data.data;
+                
+                // Update event_time if repeats exist
+                const event = response.data.data;
+                if(event.repeats?.length > 0) {
+                    event.event_time = event.repeats[0].event_time;
+                }
+                
+                this.event = event;
             } catch (error) {
                 console.error('Error fetching event data:', error);
                 this.error = error.message;
                 this.$router.push({ name: 'main' });
             }
-        }
+        },
     },
     mounted() {
         this.fetchEventData();
