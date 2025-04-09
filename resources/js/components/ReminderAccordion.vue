@@ -8,34 +8,50 @@
                         СЕГОДНЯ
                     </div>
                     <div class="reminder-accordion__item__reminder-list">
-                        <router-link v-for="(item,index) in this.remindersToday" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'cancelled': item.status === 'cancelled', 'unread': item.status === 'unread', 'confirmed': item.status === 'confirmed' }]" >
-                            <div class="reminder-item__header">
-                                <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
-                                    <template v-if="item.company.image">
-                                        <img class="reminder-item__header__service-img-img" :src="item.company.image" alt="" />
-                                    </template>
-                                    <template v-else>
-                                        <span class="avatar-letter">{{ item.company.name.charAt(0).toUpperCase() }}</span>
-                                    </template>
-                                </div>
-                                <div class="reminder-item__header__service-name">
-                                    {{item.company.name}}
-                                </div>
+
+                        <div class="reminder-wrapper" v-for="(item,index) in this.remindersToday" :key="index">
+                            <div class="delete-button" v-if="item.status === 'cancelled'">
+                                <img src="/images/reminder/trash.svg">
                             </div>
-                            <div class="reminder-item__service-content">
-                                {{formatServiceNames(item.services)}}
-                            </div>
-                            <div class="reminder-item__service-date-time">
-                                <div class="reminder-item__service-time">
-                                    <img class="reminder-item__service-time__img" src="/images/reminder/time.svg">
-                                    <span class="service-time">{{this.getServiceTime(item.event_time)}}</span>
+
+                            <router-link :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'cancelled': item.status === 'cancelled', 'unread': item.status === 'unread', 'confirmed': item.status === 'confirmed' }]"
+                                @touchstart="handleTouchStart($event, item)"
+                                @touchmove="handleTouchMove($event, item)"
+                                @touchend="handleTouchEnd($event, item)"
+                                :style="item.status === 'cancelled' ? swipeStyle(item.id) : {}"
+                            >
+                                <div class="reminder-item__header">
+                                    <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
+                                        <template v-if="item.company.image">
+                                            <img class="reminder-item__header__service-img-img" :src="item.company.image" alt="" />
+                                        </template>
+                                        <template v-else>
+                                            <span class="avatar-letter">{{ item.company.name.charAt(0).toUpperCase() }}</span>
+                                        </template>
+                                    </div>
+                                    <div class="reminder-item__header__service-name">
+                                        {{item.company.name}}
+                                    </div>
                                 </div>
-                                <div class="reminder-item__service-date">
-                                    <img class="reminder-item__service-time__img" src="/images/reminder/date.svg">
-                                    <span class="service-time">{{this.getServiceDate(item.event_time)}}</span>
+                                <div class="reminder-item__service-content">
+                                    {{formatServiceNames(item.services)}}
                                 </div>
-                            </div>
-                        </router-link>
+                                <div class="reminder-item__service-date-time">
+                                    <div class="reminder-item__service-time">
+                                        <img class="reminder-item__service-time__img" src="/images/reminder/time.svg">
+                                        <span class="service-time">{{this.getServiceTime(item.event_time)}}</span>
+                                    </div>
+                                    <div class="reminder-item__service-date">
+                                        <img class="reminder-item__service-time__img" src="/images/reminder/date.svg">
+                                        <span class="service-time">{{this.getServiceDate(item.event_time)}}</span>
+                                    </div>
+                                </div>
+                            </router-link>
+
+                        </div>
+
+                        
+
 
                     </div>
                 </div>
@@ -45,34 +61,49 @@
                         ЗАВТРА
                     </div>
                     <div class="reminder-accordion__item__reminder-list">
-                        <router-link v-for="(item,index) in this.remindersTomorrow" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'cancelled': item.status === 'cancelled', 'unread': item.status === 'unread', 'confirmed': item.status === 'confirmed' }]">
-                            <div class="reminder-item__header">
-                                <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
-                                    <template v-if="item.company.image">
-                                        <img class="reminder-item__header__service-img-img" :src="item.company.image" alt="" />
-                                    </template>
-                                    <template v-else>
-                                        <span class="avatar-letter">{{ item.company.name.charAt(0).toUpperCase() }}</span>
-                                    </template>
-                                </div>
-                                <div class="reminder-item__header__service-name">
-                                    {{item.company.name}}
-                                </div>
+
+                        <div class="reminder-wrapper" v-for="(item,index) in this.remindersTomorrow" :key="index">
+                            <div class="delete-button" v-if="item.status === 'cancelled'">
+                                <img src="/images/reminder/trash.svg">
                             </div>
-                            <div class="reminder-item__service-content">
-                                {{formatServiceNames(item.services)}}
-                            </div>
-                            <div class="reminder-item__service-date-time">
-                                <div class="reminder-item__service-time">
-                                    <img class="reminder-item__service-time__img" src="/images/reminder/time.svg">
-                                    <span class="service-time">{{this.getServiceTime(item.event_time)}}</span>
+
+                            <router-link :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'cancelled': item.status === 'cancelled', 'unread': item.status === 'unread', 'confirmed': item.status === 'confirmed' }]"
+                                @touchstart="handleTouchStart($event, item)"
+                                @touchmove="handleTouchMove($event, item)"
+                                @touchend="handleTouchEnd($event, item)"
+                                :style="item.status === 'cancelled' ? swipeStyle(item.id) : {}"
+                            >
+                                <div class="reminder-item__header">
+                                    <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
+                                        <template v-if="item.company.image">
+                                            <img class="reminder-item__header__service-img-img" :src="item.company.image" alt="" />
+                                        </template>
+                                        <template v-else>
+                                            <span class="avatar-letter">{{ item.company.name.charAt(0).toUpperCase() }}</span>
+                                        </template>
+                                    </div>
+                                    <div class="reminder-item__header__service-name">
+                                        {{item.company.name}}
+                                    </div>
                                 </div>
-                                <div class="reminder-item__service-date">
-                                    <img class="reminder-item__service-time__img" src="/images/reminder/date.svg">
-                                    <span class="service-time">{{this.getServiceDate(item.event_time)}}</span>
+                                <div class="reminder-item__service-content">
+                                    {{formatServiceNames(item.services)}}
                                 </div>
-                            </div>
-                        </router-link>
+                                <div class="reminder-item__service-date-time">
+                                    <div class="reminder-item__service-time">
+                                        <img class="reminder-item__service-time__img" src="/images/reminder/time.svg">
+                                        <span class="service-time">{{this.getServiceTime(item.event_time)}}</span>
+                                    </div>
+                                    <div class="reminder-item__service-date">
+                                        <img class="reminder-item__service-time__img" src="/images/reminder/date.svg">
+                                        <span class="service-time">{{this.getServiceDate(item.event_time)}}</span>
+                                    </div>
+                                </div>
+                            </router-link>
+
+                        </div>
+
+                        
 
                     </div>
                 </div>
@@ -82,54 +113,81 @@
                         ПОТОМ
                     </div>
                     <div class="reminder-accordion__item__reminder-list">
-                        <router-link v-for="(item,index) in this.remindersLater" :key="index" :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'cancelled': item.status === 'cancelled', 'unread': item.status === 'unread', 'confirmed': item.status === 'confirmed' }]">
-                            <div class="reminder-item__header">
-                                <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
-                                    <template v-if="item.company.image">
-                                        <img class="reminder-item__header__service-img-img" :src="item.company.image" alt="" />
-                                    </template>
-                                    <template v-else>
-                                        <span class="avatar-letter">{{ item.company.name.charAt(0).toUpperCase() }}</span>
-                                    </template>
-                                </div>
-                                <div class="reminder-item__header__service-name">
-                                    {{item.company.name}}
-                                </div>
+
+                        <div class="reminder-wrapper" v-for="(item,index) in this.remindersLater" :key="index">
+                            <div class="delete-button" v-if="item.status === 'cancelled'">
+                                <img src="/images/reminder/trash.svg">
                             </div>
-                            <div class="reminder-item__service-content">
-                                {{formatServiceNames(item.services)}}
-                            </div>
-                            <div class="reminder-item__service-date-time">
-                                <div class="reminder-item__service-time">
-                                    <img class="reminder-item__service-time__img" src="/images/reminder/time.svg">
-                                    <span class="service-time">{{this.getServiceTime(item.event_time)}}</span>
+
+                            <router-link :to="{ name:'reminder-page', params: { id: item.id } }" :class="['reminder-item', { 'cancelled': item.status === 'cancelled', 'unread': item.status === 'unread', 'confirmed': item.status === 'confirmed' }]"
+                                @touchstart="handleTouchStart($event, item)"
+                                @touchmove="handleTouchMove($event, item)"
+                                @touchend="handleTouchEnd($event, item)"
+                                :style="item.status === 'cancelled' ? swipeStyle(item.id) : {}"
+                            >
+                                <div class="reminder-item__header">
+                                    <div class="reminder-item__header__service-img" :style="{ backgroundColor: !item.company.image ? getAvatarColor(item.company.name) : 'transparent' }">
+                                        <template v-if="item.company.image">
+                                            <img class="reminder-item__header__service-img-img" :src="item.company.image" alt="" />
+                                        </template>
+                                        <template v-else>
+                                            <span class="avatar-letter">{{ item.company.name.charAt(0).toUpperCase() }}</span>
+                                        </template>
+                                    </div>
+                                    <div class="reminder-item__header__service-name">
+                                        {{item.company.name}}
+                                    </div>
                                 </div>
-                                <div class="reminder-item__service-date">
-                                    <img class="reminder-item__service-time__img" src="/images/reminder/date.svg">
-                                    <span class="service-time">{{this.getServiceDate(item.event_time)}}</span>
+                                <div class="reminder-item__service-content">
+                                    {{formatServiceNames(item.services)}}
                                 </div>
-                            </div>
-                        </router-link>
+                                <div class="reminder-item__service-date-time">
+                                    <div class="reminder-item__service-time">
+                                        <img class="reminder-item__service-time__img" src="/images/reminder/time.svg">
+                                        <span class="service-time">{{this.getServiceTime(item.event_time)}}</span>
+                                    </div>
+                                    <div class="reminder-item__service-date">
+                                        <img class="reminder-item__service-time__img" src="/images/reminder/date.svg">
+                                        <span class="service-time">{{this.getServiceDate(item.event_time)}}</span>
+                                    </div>
+                                </div>
+                            </router-link>
+                        </div>
+
+                        
 
                     </div>
                 </div>
 
             </div>
+
+            <DeleteAppointmentPopUp
+                ref="DeleteAppointmentPopUp"
+                @deleteReminderConfirm="deleteReminderConfirm"
+                @fixOffset="fixOffset"
+            />
+
         </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
-
+import DeleteAppointmentPopUp from './DeleteAppointmentPopUp.vue';
 export default {
     name: 'ReminderAccordion',
+    components: {
+        DeleteAppointmentPopUp
+    },
     data(){
         return{
             reminders: [],
             remindersToday: [],
             remindersTomorrow: [],
             remindersLater: [],
+            touchStart: null,
+            touchStartY: null,
+            swipeOffset: {},
         }
     },
     methods: {
@@ -245,7 +303,73 @@ export default {
             const weekday = weekdays[date.getDay()];
             
             return `${day}.${month}. ${weekday}`;
-        }
+        },
+        handleTouchStart(event, item) {
+            if (item.status !== 'cancelled') return;
+            event.preventDefault();
+            this.touchStart = event.touches[0].clientX;
+            this.touchStartY = event.touches[0].clientY;
+            this.swipeOffset[item.id] = this.swipeOffset[item.id] || 0;
+        },
+        handleTouchMove(event, item) {
+            if (!this.touchStart || item.status !== 'cancelled') return;
+            const currentX = event.touches[0].clientX;
+            const diff = this.touchStart - currentX;
+            const newOffset = Math.max(0, Math.min(100, diff));
+            this.swipeOffset[item.id] = newOffset;
+        },
+        handleTouchEnd(event, item) {
+            if (!this.touchStart || item.status !== 'cancelled') return;
+            const offset = this.swipeOffset[item.id] || 0;
+            
+            const touchEndX = event.changedTouches[0].clientX;
+            const touchEndY = event.changedTouches[0].clientY;
+            
+            // Вычисляем разницу между начальной и конечной позицией
+            const deltaX = Math.abs(this.touchStart - touchEndX);
+            const deltaY = Math.abs(this.touchStartY - touchEndY);
+            
+            // Минимальный порог движения и более точное определение скролла
+            const minMovement = 5;
+            const isScroll = (deltaY > minMovement);
+            
+            if (offset >= 100) {
+                this.$refs.DeleteAppointmentPopUp.item = item;
+                this.$refs.DeleteAppointmentPopUp.showPopUp();
+            } else if (offset === 0 && !isScroll) {
+                this.$router.push({ name: 'reminder-page', params: { id: item.id } });
+            }
+            
+            if (offset < 100) {
+                this.swipeOffset[item.id] = 0;
+            }
+            
+            this.touchStart = null;
+            this.touchStartY = null;
+        },
+
+        swipeStyle(itemId) {
+            const offset = this.swipeOffset[itemId] || 0;
+            return {
+                transform: `translateX(-${offset}px)`,
+                transition: 'transform 0.2s ease',
+            }
+        },
+        deleteReminderConfirm(item){
+            this.$refs.DeleteAppointmentPopUp.closePopUp();
+            this.deleteEvent(item.id);
+        },
+        fixOffset(item){
+            this.swipeOffset[item.id] = 0;
+        },
+        async deleteEvent(itemId){
+            try {
+                await window.axios.delete(`/event/${itemId}/delete`);
+                this.fetchReminders();
+            } catch (error) {
+                console.error('Error deletinging event:', error);
+            }
+        },
     },
     mounted(){
         this.fetchReminders();
@@ -299,7 +423,13 @@ export default {
         flex-direction: column;
     }
 
-
+    .reminder-wrapper {
+        position: relative;
+        margin-bottom: 8px;
+        border-radius: 12px;
+        background-color: #E53935;
+        padding: 0;
+    }
     .reminder-item{
         position: relative;
         padding: 12px;
@@ -307,11 +437,29 @@ export default {
         flex-direction: column;
 
         cursor: pointer;
-        margin-bottom: 8px;
         background: #ffffff;
         border-radius: 12px;
 
         color: var(--theme-text-color-black);
+        width: 100%;
+        margin: 0;
+        box-shadow: 0 0 0 1px #fff;
+    }
+
+    .delete-button {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .delete-button img {
+        width: 24px;
+        height: 24px;
     }
 
     .reminder-item.cancelled::after{
