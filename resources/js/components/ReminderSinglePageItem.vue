@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import notification from '../services/notification'
 import axios from 'axios';
 export default {
     name: 'ReminderSinglePageItem',
@@ -161,9 +162,16 @@ export default {
                     throw new Error('No event data available');
                 }
                 await window.axios.put(`/event/${this.event.id}/cancel`);
-                // alert('Запись отменена');
+                notification.show({
+                    text: 'Запись отменена',
+                    type: 'error'
+                });
                 this.$router.push({ name: 'main' });
             } catch (error) {
+                notification.show({
+                    text: 'Не удалось отменить запись',
+                    type: 'info'
+                });
                 console.error('Error canceling event:', error);
                 Telegram.WebApp.showAlert(`Ошибка: ${error.message}`);
             }
@@ -174,9 +182,16 @@ export default {
                     throw new Error('No event data available');
                 }
                 await window.axios.put(`/event/${this.event.id}/confirm`);
-                // alert('Запись отменена');
+                notification.show({
+                    text: 'Запись подтверждена',
+                    type: 'success'
+                });
                 this.$router.push({ name: 'main' });
             } catch (error) {
+                notification.show({
+                    text: 'Не удалось подтвердить запись',
+                    type: 'info'
+                });
                 console.error('Error canceling event:', error);
                 Telegram.WebApp.showAlert(`Ошибка: ${error.message}`);
             }

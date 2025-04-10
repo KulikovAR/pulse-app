@@ -22677,6 +22677,65 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NotificationToast.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NotificationToast.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'NotificationToast',
+  props: {
+    text: {
+      type: String,
+      required: true
+    },
+    type: {
+      type: String,
+      "default": 'success',
+      validator: function validator(value) {
+        return ['success', 'error', 'info'].includes(value);
+      }
+    },
+    duration: {
+      type: Number,
+      "default": 3000
+    }
+  },
+  data: function data() {
+    return {
+      isVisible: true
+    };
+  },
+  computed: {
+    getIconPath: function getIconPath() {
+      var icons = {
+        success: '/images/notify/success-check.svg',
+        error: '/images/notify/error-cross.svg',
+        info: '/images/notify/info-circle.svg'
+      };
+      return icons[this.type];
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+    setTimeout(function () {
+      _this.isVisible = false;
+      setTimeout(function () {
+        _this.$destroy();
+        _this.$el.remove();
+      }, 300);
+    }, this.duration);
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ReminderAccordion.vue?vue&type=script&lang=js":
 /*!***********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ReminderAccordion.vue?vue&type=script&lang=js ***!
@@ -22688,9 +22747,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _DeleteAppointmentPopUp_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DeleteAppointmentPopUp.vue */ "./resources/js/components/DeleteAppointmentPopUp.vue");
+/* harmony import */ var _services_notification__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/notification */ "./resources/js/services/notification.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _DeleteAppointmentPopUp_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DeleteAppointmentPopUp.vue */ "./resources/js/components/DeleteAppointmentPopUp.vue");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -22702,10 +22762,11 @@ function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'ReminderAccordion',
   components: {
-    DeleteAppointmentPopUp: _DeleteAppointmentPopUp_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    DeleteAppointmentPopUp: _DeleteAppointmentPopUp_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
@@ -22907,18 +22968,25 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               return window.axios["delete"]("/event/".concat(itemId, "/delete"));
             case 3:
               _this3.fetchReminders();
-              _context2.next = 10;
+              _services_notification__WEBPACK_IMPORTED_MODULE_0__["default"].show({
+                text: 'Запись удалена безвозвратно',
+                type: 'info'
+              });
+              _context2.next = 11;
               break;
-            case 6:
-              _context2.prev = 6;
+            case 7:
+              _context2.prev = 7;
               _context2.t0 = _context2["catch"](0);
+              _services_notification__WEBPACK_IMPORTED_MODULE_0__["default"].show({
+                text: 'Не удалось удалить запись',
+                type: 'info'
+              });
               console.error('Error deletinging event:', _context2.t0);
-              Telegram.WebApp.showAlert("\u041E\u0448\u0438\u0431\u043A\u0430: ".concat(_context2.t0.message));
-            case 10:
+            case 11:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, null, [[0, 6]]);
+        }, _callee2, null, [[0, 7]]);
       }))();
     }
   },
@@ -22940,12 +23008,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_notification__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/notification */ "./resources/js/services/notification.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'ReminderSinglePageItem',
@@ -23033,22 +23103,29 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               _context.next = 5;
               return window.axios.put("/event/".concat(_this.event.id, "/cancel"));
             case 5:
-              // alert('Запись отменена');
+              _services_notification__WEBPACK_IMPORTED_MODULE_0__["default"].show({
+                text: 'Запись отменена',
+                type: 'error'
+              });
               _this.$router.push({
                 name: 'main'
               });
-              _context.next = 12;
+              _context.next = 14;
               break;
-            case 8:
-              _context.prev = 8;
+            case 9:
+              _context.prev = 9;
               _context.t0 = _context["catch"](0);
+              _services_notification__WEBPACK_IMPORTED_MODULE_0__["default"].show({
+                text: 'Не удалось отменить запись',
+                type: 'info'
+              });
               console.error('Error canceling event:', _context.t0);
               Telegram.WebApp.showAlert("\u041E\u0448\u0438\u0431\u043A\u0430: ".concat(_context.t0.message));
-            case 12:
+            case 14:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[0, 8]]);
+        }, _callee, null, [[0, 9]]);
       }))();
     },
     confirm: function confirm() {
@@ -23067,22 +23144,29 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               _context2.next = 5;
               return window.axios.put("/event/".concat(_this2.event.id, "/confirm"));
             case 5:
-              // alert('Запись отменена');
+              _services_notification__WEBPACK_IMPORTED_MODULE_0__["default"].show({
+                text: 'Запись подтверждена',
+                type: 'success'
+              });
               _this2.$router.push({
                 name: 'main'
               });
-              _context2.next = 12;
+              _context2.next = 14;
               break;
-            case 8:
-              _context2.prev = 8;
+            case 9:
+              _context2.prev = 9;
               _context2.t0 = _context2["catch"](0);
+              _services_notification__WEBPACK_IMPORTED_MODULE_0__["default"].show({
+                text: 'Не удалось подтвердить запись',
+                type: 'info'
+              });
               console.error('Error canceling event:', _context2.t0);
               Telegram.WebApp.showAlert("\u041E\u0448\u0438\u0431\u043A\u0430: ".concat(_context2.t0.message));
-            case 12:
+            case 14:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, null, [[0, 8]]);
+        }, _callee2, null, [[0, 9]]);
       }))();
     },
     fetchEventData: function fetchEventData() {
@@ -23810,6 +23894,43 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NotificationToast.vue?vue&type=template&id=582d31be&scoped=true":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NotificationToast.vue?vue&type=template&id=582d31be&scoped=true ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = ["src"];
+var _hoisted_2 = {
+  "class": "notification-toast__text"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+    name: "toast"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [$data.isVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        key: 0,
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['notification-toast', $props.type])
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+        src: $options.getIconPath,
+        alt: "status icon",
+        "class": "notification-toast__icon"
+      }, null, 8 /* PROPS */, _hoisted_1), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.text), 1 /* TEXT */)], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+    }),
+    _: 1 /* STABLE */
+  });
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ReminderAccordion.vue?vue&type=template&id=083031ca&scoped=true":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ReminderAccordion.vue?vue&type=template&id=083031ca&scoped=true ***!
@@ -23878,82 +23999,94 @@ var _hoisted_16 = {
   "class": "service-time"
 };
 var _hoisted_17 = {
-  "class": "reminder-accordion__item tomorrow"
+  key: 1,
+  "class": "reminder-accordion__empty-state"
 };
 var _hoisted_18 = {
-  "class": "reminder-accordion__item__reminder-list"
+  "class": "reminder-accordion__item tomorrow"
 };
 var _hoisted_19 = {
-  key: 0,
-  "class": "delete-button"
-};
-var _hoisted_20 = {
-  "class": "reminder-item__header"
-};
-var _hoisted_21 = ["src"];
-var _hoisted_22 = {
-  key: 1,
-  "class": "avatar-letter"
-};
-var _hoisted_23 = {
-  "class": "reminder-item__header__service-name"
-};
-var _hoisted_24 = {
-  "class": "reminder-item__service-content"
-};
-var _hoisted_25 = {
-  "class": "reminder-item__service-date-time"
-};
-var _hoisted_26 = {
-  "class": "reminder-item__service-time"
-};
-var _hoisted_27 = {
-  "class": "service-time"
-};
-var _hoisted_28 = {
-  "class": "reminder-item__service-date"
-};
-var _hoisted_29 = {
-  "class": "service-time"
-};
-var _hoisted_30 = {
-  "class": "reminder-accordion__item later"
-};
-var _hoisted_31 = {
   "class": "reminder-accordion__item__reminder-list"
 };
-var _hoisted_32 = {
+var _hoisted_20 = {
   key: 0,
   "class": "delete-button"
 };
-var _hoisted_33 = {
+var _hoisted_21 = {
   "class": "reminder-item__header"
 };
-var _hoisted_34 = ["src"];
-var _hoisted_35 = {
+var _hoisted_22 = ["src"];
+var _hoisted_23 = {
   key: 1,
   "class": "avatar-letter"
 };
-var _hoisted_36 = {
+var _hoisted_24 = {
   "class": "reminder-item__header__service-name"
 };
-var _hoisted_37 = {
+var _hoisted_25 = {
   "class": "reminder-item__service-content"
 };
-var _hoisted_38 = {
+var _hoisted_26 = {
   "class": "reminder-item__service-date-time"
 };
-var _hoisted_39 = {
+var _hoisted_27 = {
   "class": "reminder-item__service-time"
 };
-var _hoisted_40 = {
+var _hoisted_28 = {
   "class": "service-time"
 };
-var _hoisted_41 = {
+var _hoisted_29 = {
   "class": "reminder-item__service-date"
+};
+var _hoisted_30 = {
+  "class": "service-time"
+};
+var _hoisted_31 = {
+  key: 1,
+  "class": "reminder-accordion__empty-state"
+};
+var _hoisted_32 = {
+  "class": "reminder-accordion__item later"
+};
+var _hoisted_33 = {
+  "class": "reminder-accordion__item__reminder-list"
+};
+var _hoisted_34 = {
+  key: 0,
+  "class": "delete-button"
+};
+var _hoisted_35 = {
+  "class": "reminder-item__header"
+};
+var _hoisted_36 = ["src"];
+var _hoisted_37 = {
+  key: 1,
+  "class": "avatar-letter"
+};
+var _hoisted_38 = {
+  "class": "reminder-item__header__service-name"
+};
+var _hoisted_39 = {
+  "class": "reminder-item__service-content"
+};
+var _hoisted_40 = {
+  "class": "reminder-item__service-date-time"
+};
+var _hoisted_41 = {
+  "class": "reminder-item__service-time"
 };
 var _hoisted_42 = {
   "class": "service-time"
+};
+var _hoisted_43 = {
+  "class": "reminder-item__service-date"
+};
+var _hoisted_44 = {
+  "class": "service-time"
+};
+var _hoisted_45 = {
+  key: 1,
+  "class": "reminder-accordion__empty-state"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
@@ -23964,7 +24097,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return $options.toggleAccord($event);
     })
-  }, " СЕГОДНЯ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.remindersToday, function (item, index) {
+  }, " СЕГОДНЯ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [$data.remindersToday.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 0
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.remindersToday, function (item, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "reminder-wrapper",
       key: index
@@ -24014,16 +24149,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to", "class", "onTouchstart", "onTouchmove", "onTouchend", "style"])]);
-  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }), 128 /* KEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, " На сегодня напоминаний нет "))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "reminder-accordion__item__title",
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $options.toggleAccord($event);
     })
-  }, " ЗАВТРА "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.remindersTomorrow, function (item, index) {
+  }, " ЗАВТРА "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [$data.remindersTomorrow.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 0
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.remindersTomorrow, function (item, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "reminder-wrapper",
       key: index
-    }, [item.status === 'cancelled' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_19, _toConsumableArray(_cache[6] || (_cache[6] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    }, [item.status === 'cancelled' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_20, _toConsumableArray(_cache[6] || (_cache[6] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
       src: "/images/reminder/trash.svg"
     }, null, -1 /* HOISTED */)])))) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       to: {
@@ -24049,7 +24186,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(item.status === 'cancelled' ? $options.swipeStyle(item.id) : {})
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
           "class": "reminder-item__header__service-img",
           style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
             backgroundColor: !item.company.image ? $options.getAvatarColor(item.company.name) : 'transparent'
@@ -24059,26 +24196,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "reminder-item__header__service-img-img",
           src: item.company.image,
           alt: ""
-        }, null, 8 /* PROPS */, _hoisted_21)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name.charAt(0).toUpperCase()), 1 /* TEXT */))], 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatServiceNames(item.services)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+        }, null, 8 /* PROPS */, _hoisted_22)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name.charAt(0).toUpperCase()), 1 /* TEXT */))], 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatServiceNames(item.services)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [_cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
           "class": "reminder-item__service-time__img",
           src: "/images/reminder/time.svg"
-        }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceTime(item.event_time)), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [_cache[8] || (_cache[8] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+        }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceTime(item.event_time)), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [_cache[8] || (_cache[8] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
           "class": "reminder-item__service-time__img",
           src: "/images/reminder/date.svg"
-        }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceDate(item.event_time)), 1 /* TEXT */)])])];
+        }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceDate(item.event_time)), 1 /* TEXT */)])])];
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to", "class", "onTouchstart", "onTouchmove", "onTouchend", "style"])]);
-  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }), 128 /* KEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_31, " На завтра напоминаний нет "))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "reminder-accordion__item__title",
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return $options.toggleAccord($event);
     })
-  }, " ПОТОМ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.remindersLater, function (item, index) {
+  }, " ПОТОМ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [$data.remindersLater.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 0
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.remindersLater, function (item, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "reminder-wrapper",
       key: index
-    }, [item.status === 'cancelled' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_32, _toConsumableArray(_cache[9] || (_cache[9] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    }, [item.status === 'cancelled' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_34, _toConsumableArray(_cache[9] || (_cache[9] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
       src: "/images/reminder/trash.svg"
     }, null, -1 /* HOISTED */)])))) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       to: {
@@ -24104,7 +24243,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(item.status === 'cancelled' ? $options.swipeStyle(item.id) : {})
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
           "class": "reminder-item__header__service-img",
           style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
             backgroundColor: !item.company.image ? $options.getAvatarColor(item.company.name) : 'transparent'
@@ -24114,17 +24253,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "reminder-item__header__service-img-img",
           src: item.company.image,
           alt: ""
-        }, null, 8 /* PROPS */, _hoisted_34)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name.charAt(0).toUpperCase()), 1 /* TEXT */))], 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatServiceNames(item.services)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [_cache[10] || (_cache[10] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+        }, null, 8 /* PROPS */, _hoisted_36)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name.charAt(0).toUpperCase()), 1 /* TEXT */))], 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.company.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatServiceNames(item.services)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [_cache[10] || (_cache[10] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
           "class": "reminder-item__service-time__img",
           src: "/images/reminder/time.svg"
-        }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceTime(item.event_time)), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [_cache[11] || (_cache[11] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+        }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceTime(item.event_time)), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [_cache[11] || (_cache[11] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
           "class": "reminder-item__service-time__img",
           src: "/images/reminder/date.svg"
-        }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceDate(item.event_time)), 1 /* TEXT */)])])];
+        }, null, -1 /* HOISTED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_44, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.getServiceDate(item.event_time)), 1 /* TEXT */)])])];
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to", "class", "onTouchstart", "onTouchmove", "onTouchend", "style"])]);
-  }), 128 /* KEYED_FRAGMENT */))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DeleteAppointmentPopUp, {
+  }), 128 /* KEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_45, " На будущее напоминаний нет "))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DeleteAppointmentPopUp, {
     ref: "DeleteAppointmentPopUp",
     onDeleteReminderConfirm: $options.deleteReminderConfirm,
     onFixOffset: $options.fixOffset
@@ -24726,6 +24865,46 @@ var telegramAuth = {
 
 /***/ }),
 
+/***/ "./resources/js/services/notification.js":
+/*!***********************************************!*\
+  !*** ./resources/js/services/notification.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _components_NotificationToast_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/NotificationToast.vue */ "./resources/js/components/NotificationToast.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+var notification = {
+  show: function show(options) {
+    var text = options.text,
+      _options$type = options.type,
+      type = _options$type === void 0 ? 'success' : _options$type,
+      _options$duration = options.duration,
+      duration = _options$duration === void 0 ? 3000 : _options$duration;
+
+    // Create wrapper div
+    var wrapper = document.createElement('div');
+    document.body.appendChild(wrapper);
+
+    // Create notification instance
+    var notificationInstance = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)(_components_NotificationToast_vue__WEBPACK_IMPORTED_MODULE_0__["default"], {
+      text: text,
+      type: type,
+      duration: duration
+    });
+    notificationInstance.mount(wrapper);
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (notification);
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/CalendarContent.vue?vue&type=style&index=0&id=ac8f9380&scoped=true&lang=css":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/CalendarContent.vue?vue&type=style&index=0&id=ac8f9380&scoped=true&lang=css ***!
@@ -25062,6 +25241,30 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n.header[data-v-1f42fb90]{\r\n       
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NotificationToast.vue?vue&type=style&index=0&id=582d31be&scoped=true&lang=css":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NotificationToast.vue?vue&type=style&index=0&id=582d31be&scoped=true&lang=css ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.notification-toast[data-v-582d31be] {\r\n    position: fixed;\r\n    bottom: 34px;\r\n    left: 16px;\r\n    right: 16px;\r\n    transform: none;\r\n    z-index: 9999;\r\n    \r\n    display: flex;\r\n    align-items: center;\r\n    padding: 16px 24px;\r\n    gap: 10px;\r\n    \r\n    background: #0F0F0F;\r\n    border-radius: 24px;\r\n    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);\n}\r\n\r\n/* Update transitions for bottom positioning */\n.toast-enter-from[data-v-582d31be], .toast-leave-to[data-v-582d31be] {\r\n    opacity: 0;\r\n    transform: translateY(20px);\n}\n.notification-toast__icon[data-v-582d31be] {\r\n    width: 24px;\r\n    height: 24px;\n}\n.notification-toast__text[data-v-582d31be] {\r\n    color: #FFFFFF;\r\n    font-family: Inter;\r\n    font-weight: 500;\r\n    font-size: 14px;\r\n    line-height: 100%;\r\n    letter-spacing: 0%;\n}\r\n\r\n/* Transitions */\n.toast-enter-active[data-v-582d31be] {\r\n    transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);\n}\n.toast-leave-active[data-v-582d31be] {\r\n    transition: all 0.4s cubic-bezier(0.33, 1, 0.68, 1);\n}\n.toast-enter-from[data-v-582d31be] {\r\n    opacity: 0;\r\n    transform: translateX(100px);\n}\n.toast-leave-to[data-v-582d31be] {\r\n    opacity: 0;\r\n    transform: translateX(-100px);\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ReminderAccordion.vue?vue&type=style&index=0&id=083031ca&scoped=true&lang=css":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ReminderAccordion.vue?vue&type=style&index=0&id=083031ca&scoped=true&lang=css ***!
@@ -25079,7 +25282,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.reminder-accordion[data-v-083031ca]{\r\n        flex-grow: 1; \r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-accordion .container[data-v-083031ca]{\r\n        flex-grow: 1;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-accordion__list[data-v-083031ca]{\r\n        width: 100%;\r\n        display: flex;\r\n        flex-direction: column;\r\n        flex-grow: 1;\n}\n.reminder-accordion__item[data-v-083031ca]{\r\n        width: 100%;\n}\n.reminder-accordion__item__title[data-v-083031ca]{\r\n        width: 100%;\r\n        position: relative;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 24px;\r\n        font-weight: 400;\r\n        line-height: 27.16px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        padding: 10px 0;\r\n        cursor: pointer;\n}\n.reminder-accordion__item__reminder-list[data-v-083031ca]{\r\n        padding: 8px 0;\r\n        display: none;\r\n        flex-direction: column;\n}\n.reminder-wrapper[data-v-083031ca] {\r\n        position: relative;\r\n        margin-bottom: 8px;\r\n        border-radius: 12px;\r\n        background-color: #E53935;\r\n        padding: 0;\n}\n.reminder-item[data-v-083031ca]{\r\n        position: relative;\r\n        padding: 12px;\r\n        display: flex;\r\n        flex-direction: column;\r\n\r\n        cursor: pointer;\r\n        background: #ffffff;\r\n        border-radius: 12px;\r\n\r\n        color: var(--theme-text-color-black);\r\n        width: 100%;\r\n        margin: 0;\r\n        box-shadow: 0 0 0 1px #fff;\n}\n.delete-button[data-v-083031ca] {\r\n        position: absolute;\r\n        right: 0;\r\n        top: 50%;\r\n        transform: translateY(-50%);\r\n        width: 100px;\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: center;\n}\n.delete-button img[data-v-083031ca] {\r\n        width: 24px;\r\n        height: 24px;\n}\n.reminder-item.cancelled[data-v-083031ca]::after{\r\n        content: 'Отменено';\r\n        width: 70px;\r\n        height: 23px;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 13px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n\r\n\r\n        position: absolute;\r\n        bottom: 12px;\r\n        right: 12px;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        /* border: 1px solid var(--theme-destructive-color); */\r\n        border-radius: 6px;\r\n        background: #E5393526;\r\n        color: #E53935;\n}\n.reminder-item.unread[data-v-083031ca]::after{\r\n        content: 'Не подтверждено';\r\n        width: 116px;\r\n        height: 23px;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 13px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n\r\n\r\n        position: absolute;\r\n        bottom: 12px;\r\n        right: 12px;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        /* border: 1px solid var(--theme-destructive-color); */\r\n        border-radius: 6px;\r\n        background: #EDEDEE;\r\n        color: #707579;\n}\n.reminder-item.confirmed[data-v-083031ca]::after{\r\n        content: 'Подтверждено';\r\n        width: 99px;\r\n        height: 23px;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 13px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n\r\n\r\n        position: absolute;\r\n        bottom: 12px;\r\n        right: 12px;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        /* border: 1px solid var(--theme-destructive-color); */\r\n        border-radius: 6px;\r\n        background: #3390EC26;\r\n        color: #3390EC;\n}\n.reminder-item__header[data-v-083031ca]{\r\n        display: flex;\r\n        align-items: center;\r\n        margin-bottom: 8px;\n}\n.reminder-item__header__service-img[data-v-083031ca] {\r\n        width: 30px;\r\n        height: 30px;\r\n        border-radius: 50%;\r\n        overflow: hidden;\r\n        margin-right: 7px;\r\n        display: flex; \r\n        align-items: center; \r\n        justify-content: center; \r\n        background-color: #f0f0f0; /* Цвет фона для случаев, если изображение не загрузится */\n}\n.reminder-item__header__service-img-img[data-v-083031ca] {\r\n        width: 100%; \r\n        height: 100%; \r\n        -o-object-fit: cover; \r\n           object-fit: cover;\n}\n.reminder-item__header__service-name[data-v-083031ca]{\r\n        display: flex;\r\n        justify-content: start;\r\n        align-items: center;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\n.reminder-item__service-content[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        margin-bottom: 12px;\n}\n.reminder-item__service-date-time[data-v-083031ca]{\r\n        display: flex;\r\n        align-items: center;\n}\n.reminder-item__service-time[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 13px;\r\n        font-weight: 400;\r\n        line-height: 14.71px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        display: flex;\r\n        align-items: center;\n}\n.reminder-item__service-time__img[data-v-083031ca]{\r\n        width: 16px;\r\n        height: 16px;\r\n        margin-right: 4px;\n}\n.reminder-item__service-date[data-v-083031ca]{\r\n        display: flex;\r\n        align-items: center;\r\n        margin-left: 12px;\n}\nspan.service-time[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 14px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n        color: #000000;\r\n        display: flex;\r\n        height: 16px;\r\n        align-items: center;\n}\n.reminder-accordion__item.later .reminder-accordion__item__title[data-v-083031ca] {\r\n        color: var(--theme-text-color-gray);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.reminder-accordion[data-v-083031ca]{\r\n        flex-grow: 1; \r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-accordion .container[data-v-083031ca]{\r\n        flex-grow: 1;\r\n        display: flex;\r\n        flex-direction: column;\n}\n.reminder-accordion__list[data-v-083031ca]{\r\n        width: 100%;\r\n        display: flex;\r\n        flex-direction: column;\r\n        flex-grow: 1;\n}\n.reminder-accordion__item[data-v-083031ca]{\r\n        width: 100%;\n}\n.reminder-accordion__item__title[data-v-083031ca]{\r\n        width: 100%;\r\n        position: relative;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 24px;\r\n        font-weight: 400;\r\n        line-height: 27.16px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        color: #0F0F0F;\r\n\r\n        padding: 10px 0;\r\n        cursor: pointer;\n}\n.reminder-accordion__item__reminder-list[data-v-083031ca]{\r\n        padding: 8px 0;\r\n        display: none;\r\n        flex-direction: column;\n}\n.reminder-wrapper[data-v-083031ca] {\r\n        position: relative;\r\n        margin-bottom: 8px;\r\n        border-radius: 12px;\r\n        background-color: #E53935;\r\n        padding: 0;\n}\n.reminder-item[data-v-083031ca]{\r\n        position: relative;\r\n        padding: 12px;\r\n        display: flex;\r\n        flex-direction: column;\r\n\r\n        cursor: pointer;\r\n        background: #ffffff;\r\n        border-radius: 12px;\r\n\r\n        color: var(--theme-text-color-black);\r\n        width: 100%;\r\n        margin: 0;\r\n        box-shadow: 0 0 0 1px #fff;\n}\n.delete-button[data-v-083031ca] {\r\n        position: absolute;\r\n        right: 0;\r\n        top: 50%;\r\n        transform: translateY(-50%);\r\n        width: 100px;\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: center;\n}\n.delete-button img[data-v-083031ca] {\r\n        width: 24px;\r\n        height: 24px;\n}\n.reminder-item.cancelled[data-v-083031ca]::after{\r\n        content: 'Отменено';\r\n        width: 70px;\r\n        height: 23px;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 13px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n\r\n\r\n        position: absolute;\r\n        bottom: 12px;\r\n        right: 12px;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        /* border: 1px solid var(--theme-destructive-color); */\r\n        border-radius: 6px;\r\n        background: #E5393526;\r\n        color: #E53935;\n}\n.reminder-item.unread[data-v-083031ca]::after{\r\n        content: 'Не подтверждено';\r\n        width: 116px;\r\n        height: 23px;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 13px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n\r\n\r\n        position: absolute;\r\n        bottom: 12px;\r\n        right: 12px;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        /* border: 1px solid var(--theme-destructive-color); */\r\n        border-radius: 6px;\r\n        background: #EDEDEE;\r\n        color: #707579;\n}\n.reminder-item.confirmed[data-v-083031ca]::after{\r\n        content: 'Подтверждено';\r\n        width: 99px;\r\n        height: 23px;\r\n\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 13px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n\r\n\r\n        position: absolute;\r\n        bottom: 12px;\r\n        right: 12px;\r\n\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n\r\n        /* border: 1px solid var(--theme-destructive-color); */\r\n        border-radius: 6px;\r\n        background: #3390EC26;\r\n        color: #3390EC;\n}\n.reminder-item__header[data-v-083031ca]{\r\n        display: flex;\r\n        align-items: center;\r\n        margin-bottom: 8px;\n}\n.reminder-item__header__service-img[data-v-083031ca] {\r\n        width: 30px;\r\n        height: 30px;\r\n        border-radius: 50%;\r\n        overflow: hidden;\r\n        margin-right: 7px;\r\n        display: flex; \r\n        align-items: center; \r\n        justify-content: center; \r\n        background-color: #f0f0f0; /* Цвет фона для случаев, если изображение не загрузится */\n}\n.reminder-item__header__service-img-img[data-v-083031ca] {\r\n        width: 100%; \r\n        height: 100%; \r\n        -o-object-fit: cover; \r\n           object-fit: cover;\n}\n.reminder-item__header__service-name[data-v-083031ca]{\r\n        display: flex;\r\n        justify-content: start;\r\n        align-items: center;\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 15px;\r\n        font-weight: 400;\r\n        line-height: 16.98px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\n}\n.reminder-item__service-content[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 17px;\r\n        font-weight: 400;\r\n        line-height: 19.24px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n\r\n        margin-bottom: 12px;\n}\n.reminder-item__service-date-time[data-v-083031ca]{\r\n        display: flex;\r\n        align-items: center;\n}\n.reminder-item__service-time[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-size: 13px;\r\n        font-weight: 400;\r\n        line-height: 14.71px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        display: flex;\r\n        align-items: center;\n}\n.reminder-item__service-time__img[data-v-083031ca]{\r\n        width: 16px;\r\n        height: 16px;\r\n        margin-right: 4px;\n}\n.reminder-item__service-date[data-v-083031ca]{\r\n        display: flex;\r\n        align-items: center;\r\n        margin-left: 12px;\n}\nspan.service-time[data-v-083031ca]{\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 14px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n        color: #000000;\r\n        display: flex;\r\n        height: 16px;\r\n        align-items: center;\n}\n.reminder-accordion__item.later .reminder-accordion__item__title[data-v-083031ca] {\r\n        color: var(--theme-text-color-gray);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -25127,7 +25330,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.reminder-accordion__item .reminder-accordion__item__title[data-v-083031ca]::after{\r\n        content: '';\r\n        display: block;\r\n        width: 10px;\r\n        height: 10px;\r\n        border-radius: 50%;\r\n        position: absolute;\r\n        right: 0;\r\n        top: 0;\r\n        bottom: 0;\r\n        margin: auto 0;\n}\n.reminder-accordion__item.today .reminder-accordion__item__title[data-v-083031ca]::after{\r\n        background: var(--theme-indicator-color-today);\n}\n.reminder-accordion__item.tomorrow .reminder-accordion__item__title[data-v-083031ca]::after{\r\n        background: var(--theme-indicator-color-tomorrow);\n}\n.reminder-accordion__item.later .reminder-accordion__item__title[data-v-083031ca]::after{\r\n        background: var(--theme-indicator-color-later);\n}\n.avatar-letter[data-v-083031ca] {\r\n        color: white;\r\n        font-size: 15px;\r\n        font-weight: 500;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.reminder-accordion__item .reminder-accordion__item__title[data-v-083031ca]::after{\r\n        content: '';\r\n        display: block;\r\n        width: 10px;\r\n        height: 10px;\r\n        border-radius: 50%;\r\n        position: absolute;\r\n        right: 0;\r\n        top: 0;\r\n        bottom: 0;\r\n        margin: auto 0;\n}\n.reminder-accordion__item.today .reminder-accordion__item__title[data-v-083031ca]::after{\r\n        background: var(--theme-indicator-color-today);\n}\n.reminder-accordion__item.tomorrow .reminder-accordion__item__title[data-v-083031ca]::after{\r\n        background: var(--theme-indicator-color-tomorrow);\n}\n.reminder-accordion__item.later .reminder-accordion__item__title[data-v-083031ca]::after{\r\n        background: var(--theme-indicator-color-later);\n}\n.avatar-letter[data-v-083031ca] {\r\n        color: white;\r\n        font-size: 15px;\r\n        font-weight: 500;\n}\n.reminder-accordion__empty-state[data-v-083031ca] {\r\n        height: 111px;\r\n        width: 100%;\r\n        display: flex;\r\n        justify-content: center;\r\n        align-items: center;\r\n        color: #A0AEC0;\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 13px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n        text-align: center;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -43206,6 +43409,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NotificationToast.vue?vue&type=style&index=0&id=582d31be&scoped=true&lang=css":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NotificationToast.vue?vue&type=style&index=0&id=582d31be&scoped=true&lang=css ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NotificationToast_vue_vue_type_style_index_0_id_582d31be_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NotificationToast.vue?vue&type=style&index=0&id=582d31be&scoped=true&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NotificationToast.vue?vue&type=style&index=0&id=582d31be&scoped=true&lang=css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NotificationToast_vue_vue_type_style_index_0_id_582d31be_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NotificationToast_vue_vue_type_style_index_0_id_582d31be_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ReminderAccordion.vue?vue&type=style&index=0&id=083031ca&scoped=true&lang=css":
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ReminderAccordion.vue?vue&type=style&index=0&id=083031ca&scoped=true&lang=css ***!
@@ -43978,6 +44211,37 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/NotificationToast.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/NotificationToast.vue ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _NotificationToast_vue_vue_type_template_id_582d31be_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NotificationToast.vue?vue&type=template&id=582d31be&scoped=true */ "./resources/js/components/NotificationToast.vue?vue&type=template&id=582d31be&scoped=true");
+/* harmony import */ var _NotificationToast_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NotificationToast.vue?vue&type=script&lang=js */ "./resources/js/components/NotificationToast.vue?vue&type=script&lang=js");
+/* harmony import */ var _NotificationToast_vue_vue_type_style_index_0_id_582d31be_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NotificationToast.vue?vue&type=style&index=0&id=582d31be&scoped=true&lang=css */ "./resources/js/components/NotificationToast.vue?vue&type=style&index=0&id=582d31be&scoped=true&lang=css");
+/* harmony import */ var d_OpenServer_domains_Pulse_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+
+
+const __exports__ = /*#__PURE__*/(0,d_OpenServer_domains_Pulse_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_NotificationToast_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_NotificationToast_vue_vue_type_template_id_582d31be_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-582d31be"],['__file',"resources/js/components/NotificationToast.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/ReminderAccordion.vue":
 /*!*******************************************************!*\
   !*** ./resources/js/components/ReminderAccordion.vue ***!
@@ -44295,6 +44559,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/NotificationToast.vue?vue&type=script&lang=js":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/NotificationToast.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NotificationToast_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NotificationToast_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NotificationToast.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NotificationToast.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/ReminderAccordion.vue?vue&type=script&lang=js":
 /*!*******************************************************************************!*\
   !*** ./resources/js/components/ReminderAccordion.vue?vue&type=script&lang=js ***!
@@ -44499,6 +44779,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Header_vue_vue_type_template_id_1f42fb90_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Header_vue_vue_type_template_id_1f42fb90_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Header.vue?vue&type=template&id=1f42fb90&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Header.vue?vue&type=template&id=1f42fb90&scoped=true");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/NotificationToast.vue?vue&type=template&id=582d31be&scoped=true":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/NotificationToast.vue?vue&type=template&id=582d31be&scoped=true ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NotificationToast_vue_vue_type_template_id_582d31be_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NotificationToast_vue_vue_type_template_id_582d31be_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NotificationToast.vue?vue&type=template&id=582d31be&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NotificationToast.vue?vue&type=template&id=582d31be&scoped=true");
 
 
 /***/ }),
@@ -44793,6 +45089,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Header_vue_vue_type_style_index_0_id_1f42fb90_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Header.vue?vue&type=style&index=0&id=1f42fb90&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/Header.vue?vue&type=style&index=0&id=1f42fb90&scoped=true&lang=css");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/NotificationToast.vue?vue&type=style&index=0&id=582d31be&scoped=true&lang=css":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/NotificationToast.vue?vue&type=style&index=0&id=582d31be&scoped=true&lang=css ***!
+  \***************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NotificationToast_vue_vue_type_style_index_0_id_582d31be_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NotificationToast.vue?vue&type=style&index=0&id=582d31be&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/NotificationToast.vue?vue&type=style&index=0&id=582d31be&scoped=true&lang=css");
 
 
 /***/ }),
