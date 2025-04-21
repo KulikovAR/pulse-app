@@ -9,23 +9,13 @@ export default {
         const telegram = window.Telegram.WebApp;
         telegram.ready();
 
-        // Enable Back button
+        // Show both back and close buttons
         telegram.BackButton.show();
-        
-        // Add close button to header
-        telegram.setHeaderButton({
-            show: true,
-            text: '✕'
-        });
+        telegram.ClosingConfirmation = true;
 
         // Back button handler
         telegram.BackButton.onClick(() => {
             this.$router.go(-1);
-        });
-
-        // Close button handler
-        telegram.onEvent('headerButtonClicked', () => {
-            telegram.close();
         });
     }
 };
