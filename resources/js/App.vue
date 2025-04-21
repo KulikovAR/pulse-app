@@ -12,11 +12,11 @@ export default {
         // Enable Back button
         telegram.BackButton.show();
         
-        // Enable Close button
-        telegram.MainButton.setParams({
-            is_visible: true,
-            color: '#FF0000'
-        }).setText('✕');
+        // Add close button to header
+        telegram.setHeaderButton({
+            show: true,
+            text: '✕'
+        });
 
         // Back button handler
         telegram.BackButton.onClick(() => {
@@ -24,7 +24,7 @@ export default {
         });
 
         // Close button handler
-        telegram.MainButton.onClick(() => {
+        telegram.onEvent('headerButtonClicked', () => {
             telegram.close();
         });
     }
