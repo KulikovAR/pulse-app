@@ -3,21 +3,29 @@
 </template>
   
 <script>
-
-
 export default {
     name: 'App',
     mounted() {
         const telegram = window.Telegram.WebApp;
         telegram.ready();
 
-        // Включаем кнопку "Назад"
+        // Enable Back button
         telegram.BackButton.show();
+        
+        // Enable Close button
+        telegram.MainButton.setParams({
+            is_visible: true,
+            color: '#FF0000'
+        }).setText('✕');
 
-        // Устанавливаем обработчик для нажатия на кнопку "Назад"
+        // Back button handler
         telegram.BackButton.onClick(() => {
-        // Ваша логика при нажатии кнопки "Назад"
             this.$router.go(-1);
+        });
+
+        // Close button handler
+        telegram.MainButton.onClick(() => {
+            telegram.close();
         });
     }
 };
