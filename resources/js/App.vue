@@ -14,9 +14,6 @@ export default {
         // Включаем кнопку "Назад"
         telegram.BackButton.show();
 
-        // Включаем стандартную кнопку закрытия
-        telegram.enableClosingConfirmation();
-
         // Устанавливаем обработчик для нажатия на кнопку "Назад"
         telegram.BackButton.onClick(() => {
         // Ваша логика при нажатии кнопки "Назад"
