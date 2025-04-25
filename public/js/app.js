@@ -22360,17 +22360,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'App',
+  watch: {
+    '$route': function $route(to) {
+      var telegram = window.Telegram.WebApp;
+
+      // Show Back button on all pages except main
+      if (to.name === 'main') {
+        telegram.BackButton.hide();
+        telegram.ClosingConfirmation = true;
+      } else {
+        telegram.ClosingConfirmation = false;
+        telegram.BackButton.show();
+      }
+    }
+  },
   mounted: function mounted() {
     var _this = this;
     var telegram = window.Telegram.WebApp;
     telegram.ready();
 
-    // Включаем кнопку "Назад"
-    telegram.BackButton.show();
+    // Initial state based on current route
+    if (this.$route.name === 'main') {
+      telegram.BackButton.hide();
+      telegram.ClosingConfirmation = true;
+    } else {
+      telegram.BackButton.show();
+    }
 
-    // Устанавливаем обработчик для нажатия на кнопку "Назад"
+    // Back button handler
     telegram.BackButton.onClick(function () {
-      // Ваша логика при нажатии кнопки "Назад"
       _this.$router.go(-1);
     });
   }
@@ -23882,14 +23900,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return _cache[0] || (_cache[0] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
         "class": "header-content__logo-img",
-        src: "/images/logo.svg",
+        src: "/images/header-logo.svg",
         alt: ""
       }, null, -1 /* HOISTED */)]);
     }),
     _: 1 /* STABLE */
-  }), _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "header-content__title"
-  }, " Pulse App ", -1 /* HOISTED */))])])]);
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"header-content__title\">\r\n                    Pulse App\r\n                </div> ")])])]);
 }
 
 /***/ }),
@@ -24731,7 +24747,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 var telegramAuth = {
   login: function login() {
     return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _response$data$data, rawInitData, initData, tgUser, mockUser, response, _error$response;
+      var _Telegram$WebApp$init, _response$data$data, rawInitData, initData, tgUser, userData, response, _error$response;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -24739,31 +24755,23 @@ var telegramAuth = {
             rawInitData = window.Telegram.WebApp.initData;
             initData = new URLSearchParams(rawInitData);
             tgUser = JSON.parse(initData.get('user'));
-            mockUser = {
-              id: 571495559,
-              username: 'default_blank',
-              first_name: 'Vlad',
-              phone: '+79493316512',
-              auth_date: Math.floor(Date.now() / 1000),
-              hash: 'mock_hash_value'
-            }; // const userData = {
-            //     id: tgUser.id,
-            //     username: tgUser.username,
-            //     first_name: tgUser.first_name,
-            //     auth_date: initData.get('auth_date'),
-            //     hash: initData.get('hash'),
-            //     phone: Telegram.WebApp.initDataUnsafe.user?.phone || null
-            // };
-            // Логируем все данные перед отправкой
+            userData = {
+              id: tgUser.id,
+              username: tgUser.username,
+              first_name: tgUser.first_name,
+              auth_date: initData.get('auth_date'),
+              hash: initData.get('hash'),
+              phone: ((_Telegram$WebApp$init = Telegram.WebApp.initDataUnsafe.user) === null || _Telegram$WebApp$init === void 0 ? void 0 : _Telegram$WebApp$init.phone) || null
+            }; // Логируем все данные перед отправкой
             // Telegram.WebApp.showAlert(`Отправляем данные:\n${JSON.stringify(userData, null, 2)}`);
             // console.log('Telegram initData:', window.Telegram.WebApp.initData);
             // console.log('User data for server:', userData);
             _context.next = 7;
-            return window.axios.post('/telegram/login', mockUser, {
+            return window.axios.post('/telegram/login', userData, {
               headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
-                // 'X-Telegram-InitData': rawInitData,
+                'X-Telegram-InitData': rawInitData,
                 'Accept': 'application/json'
               }
             });
@@ -25234,7 +25242,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.header[data-v-1f42fb90]{\r\n        padding-top: 20px;\r\n        margin-bottom: 12px;\n}\n.header-content[data-v-1f42fb90]{\r\n        display: flex;\r\n        align-items: center;\n}\n.header-content__logo[data-v-1f42fb90],\r\n    .header-content__logo-img[data-v-1f42fb90]{\r\n        display: block;\r\n        width: 36px;\r\n        height: 36px;\n}\n.header-content__logo[data-v-1f42fb90]{\r\n        margin-right: 8px;\n}\n.header-content__title[data-v-1f42fb90]{\r\n        font-family: Inter;\r\n        font-size: 18px;\r\n        font-weight: 500;\r\n        line-height: 21.78px;\r\n        letter-spacing: -0.18000000715255737px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        \r\n        color: #6D6EFF;\r\n\r\n        font-family: Inter;\r\n        font-weight: 600;\r\n        font-size: 18px;\r\n        line-height: 100%;\r\n        letter-spacing: -0.18px;\r\n        vertical-align: middle;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.header[data-v-1f42fb90]{\r\n        padding-top: 24px;\r\n        margin-bottom: 16px;\n}\n.header-content[data-v-1f42fb90]{\r\n        display: flex;\r\n        align-items: center;\n}\n.header-content__logo[data-v-1f42fb90],\r\n    .header-content__logo-img[data-v-1f42fb90]{\r\n        display: block;\r\n        width: 144px;\r\n        height: 32px;\n}\n.header-content__logo[data-v-1f42fb90]{\r\n        margin-right: 8px;\n}\n.header-content__title[data-v-1f42fb90]{\r\n        font-family: Inter;\r\n        font-size: 18px;\r\n        font-weight: 500;\r\n        line-height: 21.78px;\r\n        letter-spacing: -0.18000000715255737px;\r\n        text-align: left;\r\n        text-underline-position: from-font;\r\n        -webkit-text-decoration-skip-ink: none;\r\n                text-decoration-skip-ink: none;\r\n        \r\n        color: #6D6EFF;\r\n\r\n        font-family: Inter;\r\n        font-weight: 600;\r\n        font-size: 18px;\r\n        line-height: 100%;\r\n        letter-spacing: -0.18px;\r\n        vertical-align: middle;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -25426,7 +25434,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.confirm-phone-page[data-v-71efa146]{\r\n        height: 100vh;\n}\n.confirm-phone-page .container[data-v-71efa146]{\r\n        height: 100%;\n}\n.confirm-phone__content-wrapper[data-v-71efa146]{\r\n        height: 100%;\r\n        display: flex;\r\n        flex-direction: column;\r\n        justify-content: center;\r\n        align-items: center;\r\n        gap: 56px;\n}\n.confirm-phone__content[data-v-71efa146]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        align-items: center;\r\n        gap: 24px;\r\n        max-width: 257px;\r\n        width: 100%;\n}\n.confirm-phone__content-logo[data-v-71efa146]{\r\n        width: 72px;\r\n        height: 72px;\n}\n.confirm-phone__content-info[data-v-71efa146]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        align-items: center;\n}\n.confirm-phone__content-info__title[data-v-71efa146]{\r\n        color: #000000;\r\n        font-family: Inter;\r\n        font-weight: 600;\r\n        font-size: 18px;\r\n        line-height: 100%;\r\n        letter-spacing: -0.18px;\r\n        text-align: center;\r\n        vertical-align: middle;\r\n        margin-bottom: 4px;\n}\n.confirm-phone__content-info__text[data-v-71efa146]{\r\n        font-family: Inter;\r\n        font-weight: 500;\r\n        font-size: 16px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n        text-align: center;\r\n        vertical-align: middle;\r\n        color: #707579;\r\n        max-width: 221px;\r\n        width: 100%;\n}\n.confirm-phone__btn[data-v-71efa146]{\r\n        width: 100%;\r\n        height: 44px;\r\n        border-radius: 12px;\r\n        display: flex;\r\n        flex-direction: column;\r\n        justify-content: center;\r\n        align-items: center;\r\n        background: #3390EC;\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 15px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n        color: #FFFFFF;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.confirm-phone-page[data-v-71efa146]{\r\n        height: 100vh;\n}\n.confirm-phone-page .container[data-v-71efa146]{\r\n        height: 100%;\n}\n.confirm-phone__content-wrapper[data-v-71efa146]{\r\n        height: 100%;\r\n        display: flex;\r\n        flex-direction: column;\r\n        justify-content: center;\r\n        align-items: center;\r\n        gap: 56px;\n}\n.confirm-phone__content[data-v-71efa146]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        align-items: center;\r\n        gap: 24px;\r\n        max-width: 257px;\r\n        width: 100%;\n}\n.confirm-phone__content-logo[data-v-71efa146]{\r\n        width: 72px;\r\n        height: 72px;\n}\n.confirm-phone__content-info[data-v-71efa146]{\r\n        display: flex;\r\n        flex-direction: column;\r\n        align-items: center;\n}\n.confirm-phone__content-info__title[data-v-71efa146]{\r\n        color: #000000;\r\n        font-family: Inter;\r\n        font-weight: 600;\r\n        font-size: 18px;\r\n        line-height: 100%;\r\n        letter-spacing: -0.18px;\r\n        text-align: center;\r\n        vertical-align: middle;\r\n        margin-bottom: 4px;\n}\n.confirm-phone__content-info__text[data-v-71efa146]{\r\n        font-family: Inter;\r\n        font-weight: 500;\r\n        font-size: 16px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n        text-align: center;\r\n        vertical-align: middle;\r\n        color: #707579;\r\n        max-width: 221px;\r\n        width: 100%;\n}\n.confirm-phone__btn[data-v-71efa146]{\r\n        width: 100%;\r\n        height: 44px;\r\n        border-radius: 12px;\r\n        display: flex;\r\n        flex-direction: column;\r\n        justify-content: center;\r\n        align-items: center;\r\n        background: #3390EC;\r\n        font-family: Microsoft Sans Serif;\r\n        font-weight: 400;\r\n        font-size: 15px;\r\n        line-height: 100%;\r\n        letter-spacing: 0px;\r\n        color: #FFFFFF;\r\n        outline: none;\r\n        border: none;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

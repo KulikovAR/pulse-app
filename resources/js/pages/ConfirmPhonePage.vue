@@ -119,5 +119,7 @@ export default {
         line-height: 100%;
         letter-spacing: 0px;
         color: #FFFFFF;
+        outline: none;
+        border: none;
     }
 </style>

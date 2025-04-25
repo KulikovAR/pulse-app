@@ -1,8 +1,8 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="32" height="32" rx="16" fill="url(#paint0_linear_537_15309)"/>
-<path d="M7.46667 15.6438H11.7333L13.9098 8.53336L18.6007 23.4667L20.2563 15.6438H24.5333" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="73" height="79" viewBox="0 0 73 79" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="72" height="72" rx="36" fill="url(#paint0_linear_713_1589)"/>
+<path d="M47.1874 49.6023L38.8826 49.1038L36.0353 38.4775M58.532 41.115C55.5234 29.8869 43.9823 23.2236 32.7541 26.2322C21.526 29.2408 14.8627 40.7819 17.8713 52.01C20.8799 63.2382 32.421 69.9014 43.6491 66.8929C44.9521 66.5438 46.1935 66.0798 47.3655 65.5147M50.8413 58.1564L55.6747 60.9469L63.1161 48.058" stroke="#F5F5F5" stroke-width="5.625" stroke-linecap="round" stroke-linejoin="round"/>
 <defs>
-<linearGradient id="paint0_linear_537_15309" x1="32" y1="0" x2="0" y2="32" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint0_linear_713_1589" x1="72.5" y1="0.5" x2="0.5" y2="72.5" gradientUnits="userSpaceOnUse">
 <stop stop-color="#D665FF"/>
 <stop offset="1" stop-color="#4C6FFF"/>
 </linearGradient>

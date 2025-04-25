@@ -3,11 +3,11 @@
         <div class="container">
             <div class="header-content">
                 <router-link :to="{ name:'main' }" class="header-content__logo">
-                    <img class="header-content__logo-img" src="/images/logo.svg" alt="">
+                    <img class="header-content__logo-img" src="/images/header-logo.svg" alt="">
                 </router-link>
-                <div class="header-content__title">
+                <!-- <div class="header-content__title">
                     Pulse App
-                </div>
+                </div> -->
             </div>
         </div>
     </header>
@@ -21,8 +21,8 @@ export default {
 
 <style scoped>
     .header{
-        padding-top: 20px;
-        margin-bottom: 12px;
+        padding-top: 24px;
+        margin-bottom: 16px;
     }
     .header-content{
         display: flex;
@@ -31,8 +31,8 @@ export default {
     .header-content__logo,
     .header-content__logo-img{
         display: block;
-        width: 36px;
-        height: 36px;
+        width: 144px;
+        height: 32px;
     }
     .header-content__logo{
         margin-right: 8px;
